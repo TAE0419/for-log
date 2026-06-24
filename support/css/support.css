@@ -23,6 +23,7 @@ body{
     color: #DB824A; /* 주황색 적용 */
     font-size: 120px;            
     line-height: 1;
+    margin-left: 50px;
 }
 
 /* 아래 기존 코드는 그대로 유지 */
@@ -78,8 +79,86 @@ body{
     height: auto;
 }
 
-/* ------- 1. 공지사항 ------ */
+/* ------------- 1. 공지사항 --------- */
+/* 1. 배경 영역: 화면 가득 확장 */
+.news-list-stripe-bg {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 0 0 40px 0 !important;
+    background: repeating-linear-gradient(
+        90deg,
+        #eef7e2,
+        #eef7e2 15px,
+        #ffffff 15px,
+        #ffffff 30px
+    );
+}
 
+/* 2. 랩 영역: 여백 없이 꽉 채우기 */
+.news-list-wrap,
+.table-scroll {
+    width: 100%;
+    max-width: none !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+/* 3. 테이블 영역: 상대 위치로 스트라이프에 딱 붙이기 */
+.news-table {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: -15px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    table-layout: fixed;
+}
+
+/* 4. 헤더 영역 및 열 너비와 좌우 여백 */
+.news-table thead th {
+    padding: 20px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    background-color: #FAFAF2;
+    border-top: 1px solid #cbdcc0;
+    border-bottom: 2px solid #cbdcc0;
+}
+
+/* 열 너비 설정 및 양끝 여백 확보 */
+.news-table th:nth-child(1), .news-table td:nth-child(1) { width: 10%; padding-left: 40px !important; } /* 번호 */
+.news-table th:nth-child(2), .news-table td:nth-child(2) { width: 55%; } /* 제목 */
+.news-table th:nth-child(3), .news-table td:nth-child(3) { width: 15%; } /* 작성자 */
+.news-table th:nth-child(4), .news-table td:nth-child(4) { width: 20%; padding-right: 40px !important; } /* 작성일 */
+
+/* 5. 행 스타일 */
+.news-table tbody tr.news-item { cursor: pointer; transition: transform 0.2s ease; }
+.news-table tbody tr.news-item:hover { transform: translateY(-2px); }
+
+.news-table tbody td {
+    background-color: #ffffff;
+    padding: 20px 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* 행 모서리 둥글게 */
+.news-table tbody td:first-child { border-radius: 30px 0 0 30px; }
+.news-table tbody td:last-child { border-radius: 0 30px 30px 0; }
+
+/* 6. 배지 */
+.badge-new {
+    background-color: #e48257;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
 
 
 /* --------- 2. FAQ 자주 묻는 질문 --------- */
