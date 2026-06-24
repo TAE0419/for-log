@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Cloudsofa';
+    /* css 폴더 기준 상대경로로 트루타입 웹폰트 로드 */
+    src: url('../front/Cloudsofa_namgim-Regular (1).ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 서포트 페이지 메인 구역 전체에 클라우드소파 폰트 바인딩 */
+.support-hero-section,
+.news-section,
+.faq-section,
+.location-section {
+    font-family: 'Cloudsofa', 'Malgun Gothic', sans-serif !important;
+}
+
+body{
+    background-color: #FFFEF3; 
+}
+
+/* --- 각 섹션 타이틀 공통 구성 --- */
+.section h2 .dot {
+    color: #DB824A; /* 주황색 적용 */
+    font-size: 120px;            
+    line-height: 1;
+}
+
+/* 아래 기존 코드는 그대로 유지 */
+.section h2 {
+    font-size: 100px;
+    font-weight: 900;
+    color: #2C4224; 
+    display: flex;       
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 35px;
+    text-align: left;
+    max-width: 1000px;
+}
+.section h2 span {
+    font-size: 30px;
+    font-weight: normal;
+    color: #2C4224; 
+    margin-top: 8px;
+}
+
+/* --- 이미지 --- */
+.support-hero-section {
+    text-align: center;
+    padding-top: 100px;        
+    padding-bottom: 0;
+    position: relative;        
+    overflow: hidden;
+    min-height: 1200px;         
+}
+.support-main-title {
+    font-size: 280px;          
+    font-weight: 100;
+    color: #2C4224;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 3;                
+}
+.character-img-box {
+    width: 100%;
+    max-width: 100%;           
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;                 
+    left: 50%;
+    transform: translateX(-43%);
+    z-index: 1;                
+    pointer-events: none;
+}
+.character-img-box img {
+    width: 100%;               
+    max-width: 1830px;        
+    height: auto;
+}
+
+/* ------- 1. 공지사항 ------ */
+
+
+
+/* --------- 2. FAQ 자주 묻는 질문 --------- */
+
+
+
+/* ----------- 3. AIP 오시는 길----------- */
+
+
+
+/*--------- 스마트폰 반응형---------*/
+@media (max-width: 768px) {
+    .info-inner {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .news-list-stripe-bg {
+        padding: 20px 10px;
+    }
+    .faq-answer {
+        padding-left: 10px;
+    }
+}
