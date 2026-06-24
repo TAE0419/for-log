@@ -96,6 +96,32 @@ video {
     object-fit: cover;
     pointer-events: none;
 }
+.animateTwinkle{
+    width: 100%;
+    height: 100%;
+
+    animation: moveTwinkle 3s infinite;
+}
+@keyframes moveTwinkle {
+    0%{ 
+        background-image: url(../img/move/twink-01.png);
+    }
+    30%{
+         background-image: url(../img/move/twink-02.png);
+    }
+    50%{
+        background-image: url(../img/move/twink-03.png);
+    }
+    70%{
+        background-image: url(../img/move/twink-04.png);
+    }
+    80%{
+        background-image: url(../img/move/twink-05.png);
+    }
+    100%{
+         background-image: url(../img/move/twink-03.png);
+    }
+}
 
 .heroContent {
     position: absolute;
