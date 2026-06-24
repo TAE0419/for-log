@@ -1,19 +1,7 @@
+CSS
 * {
-    margin: 0;padding: 0; box-sizing: border-box; list-style: none; text-decoration: none;
-}
-html{
     font-size: 16px;
 }
-@media (max-width: 1024px) {
-html {
-font-size: 15px;
-}
-}
-@media (max-width: 768px) {
-html {
-font-size: 13px;
-}}
-
 
 @font-face {
     font-family: 'Cloudsofa';
