@@ -105,7 +105,7 @@ video {
      background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    animation: moveTwinkle 3s steps(1, end) infinite;
+    animation: moveTwinkle 2s steps(2, end) infinite;
 }
 @keyframes moveTwinkle {
     0%{ 
@@ -124,7 +124,7 @@ video {
         background-image: url(../img/move/twink-05.png);
     }
     100%{
-         background-image: url(../img/move/twink-03.png);
+        
     }
 }
 
