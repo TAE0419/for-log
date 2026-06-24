@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOR-LOG - CART</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 🎨 FOR-LOG 프로젝트 전용 테마 컬러 정의 */
+        :root {
+            --palm-color: #657F38;
+            --leaf-color: #9EAB57;
+            --shadow-color: #212C1B;
+            --terra-cotta: #D57640;
+            --bg-color: #FFFEF3;
+            --line-color: #E2E8F0;
+            --bg-cream: #FFFEF3;
+            --dark-green: #212C1B;
+            --terra-orange: #D57640;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--shadow-color);
+        }
+
+        @font-face {
+            font-family: 'Cloudsofa';
+            src: url('/font/Cloudsofa_namgim-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 1. 상단 네비게이션 (Header) */
+        .top-nav {
+            padding: 20px 0;
+            background: transparent;
+        }
+
+        .nav-inner {
+            width: min(1200px, calc(100% - 40px));
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-cream);
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--dark-green);
+        }
+
+        .bubbly-font {
+            font-family: 'Cloudsofa', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-actions button {
+            font-size: 1.2rem;
+            color: var(--dark-green);
+        }
+
+        .cart-page {
+            padding: 60px 0 120px;
+        }
+
+        .cart-inner {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* 🏷️ CART 타이틀 */
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h2 {
+            font-size: 3rem;
+            color: var(--leaf-color);
+            letter-spacing: 2px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-family: 'Cloudsofa';
+            font-size: 7rem;
+        }
+
+        /* 📊 와이어프레임 스타일 장바구니 테이블 */
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        /* 테이블 헤더 바 (Shadow 컬러 배경) */
+        .cart-table th {
+            background-color: var(--shadow-color);
+            color: #ffffff;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .cart-table th:nth-child(1) {
+            text-align: left;
+            width: 45%;
+        }
+
+        /* 상품명 */
+        .cart-table th:nth-child(2) {
+            width: 15%;
+        }
+
+        /* 가격 */
+        .cart-table th:nth-child(3) {
+            width: 20%;
+        }
+
+        /* 수량 */
+        .cart-table th:nth-child(4) {
+            width: 20%;
+        }
+
+        /* 합계 */
+
+        /* 📦 테이블 아이템 리스트 (점선 스타일) */
+        .cart-item-row {
+            border-bottom: 1.5px dashed var(--leaf-color);
+            /* 와이어프레임의 초록 점선 반영 */
+        }
+
+        .cart-item-row td {
+            padding: 25px 20px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        /* 상품명 영역 */
+        .cart-item-info-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid var(--line-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .cart-item-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--shadow-color);
+        }
+
+        .cart-item-price {
+            font-weight: 600;
+        }
+
+        /* 🔢 수량 조절 컴포넌트 */
+        .quantity-control-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1.5px solid var(--palm-color);
+            border-radius: 999px;
+            padding: 4px 14px;
+            background: #ffffff;
+        }
+
+        .qty-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--palm-color);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .qty-text {
+            font-weight: 700;
+            font-size: 1rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* 각 상품별 총 합계 */
+        .cart-item-subtotal {
+            font-weight: 800;
+            color: var(--shadow-color);
+            position: relative;
+        }
+
+        /* 🗑️ 행 내부의 개별 삭제 버튼 (선택 사항) */
+        .row-delete-btn {
+            background: transparent;
+            border: 1px solid var(--terra-cotta);
+            color: var(--terra-cotta);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* 텅 빈 상태 */
+        .empty-row td {
+            padding: 80px 0;
+            color: var(--palm-color);
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--leaf-color);
+        }
+
+        /* 💵 하단 금액 산정 및 정렬 라인 (실선) */
+        .cart-summary-line {
+            border-top: 2px solid var(--leaf-color);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+        }
+
+        /* 왼쪽 배송 정보 */
+        .summary-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .shipping-badge {
+            display: inline-block;
+            background-color: var(--leaf-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            width: fit-content;
+        }
+
+        /* 오른쪽 총 요약 금액 */
+        .summary-right {
+            display: grid;
+            grid-template-columns: 120px 150px;
+            row-gap: 12px;
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .summary-right .price-value {
+            font-weight: 800;
+        }
+
+        .summary-right .total-row {
+            font-size: 1.2rem;
+            color: var(--terra-cotta);
+            /* 포인트 컬러 */
+            margin-top: 5px;
+        }
+
+        /* 🎬 하단 더블 버튼 시스템 */
+        .cart-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            min-width: 180px;
+            min-height: 50px;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary {
+            background-color: var(--leaf-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--palm-color);
+        }
+
+        .btn-primary {
+            background-color: var(--palm-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--shadow-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="top-nav">
+        <div class="nav-inner">
+            <div class="logo bubbly-font">FOR-LOGO</div>
+            <nav class="nav-menu">
+                <li><a href="#">BRANDSTORY</a></li>
+                <li><a href="products_index.html">PRODUCT</a></li>
+                <li><a href="cart_test.html" class="active">CART</a></li>
+                <li><a href="#">ABOUT</a></li>
+            </nav>
+            <div class="nav-actions">
+                <button aria-label="메뉴"><i class="fa-solid fa-bars"></i></button>
+                <button type="button" id="open-cart" aria-label="장바구니 열기">
+                    <i class="fa-solid fa-bag-shopping"></i> <span id="cart-count"
+                        style="color: var(--terra-orange); font-weight: 800;">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="cart-page">
+        <div class="cart-inner">
+            <div class="cart-header">
+                <h2>Cart</h2>
+            </div>
+
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>상품명</th>
+                        <th>가격</th>
+                        <th>수량</th>
+                        <th>합계</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                </tbody>
+            </table>
+
+            <div class="cart-summary-line">
+                <div class="summary-left">
+                    <div>배송 : <span class="shipping-badge" id="shipping-status">30,000원 이상 무료</span></div>
+                    <div>배송비 : <span id="shipping-fee">3,000원</span></div>
+                </div>
+
+                <div class="summary-right">
+                    <div>총 상품 가격</div>
+                    <div class="price-value" id="total-product-price">0원</div>
+
+                    <div class="total-row">최종 결제 금액</div>
+                    <div class="price-value total-row" id="final-total-price">0원</div>
+                </div>
+            </div>
+
+            <div class="cart-buttons">
+                <button type="button" class="btn btn-secondary" onclick="location.href='shop.html'">쇼핑 계속하기</button>
+                <button type="button" class="btn btn-primary" onclick="alert('주문 단계로 이동합니다! 🌿')">주문하기</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 기본 렌더링용 샘플 데이터 세팅
+        let cart = [
+            { id: 1, name: "초로기 2단 모듈락 도시락", price: 15800, quantity: 1, icon: "🍱" },
+            { id: 2, name: "포로그 순면 보들 타월", price: 12800, quantity: 2, icon: "🌿" }
+        ];
+
+        const tableBody = document.getElementById('cart-table-body');
+        const totalProductPriceEl = document.getElementById('total-product-price');
+        const shippingFeeEl = document.getElementById('shipping-fee');
+        const finalTotalPriceEl = document.getElementById('final-total-price');
+        const shippingStatusEl = document.getElementById('shipping-status');
+
+        // 장바구니 가로형 리스트 출력 함수
+        function renderCartTable() {
+            if (cart.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-row">
+                        <td colspan="4">장바구니에 담긴 상품이 없습니다. 💚</td>
+                    </tr>`;
+                updateSummary(0);
+                return;
+            }
+
+            tableBody.innerHTML = cart.map(item => {
+                const itemSubtotal = item.price * item.quantity;
+                return `
+                    <tr class="cart-item-row" data-id="${item.id}">
+                        <td>
+                            <div class="cart-item-info-cell">
+                                <div class="cart-item-img">${item.icon}</div>
+                                <span class="cart-item-name">${item.name}</span>
+                                <button class="row-delete-btn" onclick="deleteItem(${item.id})">삭제</button>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="cart-item-price">${item.price.toLocaleString()}원</span>
+                        </td>
+                        <td>
+                            <div class="quantity-control-wrapper">
+                                <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                                <span class="qty-text">${item.quantity}</span>
+                                <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="cart-item-subtotal">${itemSubtotal.toLocaleString()}원</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // 총액 계산 및 요약 바 반영
+            const totalProductPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            updateSummary(totalProductPrice);
+        }
+
+        // 수량 증감 제어
+        function changeQty(id, amount) {
+            const product = cart.find(p => p.id === id);
+            if (product) {
+                product.quantity += amount;
+                if (product.quantity < 1) product.quantity = 1; // 최소 수량 1 고정
+                renderCartTable();
+            }
+        }
+
+        // 개별 아이템 행 삭제
+        function deleteItem(id) {
+            cart = cart.filter(p => p.id !== id);
+            renderCartTable();
+        }
+
+        // 요약 정보 정산 연산
+        function updateSummary(totalProductPrice) {
+            // 3만원 이상 조건부 무료배송 연산
+            const isFree = totalProductPrice >= 30000 || totalProductPrice === 0;
+            const shippingFee = isFree ? 0 : 3000;
+            const finalTotal = totalProductPrice + shippingFee;
+
+            totalProductPriceEl.textContent = `${totalProductPrice.toLocaleString()}원`;
+            shippingFeeEl.textContent = `${shippingFee.toLocaleString()}원`;
+            finalTotalPriceEl.textContent = `${finalTotal.toLocaleString()}원`;
+
+            const countEl = document.getElementById("cart-count");
+            if (countEl) {
+                const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+                countEl.textContent = totalQty;
+            }
+
+            if (totalProductPrice >= 30000) {
+                shippingStatusEl.textContent = "무료배송 적용 완료!";
+                shippingStatusEl.style.backgroundColor = "#657F38";
+            } else {
+                shippingStatusEl.textContent = "30,000원 이상 무료";
+                shippingStatusEl.style.backgroundColor = "#9EAB57";
+            }
+        }
+
+        // 초기화 실행
+        renderCartTable();
+    </script>
+</body>
+
+</html>
