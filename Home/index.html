@@ -3,22 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./common/FontAndColor/FontAndColor.css">
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/main.css">
     <title>FOR-LOG</title>
 </head>
 <body>
-    <div class="characterWrap">
+    <header>
+        <div class="headerInner">
+            <div class="logo"><a href="../Home/index.html"><img src="./img/png files(and logo)/logo(black).png" alt="logo"></a></div>
+            <ul class="gnb">
+                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <ul class="snb">
+                    <li><a href="#">CONCEPT</a></li>
+                    <li><a href="#">CHOLOGI</a></li>
+                </ul>
+                </li>
+                <li>
+                    <a href="../products/products_index.html">PRODUCT</a>
+                    <ul class="snb">
+                        <li><a href="#">SHOP</a></li>
+                        <li><a href="#">CART</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../support/html/index.html">SUPPORT</a>
+                    <ul class="snb">
+                        <li><a href="#">NEWS</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">LOCATION</a></li>
+                        <li><a href="#">LOG IN</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="ham">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+<!-- =============================햄버거 누르면 나타나는 전체메뉴=========================== -->
+    <div class="dim"></div>
+    <div class="hamSideMenu">
+        <div class="close">&#10006;</div>
+        <ul class="hamGnb">
+            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+            <ul class="hamSnb">
+                <li><a href="#">CONCEPT</a></li>
+                <li><a href="#">CHOLOGI</a></li>
+            </ul>
+            </li>
+            <li>
+                <a href="../products/products_index.html">PRODUCT</a>
+                <ul class="hamSnb">
+                    <li><a href="#">SHOP</a></li>
+                    <li><a href="#">CART</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../support/html/index.html">SUPPORT</a>
+                <ul class="hamSnb">
+                    <li><a href="#">NEWS</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">LOCATION</a></li>
+                    <li><a href="#">LOG IN</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- 화면 시작 섹션1 -->
+    <div class="mainWrap">
+        <div class="characterWrap">
             <img src="./img/character image/PNG/choro-gi-nomal.png" alt="Main character">
         </div>
-    <img class="cloverFrame" src="./img/SVG files/cloverBackground.svg" alt="클로버 모양의 svg">
+    <img class="cloverFrame" src="./img/SVG files/cloverBackground-01.svg" alt="클로버 모양의 svg">
     <div class="animateTwinkle">
         <!-- <img class="cloverFrame" src="./img/SVG files/twink-01.svg" alt="클로버 모양의 svg"> -->
     </div>
-    <div class="mainWrap">
             <div class="heroVideos" aria-hidden="true">
                 <video class="heroVideo videoOne" src="./mp4/coverMP4.mp4" autoplay muted loop playsinline></video>
-                <video class="heroVideo videoTwo" src="./mp4/moving.mp4" autoplay muted loop playsinline></video>
+                <video class="heroVideo videoTwo" src="./mp4/video.mp4" autoplay muted loop playsinline></video>
                 <video class="heroVideo videoThree" src="./img/video/video23.mp4" autoplay muted loop playsinline></video>
             </div>
     <section class="sec1">
@@ -28,9 +93,10 @@
                 <p>&#49885;&#47932; &#47784;&#54000;&#48652; &#51105;&#54868; &amp; &#52488;&#47196;&#44592; &#44415;&#51592; &#49660;&#54609;&#47792;</p>
             </div>
         </div>
-        </div>
     </section>
-
+    </div>
+    <!-- 화면 시작 섹션1 끝남  -->
+     <!-- 섹션2 시작 -->
     <section class="sec2">
         <div class="heroContent2">
                 <div class="circle"></div><span>SHORTCUT</span>
@@ -47,7 +113,8 @@
             <img src="./img/character image/welcome.png" alt="Location">
         </div>
     </section>
-
+        <!-- 섹션2 끝 -->
+        <!-- 섹션3 시작 -->
     <section class="sec3">
         <div class="inner">
             <div class="character">
@@ -61,17 +128,71 @@
             </div>
         </div>
     </section>
-    
+    <!-- 섹션3 끝 -->
+     <!-- 섹션4 시작-------갤러리---------- -->
     <section class="sec4">
          <img src="./img/SVG files/pattern/pattern-white.svg" alt="상단 장식 svg이미지(화이트)">
         <div class="galleryStart">
             <div class="cloverWarp"></div>
             <div class="secondWrap">
-                <span>BEST<br>GALLERY</span>
+                <span class="BestGallery">BEST<br>GALLERY</span>
                 <img src="./img/character image/PNG/choro-gi5.png" alt="꽃에 물주는 choro-gi">
             </div>
         </div>
     </section>
+    <!-- 섹션4 끝-------갤러리---------- -->
+     <!-- 섹션5시작-------리뷰페이지---------- -->
+    <section class="sec5">
+        <img src="./img/SVG files/pattern/pattern-green3.svg" alt="올록볼록한 장식 사진">
+        <div>
+            <span>BEST<br>REVIEW!</span>
+        </div>
+
+        <div class="reviewStart">
+            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+        </div>
+    </section>
+<!-- 섹션5끝-------리뷰페이지---------- -->
+ <!-- 섹션6시작-------슬라이드---------- -->
+<section class="sec6">
+        <div class="slide">
+            <div class="slider">
+                <img src="./img/character image/table-character2.png" alt="">
+            </div>
+        </div>
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+</section>
+
+<footer>
+        <div class="left">
+            <div class="info">
+                <p>주소 : 서울특별시 강남구 테헤란로 427 위워크타워 10층</p>
+                <p>대표 : 김태은</p>
+                <p>사업자등록번호 : 123-45-67890</p>
+                <p>이메일 : info@company.com</p>
+                <p>이용약관 | 개인정보처리방침</p>
+                <p>© 2023 Company. All rights reserved.</p>
+            </div>
+            <div class=line><hr style="border: none; border-top: 2px dashed var(--bg-color);"></div>
+            <div class="logo">
+                <img src="./common/img/logo(white).png" alt="logo">
+            </div>
+        </div>
+        <div class="right">
+            <img src="./common/img/youtube.png" alt="sns">
+            <img src="./common/img/instagram.png" alt="sns">
+            <img src="./common/img/blog.png" alt="sns">
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="./js/main.js"></script>
 </body>
 </html>
