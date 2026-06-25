@@ -1,10 +1,53 @@
-*{margin: 0;padding: 0;box-sizing: border-box;}
+
 section{
     width: 100%; height: 100vh;
     display: flex; justify-content: center;align-items: center;
-    background-color: rgb(120, 153, 120);
-    border: 5px solid black;
+    background-color: var(--bg-color);
 }
-div{
-    color: white; font-size: 100px; font-weight: bold;
+.first{
+    font: var(--title-font);
+    color: var(--sub-color);
+}
+.light{
+    display:flex; justify-content: space-between;
+}
+
+/* ==========================의의=================================== */
+.seconde{
+    background-color: var(--dark-color);
+}
+.seconde>.textBox>h1{
+    font: var(--big2-font); 
+    color: var(--bg-color);
+    text-align: center;
+}
+.seconde>.textBox>p{
+    font: var(--small2-font); 
+    color: var(--bg-color);
+    text-align: center;
+}
+/* ==========================컨셉=================================== */
+.third{
+    height: 300vh; position: relative;
+}
+.third>.stripe{
+    width: 100%; height: 500px;overflow: hidden;
+    position:absolute; left: 0; top: 0;
+}
+.third>.stripe>img{
+    width: 100%; object-fit: cover;
+}
+.third>.stripe>.gradiant{
+    position: absolute; top: 0;left: 0;
+    background-color: rgb(140, 162, 182);
+}
+
+
+
+.fourth>.stripe{
+    width: 100%; height: 100%; overflow: hidden;
+    position: absolute; left: 0;
+}
+.fourth>.stripe>img{
+    width: 100%; object-fit: cover;
 }
