@@ -1,4 +1,5 @@
 :root {
+     /* 수정이 되었나 확인용 */
     /* 사용자 지정 컬러 팔레트 적용 */
     --bg-color: #FFFEF3;
     --dark-color: #212C1B;
@@ -69,12 +70,22 @@ img {
 
 /* 배경 스트라이프 패턴 클래스 */
 .striped-bg {
-    background-image: repeating-linear-gradient(90deg,
-            var(--bg-color) 0px,
-            var(--bg-color) 20px,
-            rgba(158, 171, 87, 0.25) 20px,
-            rgba(158, 171, 87, 0.25) 40px);
-    padding-bottom: 80px;
+    overflow: hidden;
+    position: relative;
+    background-color: #fffdeb;
+    background-image:
+        linear-gradient(180deg, #fffdeb 0%, transparent 70%, #fffdeb 100%),
+        url("./img/backgrandimg01.png");
+    background-repeat:
+        no-repeat,
+        repeat;
+    background-size:
+        100% 100%,
+        auto;
+    background-position:
+        center,
+        center;   
+    margin-bottom: 15rem;
 }
 
 /* 1. 상단 네비게이션 (Header) */
@@ -239,9 +250,11 @@ img {
 }
 
 .clover-blob h3 {
-    font-size: 2.5rem;
+    font-size: 3.0rem;
     line-height: 1.1;
     margin-bottom: 15px;
+    font-family: 'Noto-Sans-KR', sans-serif; 
+    font-weight: 900;
 }
 
 .clover-blob p {
@@ -249,6 +262,9 @@ img {
     opacity: 0.9;
     margin-bottom: 25px;
     word-break: keep-all;
+    display: flex;
+    text-align: left;
+    
 }
 
 .clover-btn {
@@ -263,11 +279,11 @@ img {
 /* 4. 섹션 3: Category (Timeline Style) */
 .category-section {
     text-align: center;
-    padding: 100px 0;
+    padding: 120px 0;
 }
 
 .category-title {
-    font-size: 5rem;
+    font-size: 8rem;
     color: var(--dark-color);
     margin-bottom: 50px;
 }
@@ -302,7 +318,7 @@ img {
     color: var(--point-color);
     font-weight: 800;
     transition: transform 0.2s;
-    min-height: 110px;
+    min-height: 140px;
 }
 
 .category-btn:hover {
@@ -310,23 +326,38 @@ img {
 }
 
 .category-btn span {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+}
+
+.category-btn:nth-child(odd) {
+    justify-content: flex-end;
+}
+.category-btn:nth-child(odd) span {
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+/* 짝수 번째 버튼 텍스트가 라인 위에 위치 */
+.category-btn:nth-child(even) {
+    justify-content: flex-start;
+}
+.category-btn:nth-child(even) span {
+    margin-top: 10px;
+    margin-bottom: auto;
 }
 
 /* 기본 상태: 작은 주황색 점 */
 .cat-dot {
     position: absolute;
-    bottom: 20px;
+    bottom: 50px;
     left: 50%;
     transform: translate(-50%, 50%);
-
-    width: 18px;
-    height: 18px;
+    width: 30px;
+    height: 30px;
     background: var(--point-color);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px var(--bg-color);
+    box-shadow: 0 0 0 4px var(--bg-cream);
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -338,8 +369,8 @@ img {
 
 /* 공통 호버 상태: 원이 커지면서 주황색 필터 톤 오버레이 적용 */
 .category-btn:hover .cat-dot {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border: 4px solid var(--point-color);
     color: #fff;
     background-blend-mode: multiply;
@@ -388,7 +419,7 @@ img {
 }
 
 .all-title {
-    font-size: 5rem;
+    font-size: 6.5rem;
     color: var(--main-color);
     line-height: 0.8;
 }
@@ -439,15 +470,6 @@ img {
     gap: 40px 20px;
 }
 
-.product-card {
-    text-align: left;
-    background: transparent;
-    border-radius: 16px;
-    padding: 10px;
-    margin: -10px;
-    transition: box-shadow 0.3s ease;
-}
-
 .product-visual {
     position: relative;
     aspect-ratio: 1;
@@ -494,18 +516,27 @@ img {
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
 }
 
-.wish-btn {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    color: var(--point-color);
-    font-size: 1.2rem;
-    z-index: 20;
-    transition: transform 0.2s ease, color 0.2s ease;
+/* 상품명과 하트를 한 줄 가로 정렬하고 양 끝으로 배치 */
+.product-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 4px;
+    position: relative;
+    width: 100%;
+    padding: 0 2px;
 }
 
-.wish-btn:hover {
-    transform: scale(1.2);
+.product-name {
+    color: var(--dark-color);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0px; 
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .badge {
@@ -616,23 +647,34 @@ footer {
 .band-green {
     width: 100vw;
     min-height: 90vh;
-    background-image: repeating-linear-gradient(90deg,
-            var(--bg-color) 0px,
-            var(--bg-color) 25px,
-            rgba(158, 171, 87, 0.25) 25px,
-            rgba(158, 171, 87, 0.25) 50px);
+    margin-bottom: 15rem;
+    padding: 100px 20px 60px 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 100px 20px 60px 20px;
-    box-sizing: border-box;
-    position: relative;
+
+    background-color: #fffdeb;
+    background-image:
+    linear-gradient(180deg, #fffdeb 0%, transparent 70%, #fffdeb 100%),
+    url("./img/backgrandimg01.png");
+
+    /* 4. 배경 세부 제어 (순서대로: 그라데이션, 줄무늬, 이미지) */
+    background-repeat: no-repeat, repeat;
+        background-size:
+        100% 100%,
+        auto;
+    background-position: center, center;
 }
 
-/* 💡 꽉 차지 않고 양옆 공간이 있는 둥근 메인 테스트 박스 */
+
+/* 꽉 차지 않고 양옆 공간이 있는 둥근 메인 테스트 박스 */
 .recommend-container {
     width: 100%;
-    max-width: 760px;
+    max-width: 920px;
     background: #fff;
     border-radius: 32px;
     padding: 60px 40px;
@@ -893,4 +935,50 @@ footer {
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 25px;
+}
+
+/* 전체 카드 클릭 가능 표시 */
+.product-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* 찜 버튼 인라인 정렬 */
+.product-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.wish-inline-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--point-color);
+    cursor: pointer;
+}
+
+.wish-inline-btn.active {
+    color: var(--point-color);
+}
+
+/* 기존 버튼 삭제 */
+.wish-btn {
+    display: none !important;
+}
+
+/* 모달 내 배지 스타일을 더 명확하게 */
+.modal-tag {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid currentColor;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 10px;
 }
