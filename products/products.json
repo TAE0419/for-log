@@ -37,7 +37,19 @@
   },
   {
     "id": 4,
-    "name": "FOR-LOG 시그니처 유리 머그컵",
+ "name": "새벽 안개 낀 이끼 계곡 아로마 디퓨저",
+    "category": "plant",
+    "subCategory": "living",
+    "price": 26000,
+    "image": "./img/005.jpg",
+    "isBest": false,
+    "isNew": false,
+    "date": "2026-05-01",
+    "description": "습기를 머금은 이끼와 깊은 흙 내음을 그대로 조향해, 방 안에 두는 것만으로 숲속 한가운데 있는 기분을 선사합니다."
+  },
+  {
+    "id": 5,
+       "name": "FOR-LOG 시그니처 유리 머그컵",
     "category": "frog",
     "subCategory": "living",
     "price": 14000,
@@ -47,18 +59,6 @@
     "weeklyBest": true,
     "date": "2026-04-20",
     "description": "귀여운 초로기의 일러스트가 프린팅된 투명하고 단단한 내열 유리컵입니다."
-  },
-  {
-    "id": 5,
-    "name": "새벽 안개 낀 이끼 계곡 아로마 디퓨저",
-    "category": "plant",
-    "subCategory": "living",
-    "price": 26000,
-    "image": "./img/005.jpg",
-    "isBest": false,
-    "isNew": false,
-    "date": "2026-05-01",
-    "description": "습기를 머금은 이끼와 깊은 흙 내음을 그대로 조향해, 방 안에 두는 것만으로 숲속 한가운데 있는 기분을 선사합니다."
   },
   {
     "id": 6,
@@ -86,15 +86,15 @@
   },
   {
     "id": 8,
-    "name": "오로라 영롱 잎사귀 아크릴 모빌",
+      "name": "책사이에 피어나는 새싹 책갈피",
     "category": "plant",
-    "subCategory": "living",
-    "price": 26000,
-    "image": "./img/008.jpg",
-    "isBest": true,
+    "subCategory": "stationery",
+    "price": 4500,
+    "image": "./img/018.jpg",
+    "isBest": false,
     "isNew": false,
-    "date": "2026-05-12",
-    "description": "빛의 각도에 따라 영롱하게 투명한 색이 변하는 오로라 아크릴 재질의 유니크한 인테리어 썬캐처 오브제입니다."
+    "date": "2026-05-25",
+    "description": "독서 중인 책 상단에 꽂아두면 책 위로 파릇파릇한 실리콘 새싹이 돋아난 듯 착각을 불러일으키는 페이크 문구 굿즈입니다."
   },
   {
     "id": 9,
@@ -110,15 +110,15 @@
   },
   {
     "id": 10,
-    "name": "메탈 실버 무드 새싹 헤어 집게핀",
+   "name": "보태니컬 빈티지 플랜트 나일론 백팩",
     "category": "plant",
     "subCategory": "acc",
-    "price": 6800,
-    "image": "./img/023.jpg",
-    "isBest": true,
-    "isNew": true,
-    "date": "2026-06-17",
-    "description": "2030 메탈 실버 y2k 감성과 머리 위에 파릇파릇 돋아난 귀여운 새싹 실루엣이 결합된 위트 있는 집게핀입니다."
+    "price": 42000,
+    "image": "./img/021.jpg",
+    "isBest": false,
+    "isNew": false,
+    "date": "2026-06-18",
+    "description": "바스락거리는 고프코어 스타일 고밀도 나일론 원단에 내추럴하고 힙한 보태니컬 드로잉이 아기자기하게 프린팅된 백팩입니다."
   },
   {
     "id": 11,
@@ -188,33 +188,33 @@
     "price": 12000,
     "image": "./img/016.jpg",
     "isBest": false,
-    "isNew": true,
+    "isNew": false,
     "date": "2026-06-10",
     "description": "아기자기한 귀여운 선인장 모양의 도자기 향꽂이 오브제입니다."
   },
   {
     "id": 17,
-    "name": "보태니컬 빈티지 플랜트 나일론 백팩",
+     "name": "메탈 실버 무드 새싹 헤어 집게핀",
     "category": "plant",
     "subCategory": "acc",
-    "price": 42000,
-    "image": "./img/021.jpg",
-    "isBest": false,
-    "isNew": false,
-    "date": "2026-06-18",
-    "description": "바스락거리는 고프코어 스타일 고밀도 나일론 원단에 내추럴하고 힙한 보태니컬 드로잉이 아기자기하게 프린팅된 백팩입니다."
+    "price": 6800,
+    "image": "./img/023.jpg",
+    "isBest": true,
+    "isNew": true,
+    "date": "2026-06-17",
+    "description": "2030 메탈 실버 y2k 감성과 머리 위에 파릇파릇 돋아난 귀여운 새싹 실루엣이 결합된 위트 있는 집게핀입니다."
   },
   {
     "id": 18,
-    "name": "책사이에 피어나는 새싹 책갈피",
+  "name": "오로라 영롱 잎사귀 아크릴 모빌",
     "category": "plant",
-    "subCategory": "stationery",
-    "price": 4500,
-    "image": "./img/018.jpg",
-    "isBest": false,
-    "isNew": false,
-    "date": "2026-05-25",
-    "description": "독서 중인 책 상단에 꽂아두면 책 위로 파릇파릇한 실리콘 새싹이 돋아난 듯 착각을 불러일으키는 페이크 문구 굿즈입니다."
+    "subCategory": "living",
+    "price": 26000,
+    "image": "./img/008.jpg",
+    "isBest": true,
+    "isNew": true,
+    "date": "2026-05-12",
+    "description": "빛의 각도에 따라 영롱하게 투명한 색이 변하는 오로라 아크릴 재질의 유니크한 인테리어 썬캐처 오브제입니다."
   },
   {
     "id": 19,
@@ -236,7 +236,7 @@
     "price": 12000,
     "image": "./img/028.jpg",
     "isBest": false,
-    "isNew": false,
+    "isNew": true,
     "date": "2026-04-25",
     "description": "은은한 구리빛 골드 컬러와 정교한 잎맥 디테일이 돋보이는 메탈릭 나뭇잎 오브제 컵 코스터입니다. 테이블 위 감각적인 포인트를 더해보세요."
   },
