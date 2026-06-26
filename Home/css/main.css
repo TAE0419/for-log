@@ -265,32 +265,56 @@ video {
 .animateTwinkle{
     width: 100%;
     height: 100vh;
-      position: absolute;
+    position: absolute;
     inset: 0;
     z-index: 30;
-     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    animation: moveTwinkle 1s steps(2, end) infinite;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.oneBox{
+    margin-top: 1rem;
+    width: 6.5rem;
+    height: 75%;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+   flex-direction: column;
+   gap: 2.8rem;
+}
+.oneBox>img{
+   animation: moveTwinkle 1.6s steps(2, end) infinite;
+}
+.twoBox>img{
+   animation: moveTwinkle 1.6s steps(2, end) infinite;
+}
+.twoBox{
+    margin-top: 1rem;
+    width: 6.5rem;
+    height: 75%;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+   flex-direction: column;
+   gap: 2.8rem;
 }
 @keyframes moveTwinkle {
     0%{ 
-        background-image: url(../img/move/twink-01.png);
+        transform: scale(1.2)rotate(20deg);
     }
     30%{
-         background-image: url(../img/move/twink-02.png);
+        transform: scale(0.6)  rotate(50deg);
     }
     50%{
-        background-image: url(../img/move/twink-03.png);
+       transform: scale(0.5) rotate(70deg);
     }
     70%{
-        background-image: url(../img/move/twink-04.png);
-    }
-    80%{
-        background-image: url(../img/move/twink-05.png);
+        transform: scale(0.2) rotate(100deg);
     }
     100%{
-        
+        transform: scale(0);
     }
 }
 
@@ -419,9 +443,13 @@ video {
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    transform: translateY(10rem);
+    opacity: 0;
+    transition: all 0.6s;
 }
 .heroContent2.on{
-    transform: translateY();
+    transform: translateY(0rem);
+    opacity: 1;
 }
 .heroContent2 span{
      font-size: clamp(4rem, 12vw, 10rem);
@@ -453,6 +481,58 @@ video {
     object-fit: cover;
     cursor: pointer;
 }
+.boxUp>div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.whiteCircle{
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    margin-bottom: 2.8rem;
+    width: 20rem;
+    height: 10rem;
+    border-radius: 70rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+.whiteCircle:hover{
+    transform: translateY(-2rem);
+}
+
+.whiteCircle::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #fffdeb;
+    border-radius: inherit;
+    filter: blur(1.5rem);
+    z-index: 0;
+}
+
+.whiteCircle > span{
+    font-size: clamp(1.2rem, 12vw, 2rem);
+     color:  #24331C;
+     font-family: "cloud";
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.whiteCircle > span:hover{
+    color: #DB824A;
+}
+.p_span{
+    /* border: 1px solid red; */
+    position: absolute;
+    left: 15%;
+    top: 28%;
+     transform: translateX(-50%);
+    z-index: 1;
+}
 .boxDown{
     margin-top: -5.3rem;
     width: 100%;
@@ -463,12 +543,30 @@ video {
     justify-items: end;
     margin-bottom: 15rem;
 }
+.boxDown>div{
+    margin-top: 10rem;
+    display: flex;
+    align-items:flex-start;
+    justify-content:center;
+}
+.boxUp>img{
+    box-shadow: 6px 5px 3px rgba(74, 99, 31, 0.3);
+    transition: all 0.3s;
+}
+.boxUp>img:hover{
+    transform: translateY(-2rem);
+}
 .boxDown>img{
     width: 100%;
     max-height: 25rem;
     border-radius: 5px;
     object-fit: cover;
     cursor: pointer;
+    box-shadow: 6px 5px 3px rgba(74, 99, 31, 0.3);
+    transition: all 0.3s;
+}
+.boxDown>img:hover{
+    transform: translateY(-2rem);
 }
 @media (max-width: 900px) {
       .sec2 {
@@ -664,20 +762,75 @@ video {
      /* overflow: hidden; */
     gap: 5rem;
 }
+
+.productBand {
+    width: 100%;
+    height: clamp(25rem, 39vw, 42rem);
+    position: relative;
+    overflow: hidden;
+}
+
+.productBandBg {
+    width: auto;
+    min-width: 100%;
+    height: 240%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: none;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.productBand + img {
+    display: none;
+}
+
 .reviewStart > img {
     transform: scale(2.4);
     transform-origin: center;
 }
 
 @media (max-width: 900px) {
+    .productBand {
+        height: clamp(23rem, 62vw, 34rem);
+    }
+
+    .productBandBg {
+        width: auto;
+        height: 250%;
+        max-width: none;
+    }
+
     .reviewStart > img {
         width: 120%;
         max-width: none;
         transform: scale(3);
     }
 }
+@media (max-width: 720px) {
+    .productBand {
+        height: 31rem;
+    }
+
+    .productBandBg {
+        height: 320%;
+        transform: translate(-50%, calc(-50% + 2rem));
+    }
+}
 
 @media (max-width: 560px) {
+    .productBand {
+        height: 29rem;
+    }
+
+    .productBandBg {
+        width: auto;
+        height: 300%;
+        transform: translate(-50%, calc(-50% + 1.5rem));
+    }
+
     .reviewStart > img {
         width: 150%;
         transform: scale(3.5);
@@ -702,6 +855,11 @@ video {
     aspect-ratio: 16 / 9;
 
 }
+.slider {
+    position: relative;
+    overflow: hidden;
+}
+
 .slider,
 .slider > img {
     width: 100%;
@@ -709,8 +867,16 @@ video {
     border-radius: 70rem;
 }
 .slider > img {
-     object-fit: cover;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    object-fit: cover;
     object-position: center;
+    transition: opacity 1s ease;
+}
+
+.slider > img.on {
+    opacity: 1;
 }
 
 .dots{
@@ -726,7 +892,14 @@ video {
     height: 1.2rem;
     background-color: #DB824A;
     border-radius: 50%;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 
+}
+.dots>div.on{
+    opacity: 1;
+    transform: scale(1.2);
 }
 footer{
             width: 100%; height: 31rem;
@@ -759,3 +932,223 @@ footer{
         .right>img{
             width: 3rem;
         }
+/* 프로덕트 부분----------------------------씨에스에스{{{(>_<)}}} */
+.productSection {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    transform: translateY(calc(-50% - 2.6rem));
+    z-index: 2;
+}
+
+.productList {
+    width: 100%;
+}
+
+.categoryRow {
+    margin-bottom: 0;
+    position: relative;
+}
+
+.categoryTitle {
+    width: auto;
+    margin: 0;
+    position: absolute;
+    left: 6vw;
+    top: clamp(-3.6rem, -4vw, -2.2rem);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #24331c;
+}
+
+.categoryTitle::before {
+    content: "";
+    width: 1.2rem;
+    height: 1.2rem;
+    background: #5b8d3b;
+    border-radius: 50%;
+}
+
+.productViewport {
+    width: 100%;
+    overflow-x: auto;
+    cursor: grab;
+    scrollbar-width: none;
+    touch-action: pan-y;
+    position: relative;
+    z-index: 3;
+}
+
+.productViewport::-webkit-scrollbar {
+    display: none;
+}
+
+.productViewport.dragging {
+    cursor: grabbing;
+}
+
+.productTrack {
+    display: flex;
+    gap: clamp(3rem, 4vw, 2.9rem);
+    padding: 1.5rem 6vw;
+    user-select: none;
+    will-change: transform;
+}
+
+.productCard {
+    flex: 0 0 clamp(17rem, 21vw, 20rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.4rem;
+    cursor: pointer;
+}
+
+.productInner {
+    width: clamp(13rem, 16vw, 17rem);
+    background: #fffdeb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(36, 51, 28, 0.18);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.productCard:hover .productInner {
+    transform: translateY(-0.4rem);
+    box-shadow: 0 12px 20px rgba(36, 51, 28, 0.24);
+}
+
+.productImg {
+    width: 100%;
+    height: clamp(8.8rem, 11vw, 12rem);
+    object-fit: cover;
+    background-color: #aab664;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 83.333%,
+        rgba(0, 0, 0, 0.3) 91.666%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 83.333%,
+        rgba(0, 0, 0, 0.3) 91.666%,
+        transparent 100%
+    );
+}
+
+.productInfo {
+    padding: 0.7rem;
+}
+
+.productInfo h4 {
+    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.productInfo p {
+    font-size: clamp(0.76rem, 0.95vw, 0.92rem);
+    line-height: 1.4;
+    color: #333;
+}
+
+.productCreator {
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.modalOpen {
+    overflow: hidden;
+}
+
+.productModal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.productModal.on {
+    opacity: 1;
+    visibility: visible;
+}
+
+.productModalBox {
+    width: min(90vw, 42rem);
+    max-height: 88vh;
+    position: relative;
+    background-color: #fffdeb;
+    border-radius: 8px;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    overflow-y: auto;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.productModalClose {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    border: 0;
+    border-radius: 50%;
+    background-color: #24331c;
+    color: #fffdeb;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.productModalImg {
+    width: min(100%, 28rem);
+    max-height: 50vh;
+    margin: 0 auto 1.5rem;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.productModalText {
+    text-align: center;
+    color: #24331c;
+}
+
+.productModalText h3 {
+    margin-bottom: 0.6rem;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 900;
+}
+
+.productModalCreator {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.productModalDesc {
+    font-size: 1rem;
+    line-height: 1.6;
+}
