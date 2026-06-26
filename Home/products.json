@@ -1,0 +1,166 @@
+[
+    {
+        "category": "INTERIOR",
+        "items": [
+            {
+                "title": "Chorogi module rack",
+                "creator": "GR1234",
+                "desc": "Small green point for your room",
+                "image": "./img/forlog-forlog_products/img/001.jpg"
+            },
+            {
+                "title": "Plant table set",
+                "creator": "GR1234",
+                "desc": "Cozy plant mood item",
+                "image": "./img/forlog-forlog_products/img/002.jpg"
+            },
+            {
+                "title": "Green shelf kit",
+                "creator": "GR1234",
+                "desc": "Easy interior accent",
+                "image": "./img/forlog-forlog_products/img/003.jpg"
+            },
+            {
+                "title": "Clover mini stand",
+                "creator": "GR1234",
+                "desc": "For a bright little corner",
+                "image": "./img/forlog-forlog_products/img/004.jpg"
+            },
+            {
+                "title": "Chorogi tray",
+                "creator": "GR1234",
+                "desc": "Soft green daily object",
+                "image": "./img/forlog-forlog_products/img/005.jpg"
+            },
+            {
+                "title": "Home plant object",
+                "creator": "GR1234",
+                "desc": "Warm mood for your desk",
+                "image": "./img/forlog-forlog_products/img/006.jpg"
+            }
+        ]
+    },
+    {
+        "category": "DESK",
+        "items": [
+            {
+                "title": "Daily memo pad",
+                "creator": "GR1234",
+                "desc": "Tiny desk friend",
+                "image": "./img/forlog-forlog_products/img/007.jpg"
+            },
+            {
+                "title": "Green pen holder",
+                "creator": "GR1234",
+                "desc": "Soft office point",
+                "image": "./img/forlog-forlog_products/img/008.jpg"
+            },
+            {
+                "title": "Clover mouse pad",
+                "creator": "GR1234",
+                "desc": "Comfortable desk mood",
+                "image": "./img/forlog-forlog_products/img/009.jpg"
+            },
+            {
+                "title": "Chorogi sticker set",
+                "creator": "GR1234",
+                "desc": "Small notes, big charm",
+                "image": "./img/forlog-forlog_products/img/010.jpg"
+            },
+            {
+                "title": "Desk calendar",
+                "creator": "GR1234",
+                "desc": "A green plan for every day",
+                "image": "./img/forlog-forlog_products/img/011.jpg"
+            },
+            {
+                "title": "Mini card pack",
+                "creator": "GR1234",
+                "desc": "For small messages",
+                "image": "./img/forlog-forlog_products/img/012.jpg"
+            }
+        ]
+    },
+    {
+        "category": "FASHION",
+        "items": [
+            {
+                "title": "Chorogi keyring",
+                "creator": "GR1234",
+                "desc": "Cute point for your bag",
+                "image": "./img/forlog-forlog_products/img/013.jpg"
+            },
+            {
+                "title": "Clover pouch",
+                "creator": "GR1234",
+                "desc": "Carry little things softly",
+                "image": "./img/forlog-forlog_products/img/014.jpg"
+            },
+            {
+                "title": "Green charm pin",
+                "creator": "GR1234",
+                "desc": "A tiny lucky accent",
+                "image": "./img/forlog-forlog_products/img/015.jpg"
+            },
+            {
+                "title": "Plant tote bag",
+                "creator": "GR1234",
+                "desc": "Daily bag with green mood",
+                "image": "./img/forlog-forlog_products/img/016.jpg"
+            },
+            {
+                "title": "Soft badge set",
+                "creator": "GR1234",
+                "desc": "Mix and match points",
+                "image": "./img/forlog-forlog_products/img/017.jpg"
+            },
+            {
+                "title": "Clover strap",
+                "creator": "GR1234",
+                "desc": "A bright small detail",
+                "image": "./img/forlog-forlog_products/img/018.jpg"
+            }
+        ]
+    },
+    {
+        "category": "LIVING",
+        "items": [
+            {
+                "title": "Chorogi cup",
+                "creator": "GR1234",
+                "desc": "A calm break time",
+                "image": "./img/forlog-forlog_products/img/019.jpg"
+            },
+            {
+                "title": "Green coaster",
+                "creator": "GR1234",
+                "desc": "Fresh color on the table",
+                "image": "./img/forlog-forlog_products/img/020.jpg"
+            },
+            {
+                "title": "Clover towel",
+                "creator": "GR1234",
+                "desc": "Soft texture for daily use",
+                "image": "./img/forlog-forlog_products/img/021.jpg"
+            },
+            {
+                "title": "Plant lunch box",
+                "creator": "GR1234",
+                "desc": "Pack a little green",
+                "image": "./img/forlog-forlog_products/img/022.jpg"
+            },
+            {
+                "title": "Room spray",
+                "creator": "GR1234",
+                "desc": "Fresh mood in one touch",
+                "image": "./img/forlog-forlog_products/img/023.jpg"
+            },
+            {
+                "title": "Mini blanket",
+                "creator": "GR1234",
+                "desc": "Warm and soft daily item",
+                "image": "./img/forlog-forlog_products/img/024.jpg"
+            }
+        ]
+    }
+]
