@@ -484,5 +484,53 @@
     "isNew": true,
     "date": "2026-06-29",
     "description": "빈티지한 브론즈 컬러의 정교한 나뭇잎 펜던트가 돋보이는 롱 목걸이입니다. 셔츠나 린넨 블라우스 위에 툭 걸쳐주면 차분하면서도 감각적인 포인트를 더해줍니다."
+  },
+  {
+    "id": 41,
+    "name": "초로기의 싱그러운 하루 조각 스티커팩",
+    "category": "frog",
+    "subCategory": "stationery",
+    "price": 4500,
+    "image": "./img/041.png",
+    "isBest": true,
+    "isNew": true,
+    "date": "2026-06-29",
+    "description": "커다란 몬스테라 화분을 소중하게 안고 있는 초로기부터 꽃밭 속 피크닉을 즐기는 모습까지, 초로기의 무해하고 귀여운 일상이 가득 담긴 다꾸용 리무버블 유광 조각 스티커 10종 세트입니다."
+  },
+  {
+    "id": 42,
+    "name": "초로기 안녕! A5 하드커버 린넨 다이어리",
+    "category": "frog",
+    "subCategory": "stationery",
+    "price": 5500,
+    "image": "./img/042.png",
+    "isBest": false,
+    "isNew": true,
+    "date": "2026-06-29",
+    "description": "귀여운 초로기의 3면도 일러스트가 위트 있게 프린팅된 필기용 하드커버 린넨 다이어리입니다. 내부에는 부드러운 연그린 컬러의 모눈(그리드) 내지가 들어가 있어 필기와 드로잉 모두 편리합니다."
+  },
+  {
+    "id": 43,
+    "name": "포근포근 몬스테라 반려식물 봉제 인형",
+    "category": "plant",
+    "subCategory": "plush",
+    "price": 22000,
+    "image": "./img/043.png",
+    "isBest": true,
+    "isNew": true,
+    "date": "2026-06-29",
+    "description": "물 주기 귀찮은 집사들을 위한 완벽한 반려식물! 통통하고 부드러운 극세사 원단으로 커다란 몬스테라 잎사귀와 화분을 구현한 인테리어 봉제 인형입니다. 화분 밑에 달린 앙증맞은 두 발이 킬링 포인트입니다."
+  },
+  {
+    "id": 44,
+    "name": "대롱대롱 행운 네잎클로버 인형 키링",
+    "category": "plant",
+    "subCategory": "plush",
+    "price": 9800,
+    "image": "./img/044.png",
+    "isBest": false,
+    "isNew": true,
+    "date": "2026-06-29",
+    "description": "가방이나 에어팟 케이스에 달아 매일 행운을 충전하는 미니 인형 키링입니다. 보들보들한 테리 원단으로 제작되어 폭신한 촉감을 자랑하며, 클로버 중심에 박힌 수줍은 미소 자수가 매력적입니다."
   }
 ]

@@ -9,7 +9,7 @@
     --line: #E9ECEF;
     --shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
     --font-cloud: 'Cloudsofa', sans-serif;
-    
+
 }
 
 * {
@@ -87,8 +87,8 @@ img {
         auto;
     background-position:
         center,
-        center;   
-    margin-bottom: 15rem;
+        center;
+    margin-bottom: 5rem;
 }
 
 /* 1. Header */
@@ -137,7 +137,7 @@ header {
     min-width: 250px;
 }
 
-.logo > a {
+.logo>a {
     width: 75%;
     height: 51%;
     display: flex;
@@ -157,7 +157,7 @@ header {
     justify-content: end;
 }
 
-.gnb > li {
+.gnb>li {
     height: 100%;
     position: relative;
     margin-right: 100px;
@@ -166,11 +166,11 @@ header {
     color: var(--dark-color);
 }
 
-.gnb > li:hover {
+.gnb>li:hover {
     color: var(--main-color);
 }
 
-.gnb > li > a {
+.gnb>li>a {
     width: 100%;
     height: 100%;
     display: flex;
@@ -263,14 +263,14 @@ header {
     right: 0;
 }
 
-.hamGnb > li {
+.hamGnb>li {
     margin-top: 70px;
     font: var(--small-font);
     color: var(--dark-color);
     transition: all 0.2s;
 }
 
-.hamGnb > li:hover {
+.hamGnb>li:hover {
     color: var(--main-color);
 }
 
@@ -309,6 +309,7 @@ header {
         align-items: end;
     }
 }
+
 /* 2. 섹션 1: Hero (PRODUCT) */
 .hero-section {
     text-align: center;
@@ -419,7 +420,7 @@ header {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    padding: 200px 25px; 
+    padding: 200px 25px;
     color: var(--bg-color);
     display: flex;
     flex-direction: column;
@@ -438,7 +439,7 @@ header {
     font-size: 3.0rem;
     line-height: 1.1;
     margin-bottom: 15px;
-    font-family: 'Noto-Sans-KR', sans-serif; 
+    font-family: 'Noto-Sans-KR', sans-serif;
     font-weight: 900;
 }
 
@@ -449,7 +450,7 @@ header {
     word-break: keep-all;
     display: flex;
     text-align: left;
-    
+
 }
 
 .clover-btn {
@@ -471,6 +472,14 @@ header {
     font-size: 8rem;
     color: var(--dark-color);
     margin-bottom: 50px;
+}
+
+.category-notice {
+    font-size: 1.1rem;
+    color: var(--sub-color);
+    font-weight: 500;
+    margin-bottom: 50px;
+    word-break: keep-all;
 }
 
 .timeline-container {
@@ -517,6 +526,7 @@ header {
 .category-btn:nth-child(odd) {
     justify-content: flex-end;
 }
+
 .category-btn:nth-child(odd) span {
     margin-top: auto;
     margin-bottom: 10px;
@@ -526,6 +536,7 @@ header {
 .category-btn:nth-child(even) {
     justify-content: flex-start;
 }
+
 .category-btn:nth-child(even) span {
     margin-top: 10px;
     margin-bottom: auto;
@@ -570,6 +581,7 @@ header {
     background: linear-gradient(rgba(213, 118, 64, 0.5), rgba(213, 118, 64, 0.5)),
         url('./img/012.jpg') center/cover;
 }
+
 /* 2. LIVING 호버 시 */
 .category-btn[data-category="living"]:hover .cat-dot {
     background: linear-gradient(rgba(213, 118, 64, 0.5), rgba(213, 118, 64, 0.5)),
@@ -600,6 +612,7 @@ header {
     align-items: flex-end;
     justify-content: space-between;
     padding: 0 20px 10px;
+    position: relative;
 }
 
 .all-title {
@@ -609,12 +622,38 @@ header {
 }
 
 .sort-select {
+    appearance: none;            /* 브라우저 기본 투박한 화살표 제거  */
+    -webkit-appearance: none;    /* Safari 지원 */
+    -moz-appearance: none;       /* Firefox 지원 */
+    
     background: var(--main-color);
     color: var(--dark-color);
     font-weight: 700;
-    padding: 8px 16px;
+    padding: 10px 40px 10px 20px;
     border-radius: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
 }
+
+.all-section-head::after {
+    content: '\f107';             /* Font Awesome의 angle-down 아이콘 코드 */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 36px; 
+    bottom: 20px;
+    color: var(--dark-color); 
+    pointer-events: none;  /* 화살표를 클릭해도 셀렉트 박스가 열리도록 클릭 이벤트 통과 */
+    z-index: 3;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
 
 /* 물결(Scallop) 디바이더  */
 .wavy-divider {
@@ -628,7 +667,7 @@ header {
     background-image: url('./img/wavy-divider.svg');
     background-repeat: repeat-x;
     background-size: auto 100%;
-    background-position: left top; 
+    background-position: left top;
     margin-bottom: 50px;
 }
 
@@ -716,7 +755,7 @@ header {
     color: var(--dark-color);
     font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -768,6 +807,26 @@ header {
     color: #fff;
 }
 
+/* 찜하기(하트) 쿵쾅 팝업 애니메이션 */
+@keyframes heartPop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.wish-inline-btn.active i {
+    animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--point-color);
+}
+
 /* 6. Footer */
 footer {
     width: 100%;
@@ -802,7 +861,7 @@ footer .logo {
     width: 80%;
 }
 
-footer .logo > img {
+footer .logo>img {
     width: 100%;
 }
 
@@ -821,11 +880,12 @@ footer .sns {
     align-items: center;
 }
 
-footer .right > img,
+footer .right>img,
 footer .sns img {
     width: 3rem;
     cursor: pointer;
 }
+
 /* --- 오늘의 추천 상품 (취향 테스트 스타일) --- */
 .band-green {
     width: 100vw;
@@ -842,12 +902,12 @@ footer .sns img {
 
     background-color: #fffdeb;
     background-image:
-    linear-gradient(180deg, #fffdeb 0%, transparent 70%, #fffdeb 100%),
-    url("./img/backgrandimg01.png");
+        linear-gradient(180deg, #fffdeb 0%, transparent 70%, #fffdeb 100%),
+        url("./img/backgrandimg01.png");
 
     /* 4. 배경 세부 제어 (순서대로: 그라데이션, 줄무늬, 이미지) */
     background-repeat: no-repeat, repeat;
-        background-size:
+    background-size:
         100% 100%,
         auto;
     background-position: center, center;
@@ -1125,6 +1185,7 @@ footer .sns img {
     cursor: pointer;
     transition: transform 0.2s;
 }
+
 .product-card:hover {
     transform: translateY(-5px);
 }
@@ -1164,4 +1225,238 @@ footer .sns img {
     padding: 4px 12px;
     border-radius: 50px;
     margin-bottom: 10px;
+}
+
+/* =========================================
+           ✨ 추가된 부분: 반응형 웹 (Media Queries) 
+           ========================================= */
+
+/* 테블릿 환경 (1024px 이하) */
+@media (max-width: 1024px) {
+    .gnb {
+        display: none;
+    }
+
+    .ham {
+        display: flex;
+    }
+
+    .headerInner {
+        grid-template-columns: auto 1fr auto;
+        padding: 0 20px;
+    }
+
+    .hero-title {
+        font-size: 6rem;
+    }
+
+    .hero-slider-container {
+        height: 400px;
+    }
+
+    .weekly-section {
+        width: 95vw;
+        margin: 60px auto 0;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clover-blob {
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 30px;
+        border-radius: 30px;
+        padding: 60px 20px;
+    }
+
+    .category-title {
+        font-size: 5rem;
+    }
+
+    /* 그리드 열 개수 줄이기 */
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px 15px;
+    }
+
+    /* 푸터 레이아웃 세로 정렬 */
+    footer {
+        flex-direction: column;
+        gap: 40px;
+        padding: 40px 20px;
+    }
+
+    footer .left {
+        width: 100%;
+    }
+
+    footer .right {
+        align-items: flex-start;
+    }
+
+    footer .sns {
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+/* 모바일 환경 (768px 이하) */
+@media (max-width: 768px) {
+    .hero-section {
+        padding-top: 90px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        margin-bottom: -20px;
+    }
+
+    .hero-slider-container {
+        height: 300px;
+        border-radius: 150px;
+        border-width: 3px;
+    }
+
+    .weekly-title-wrap h2 {
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .clover-blob h3 {
+        font-size: 2.2rem;
+    }
+
+    .category-section {
+        padding: 60px 0;
+    }
+
+    .category-title {
+        font-size: 4rem;
+        margin-bottom: 30px;
+    }
+
+    /* 카테고리 타임라인을 가로 스크롤 형태로 변경 */
+    .timeline-container {
+        overflow-x: auto;
+        justify-content: flex-start;
+        gap: 40px;
+        padding: 20px;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    .timeline-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .timeline-line {
+        top: 50%;
+        width: 200%;
+    }
+
+    .category-btn {
+        min-width: 80px;
+        flex-shrink: 0;
+        min-height: 120px;
+    }
+
+    .all-title {
+        font-size: 3.5rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 10px;
+    }
+
+    .recommend-title {
+        font-size: 2rem;
+    }
+
+    .recommend-container {
+        padding: 30px 20px;
+    }
+
+    /* 모달 레이아웃 세로 정렬 */
+    .modal-body {
+        flex-direction: column;
+    }
+
+    .modal-content {
+        padding: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-img-area {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .modal-info-area {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* 작은 모바일 환경 (480px 이하) */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: -15px;
+    }
+
+    .hero-slider-container {
+        height: 200px;
+        border-radius: 100px;
+    }
+
+    .all-title {
+        font-size: 2.5rem;
+    }
+
+    .product-name {
+        font-size: 0.9rem;
+    }
+
+    .price {
+        font-size: 1rem;
+    }
+
+    .add-cart-btn {
+        font-size: 0.85rem;
+        padding: 8px 0;
+    }
+
+    .recommend-title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .test-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .result-products-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .result-products-grid .product-card {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .hamSideMenu {
+        width: 85%;
+    }
 }

@@ -17,6 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -118,7 +119,8 @@
                 <div class="weekly-layout">
                     <article class="clover-blob">
                         <h3 class="bubbly-font">What's<br>Your<br>Forlog?</h3>
-                        <p>오늘의 기분에 어울리는 그린 제품을
+                        <p>오늘의 기분에 어울리는
+                            <br />그린 제품을
                             <br />추천해드립니다
                         </p>
                         <button class="clover-btn" type="button" data-category-jump=".category-section">확인하기 →</button>
@@ -132,6 +134,7 @@
 
             <section class="category-section">
                 <h2 class="category-title bubbly-font">CATEGORY</h2>
+                <p class="category-notice">원하는 카테고리를 클릭하여 상품을 모아보세요!</p>
                 <div class="timeline-container" id="category-list">
                 </div>
             </section>
@@ -248,7 +251,15 @@
             });
         });
 
-        // 💡 경로 단순화: 같은 폴더에 있으므로 파일 이름만 정확히 지정합니다!
+        $('.hamGnb a').click(function () {
+            // 서브메뉴(snb)가 없는 링크를 누르거나, 서브메뉴 내부 링크를 누르면 사이드바를 닫아줍니다.
+            if (!$(this).siblings('.hamSnb').length || $(this).parents('.hamSnb').length) {
+                $('.dim').removeClass('on');
+                $('.hamSideMenu').removeClass('on');
+            }
+        });
+
+        // 경로 단순화: 같은 폴더에 있으므로 파일 이름만 정확히 지정
         const PRODUCT_URL = "./products.json";
         let allProducts = [];
         let cart = [];
@@ -318,23 +329,21 @@
 
         // 3. 위클리 베스트 렌더링
         function renderWeekly() {
-            if (!weeklyWrapper) return;
-
-            const weeklyProducts = allProducts.filter(p => p.weeklyBest === true);
-
-            weeklyWrapper.innerHTML = weeklyProducts.map(p => `
+            const weeklyProducts = allProducts.filter(p => p.weeklyBest);
+            document.getElementById("weekly-wrapper").innerHTML = weeklyProducts.map(p => `
                 <div class="swiper-slide">${getProductCardHtml(p)}</div>
             `).join("");
-
-            // Swiper 기능 안전하게 실행
-            if (typeof Swiper !== 'undefined') {
-                new Swiper('.weekly-swiper', {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                    breakpoints: { 768: { slidesPerView: 3, spaceBetween: 20 } }
-                });
-            }
+            
+            new Swiper('.weekly-swiper', {
+                slidesPerView: 1.2, /* 초소형 모바일에서 1개씩(옆 카드가 살짝 보이게) */
+                spaceBetween: 15,
+                breakpoints: { 
+                    480: { slidesPerView: 2, spaceBetween: 20 },
+                    768: { slidesPerView: 3, spaceBetween: 20 } 
+                }
+            });
         }
+
 
         // 4. 일반 상품 리스트 렌더링
         function renderProducts() {
@@ -571,17 +580,43 @@
                 const icon = wishBtn.querySelector("i");
 
                 if (wishes.includes(productId)) {
+                    // 찜 해제
                     wishes = wishes.filter(id => id !== productId);
                     wishBtn.classList.remove("active");
-                    if (icon) icon.className = "fa-regular fa-heart";
+                    if (icon) {
+                        icon.className = "fa-regular fa-heart";
+                        icon.style.animation = "none";
+                    }
                 } else {
+                    // 찜 추가 및 쿵쾅 애니메이션 강제 재실행
                     wishes.push(productId);
                     wishBtn.classList.add("active");
-                    if (icon) icon.className = "fa-solid fa-heart";
+                    if (icon) {
+                        icon.className = "fa-solid fa-heart";
+                        icon.style.animation = "none";
+                        setTimeout(() => icon.style.animation = "", 10);
+                    }
+
+                    // ✨ 클릭한 하트 버튼 좌표를 계산해서 국소부위 미니 폭죽 쏘기 ✨
+                    const rect = wishBtn.getBoundingClientRect();
+                    const x = (rect.left + rect.width / 2) / window.innerWidth;
+                    const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+                    confetti({
+                        particleCount: 30, 
+                        spread: 360, 
+                        startVelocity: 10,
+                        ticks: 45, 
+                        origin: { x: x, y: y }, 
+                        colors: ['#FF1493', '#FF6600', '#ADFF2F', '#00FFFF'], 
+                        zIndex: 9999,
+                        scalar: 0.5,
+                        disableForReducedMotion: true
+                    });
                 }
 
                 localStorage.setItem("forlog_wishes", JSON.stringify(wishes));
-                return; // 여기서 종료
+                return; // 💡 여기서 종료되므로 상품 카드 클릭(모달) 이벤트가 발생하지 않음
             }
 
             // 3. 상품 카드 클릭 시 (장바구니/찜 버튼이 아닐 때만 작동)
@@ -640,13 +675,12 @@
             document.getElementById("cart-confirm-modal").style.display = "none";
         }
 
-        // 3. 위클리 슬라이드 클릭 감지 (이벤트 위임)
+        // 3. 위클리 슬라이드 클릭 시 하트/장바구니 버튼 충돌 완벽 차단!
         document.body.addEventListener("click", function (e) {
-            // 클릭된 요소 근처에 위클리 슬라이드 내부의 .product-card가 있는지 탐색
             const card = e.target.closest(".weekly-swiper .product-card");
 
-            if (card && !e.target.classList.contains("add-cart-btn") && !e.target.closest(".wish-btn")) {
-                // 카드 내부에 있는 장바구니 버튼에서 id를 훔쳐옵니다
+            // 타겟이 장바구니 버튼이거나 '새롭게 추가된 하트 클래스(wish-inline-btn)'일 때는 모달 띄우기를 무시
+            if (card && !e.target.closest(".add-cart-btn") && !e.target.closest(".wish-inline-btn")) {
                 const cartBtn = card.querySelector(".add-cart-btn");
                 if (cartBtn) {
                     const productId = parseInt(cartBtn.getAttribute("data-product-id"));

@@ -8,6 +8,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- 🌟 추가됨: 폭죽 파티클 효과를 위한 canvas-confetti 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
 
     <style>
@@ -35,7 +38,7 @@
         }
 
         /* -----------------------------------------
-           [헤더 영역 스타일 (팀장님 원본 설계 100% 동기화)]
+           [헤더 영역 스타일]
         -------------------------------------------- */
         header {
             width: 100%; height: 90px;
@@ -45,7 +48,7 @@
         
         .headerInner {
             width: 90%; height: 60%;
-            background-color: var(--bg-color); /* 팀장님 원본 */
+            background-color: var(--bg-color);
             border-radius: 50px;
             display: grid; grid-template-columns: 15% 80% 5%; 
             padding: 0 40px;
@@ -64,7 +67,6 @@
             z-index: -1; 
         }
         
-        /* 📌 팀장님 핵심 규칙: 모바일에서도 휙 작아지지 않게 min-width 고정 지탱 */
         .logo {
             display: flex; justify-content: center; align-items: center; min-width: 250px;
         }
@@ -382,15 +384,10 @@
             border-bottom: 1px solid var(--main-color);
         }
 
-        /* 💡 반응형 개선: 모바일 기기(768px 이하)에서 테이블 레이아웃을 카드 형태로 수직 전환 */
+        /* 반응형 개선 */
         @media (max-width: 768px) {
-            .cart-table thead {
-                display: none; 
-            }
-            .cart-table, .cart-table tbody, .cart-item-row, .cart-item-row td {
-                display: block;
-                width: 100%;
-            }
+            .cart-table thead { display: none; }
+            .cart-table, .cart-table tbody, .cart-item-row, .cart-item-row td { display: block; width: 100%; }
             .cart-item-row {
                 background-color: #ffffff;
                 border: 1px solid var(--line-color);
@@ -414,21 +411,12 @@
                 margin-bottom: 5px;
                 width: 100%;
             }
-            .cart-item-img {
-                width: 80px; height: 80px; 
-            }
+            .cart-item-img { width: 80px; height: 80px; }
             .cart-item-row td:nth-child(2)::before { content: "가격"; color: var(--sub-color); font-weight: 700; font-size: 0.95rem; }
             .cart-item-row td:nth-child(3)::before { content: "수량"; color: var(--sub-color); font-weight: 700; font-size: 0.95rem; }
             .cart-item-row td:nth-child(4)::before { content: "합계"; color: var(--point-color); font-weight: 700; font-size: 0.95rem; }
-            
-            .row-delete-btn {
-                margin-left: auto;
-                padding: 6px 12px;
-            }
-            .empty-row td {
-                display: block;
-                text-align: center;
-            }
+            .row-delete-btn { margin-left: auto; padding: 6px 12px; }
+            .empty-row td { display: block; text-align: center; }
         }
 
         /* 우측 가격 요약 사이드바 */
@@ -445,9 +433,7 @@
         }
 
         @media (max-width: 1024px) {
-            .cart-summary-sidebar {
-                width: 100%;
-            }
+            .cart-summary-sidebar { width: 100%; }
         }
 
         .summary-row {
@@ -467,6 +453,7 @@
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
+            outline: none;
         }
 
         .summary-divider {
@@ -501,6 +488,7 @@
 
         .sidebar-order-btn:hover {
             background-color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         /* 하단 버튼 시스템 */
@@ -546,7 +534,7 @@
             color: white;
         }
 
-        /* 공통 확인 모달 */
+        /* 일반 모달 */
         .confirm-modal {
             position: fixed;
             top: 0; left: 0;
@@ -583,40 +571,157 @@
             margin-top: 20px;
         }
 
-        .btn-confirm-no,
-        .btn-confirm-yes {
+        .btn-confirm-no, .btn-confirm-yes {
             padding: 12px 28px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 700;
         }
 
-        .btn-confirm-no {
-            border: 1px solid var(--line-color);
-            background: #fff;
+        .btn-confirm-no { border: 1px solid var(--line-color); background: #fff; }
+        .btn-confirm-yes { border: none; background: var(--point-color); color: #fff; }
+
+        /* -----------------------------------------
+           ✨ 대망의 화려한 주문 완료 영수증 모달 ✨
+        -------------------------------------------- */
+        .fancy-receipt-modal .confirm-modal-overlay {
+            background: rgba(36, 51, 28, 0.7); 
+            backdrop-filter: blur(8px);
         }
 
-        .btn-confirm-yes {
-            border: none;
-            background: var(--point-color);
-            color: #fff;
+        .fancy-receipt-content {
+            position: relative;
+            background: #ffffff;
+            width: 90%;
+            max-width: 480px; 
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 30px 60px rgba(170, 182, 100, 0.4), 0 0 80px rgba(219, 130, 74, 0.2); 
+            border: 4px solid var(--main-color);
+            animation: modalPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        /* 💡 영수증 모달 특화 스타일 추가 */
-        .receipt-style {
-            background-color: #fffdeb;
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.7) translateY(50px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .celebrate-icon {
+            font-size: 4.5rem;
+            color: var(--point-color);
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIcon 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: translateY(0) rotate(-5deg) scale(1); }
+            50% { transform: translateY(-15px) rotate(5deg) scale(1.1); }
+        }
+
+        .fancy-receipt-title {
+            font-family: var(--font-cloud);
+            font-size: 4rem;
+            color: var(--main-color);
+            margin-bottom: 5px;
+            line-height: 1;
+            text-shadow: 3px 3px 0px rgba(170, 182, 100, 0.2);
+        }
+
+        .fancy-receipt-subtitle {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+        }
+
+        /* 진짜 영수증처럼 보이게 하는 내부 박스 */
+        .receipt-paper {
+            background: var(--bg-color);
             border-radius: 16px;
-            border: 1px solid #e0e4cc;
-            padding: 45px 35px;
+            padding: 25px;
+            margin-bottom: 35px;
+            position: relative;
+            border: 1px dashed var(--sub-color);
+            text-align: left;
         }
-        .receipt-divider {
+
+        /* 영수증 펀칭 구멍 효과 */
+        .receipt-paper::before, .receipt-paper::after {
+            content: '';
+            position: absolute;
+            width: 30px; height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .receipt-paper::before { left: -16px; border-right: 1px dashed var(--sub-color); }
+        .receipt-paper::after { right: -16px; border-left: 1px dashed var(--sub-color); }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .receipt-row.total {
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 2px dashed var(--main-color);
-            margin: 20px 0;
-            opacity: 0.5;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--point-color);
+        }
+
+        /* ✨ 고급스러운 빛(Shimmer) 애니메이션 버튼 ✨ */
+        .btn-finish-order {
+            position: relative;
+            background: linear-gradient(135deg, var(--point-color), #c96f38);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(219, 130, 74, 0.3);
+            transition: all 0.3s;
+            overflow: hidden; /* 영역 밖으로 나가는 빛 자르기 */
+        }
+
+        /* 빛이 차르르 지나가는 가상 요소 */
+        .btn-finish-order::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shimmerBtn 2.5s infinite;
+        }
+
+        .btn-finish-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(219, 130, 74, 0.5);
+        }
+
+        @keyframes shimmerBtn {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
         }
 
         /* -----------------------------------------
-           [푸터 영역 스타일 (팀원님 오리지널 코드 완전 보존)]
+           [푸터 영역 스타일]
         -------------------------------------------- */
         footer {
             width: 100%; height: 31rem;
@@ -640,7 +745,6 @@
             width: 90%;
         }
         
-        /* 헤더 로고와 충돌 스코핑 제어 보호막 유지 */
         footer .logo {
             width: 80%;
         }
@@ -654,7 +758,6 @@
             align-items: center; justify-content: center;
         }
 
-        /* 📌 오리지널 세로 배열 레이아웃 유지 */
         footer .sns {
             display: flex;
             flex-direction: column;
@@ -766,7 +869,7 @@
                     <div class="summary-row">
                         <select class="delivery-select-box" id="sidebar-delivery-select">
                             <option value="regular">일반 배송</option>
-                            <option value="express">급행 배송</option>
+                            <option value="express">샛별 배송</option>
                         </select>
                         <span id="sidebar-shipping-fee" class="value-text">+ 3,000원</span>
                     </div>
@@ -779,7 +882,7 @@
                         <div class="total-label">최종 결제 금액</div>
                         <div id="sidebar-final-price" class="total-value">0원</div>
                     </div>
-                    <!-- 💡 수정: 알림창 대신 executeOrder() 함수 호출로 변경 -->
+                    
                     <button type="button" class="sidebar-order-btn" onclick="executeOrder()">주문하기</button>
                 </aside>
             </div>
@@ -791,6 +894,7 @@
         </div>
     </main>
 
+    <!-- 기존 장바구니 비우기 모달 -->
     <div id="clear-confirm-modal" class="confirm-modal" style="display: none;">
         <div class="confirm-modal-overlay" onclick="closeClearModal()"></div>
         <div class="confirm-modal-content">
@@ -803,19 +907,34 @@
         </div>
     </div>
 
-    <!-- 💡 추가: 영수증 형태의 주문 완료 커스텀 모달 -->
-    <div id="order-receipt-modal" class="confirm-modal" style="display: none;">
+    <!-- 🌟 화려하고 거대한 주문 완료 영수증 🌟 -->
+    <div id="order-receipt-modal" class="confirm-modal fancy-receipt-modal" style="display: none;">
         <div class="confirm-modal-overlay" onclick="closeOrderModal()"></div>
-        <div class="confirm-modal-content receipt-style">
-            <h3 style="font-family: var(--font-cloud); font-size: 2.2rem; color: var(--main-color); margin-bottom: 5px;">RECEIPT</h3>
-            <div class="receipt-divider"></div>
-            <p style="font-weight: 900; font-size: 1.25rem; color: var(--dark-color); margin-bottom: 10px;">주문이 완료되었습니다! 🐸</p>
-            <p style="color: var(--sub-color); font-size: 1rem; margin-bottom: 15px; font-weight: 700;">총 결제 금액: <span id="receipt-total" style="color: var(--point-color); font-size: 1.2rem;">0원</span></p>
-            <p style="font-size: 0.9rem; color: #666; word-break:keep-all; line-height: 1.5;">초로기와 함께하는 FOR-LOG<br>굿즈가 곧 배송될 예정입니다.</p>
-            <div class="receipt-divider"></div>
-            <div class="confirm-modal-buttons">
-                <button type="button" class="btn-confirm-yes" onclick="finishOrder()" style="width: 100%; border-radius: 12px; font-size: 1.05rem; padding: 14px;">확인 및 쇼핑 계속하기</button>
+        <div class="confirm-modal-content fancy-receipt-content">
+            <!-- 둥둥 떠다니는 아이콘 -->
+            <div class="celebrate-icon"><i class="fa-solid fa-gift"></i></div>
+            
+            <h3 class="fancy-receipt-title">THANK YOU!</h3>
+            <p class="fancy-receipt-subtitle">성공적으로 주문이 완료되었습니다 💚</p>
+
+            <!-- 펀치 구멍 뚫린 리얼한 영수증 내역 영역 -->
+            <div class="receipt-paper">
+                <div class="receipt-row">
+                    <span style="color: var(--sub-color);">주문 일자</span>
+                    <span id="receipt-date">2026.06.29</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--sub-color);">주문 번호</span>
+                    <span id="receipt-order-num">FL-12345678</span>
+                </div>
+                <div class="receipt-row total">
+                    <span>최종 결제 금액</span>
+                    <span id="receipt-total">0원</span>
+                </div>
             </div>
+
+            <!-- 빛이 스르륵 흐르는 영수증 최종 버튼 -->
+            <button type="button" class="btn-finish-order" onclick="finishOrder()">✨ 달콤한 굿즈 만나러 가기 ✨</button>
         </div>
     </div>
 
@@ -874,6 +993,12 @@
                 $('.hamSnb').not(myMenu).stop().slideUp(300);
                 $(this).siblings('.hamSnb').stop().slideToggle(300);
             });
+
+            // 배송 옵션을 변경할 때마다 즉시 배송비를 재계산하도록 이벤트 연결
+            $('#sidebar-delivery-select').change(function() {
+                const totalProductPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                updateSummary(totalProductPrice);
+            });
         });
 
         let sampleCart = [
@@ -905,7 +1030,7 @@
                         <td>
                             <div class="cart-item-info-cell">
                                 <div class="cart-item-img">
-                                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/70x70?text=FORLOG'">
+                                    <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/70x70?text=FORLOG'">
                                 </div>
                                 <span class="cart-item-name">${item.name}</span>
                                 <button class="row-delete-btn" onclick="deleteItem(${item.id})">삭제</button>
@@ -958,30 +1083,97 @@
             closeClearModal();
         }
 
-        // 합계 및 배송비 정산 시스템
         function updateSummary(totalProductPrice) {
-            const isFree = totalProductPrice >= 30000 || totalProductPrice === 0;
-            const shippingFee = isFree ? 0 : 3000;
+            const deliveryType = document.getElementById('sidebar-delivery-select').value;
+            let shippingFee = 0;
+            let shippingText = "";
+
+            if (totalProductPrice > 0) {
+                if (deliveryType === 'express') {
+                    // 샛별 배송은 무조건 5,000원 부과
+                    shippingFee = 5000;
+                    shippingText = `+ ${shippingFee.toLocaleString()}원`;
+                } else {
+                    // 일반 배송은 30,000원 이상 무료
+                    const isFree = totalProductPrice >= 30000;
+                    shippingFee = isFree ? 0 : 3000;
+                    shippingText = isFree ? "무료배송" : `+ ${shippingFee.toLocaleString()}원`;
+                }
+            } else {
+                shippingFee = 0;
+                shippingText = "0원";
+            }
+
             const discount = totalProductPrice > 0 ? 1000 : 0;
+            
             sidebarProductPriceEl.textContent = `${totalProductPrice.toLocaleString()}원`;
-            sidebarShippingFeeEl.textContent = isFree ? "무료배송" : `+ ${shippingFee.toLocaleString()}원`;
+            sidebarShippingFeeEl.textContent = shippingText;
             sidebarDiscountPriceEl.textContent = `-${discount.toLocaleString()}원`;
             sidebarFinalPriceEl.textContent = `${Math.max(0, totalProductPrice + shippingFee - discount).toLocaleString()}원`;
         }
 
-        // 💡 추가: 주문 완료 처리 및 영수증 모달 관련 자바스크립트
+        // ✨ 폭죽을 양옆에서 터뜨려주는 함수 ✨
+        function triggerFireworks() {
+            var duration = 3 * 1000; // 3초 동안 폭죽
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10001 }; // zIndex를 높여서 모달 위로!
+
+            // FOR-LOG 브랜드 컬러 (올리브그린, 오렌지, 딥그린)
+            var colors = ['#AAB664', '#DB824A', '#6F8B41', '#ffffff'];
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // 왼쪽에서 팡!
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+                // 오른쪽에서 팡!
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+            }, 250);
+        }
+
+        // 🌟 주문 완료 로직
         function executeOrder() {
             if (cart.length === 0) {
                 alert("장바구니가 비어 있습니다. 상품을 먼저 담아주세요! 🌿");
                 return;
             }
             
-            // 사이드바에서 최종 계산된 결제 금액을 가져와 영수증에 꽂아줌
+            // 1. 그럴싸한 가짜 주문번호 생성
+            const orderNum = "FL-" + Math.floor(Math.random() * 100000000);
+            document.getElementById('receipt-order-num').textContent = orderNum;
+            
+            // 2. 오늘 날짜 연동
+            const today = new Date();
+            const dateStr = today.getFullYear() + "." + String(today.getMonth() + 1).padStart(2, '0') + "." + String(today.getDate()).padStart(2, '0');
+            document.getElementById('receipt-date').textContent = dateStr;
+
+            // 3. 사이드바에서 최종 결제 금액 스틸해오기
             const finalPrice = sidebarFinalPriceEl.textContent;
             document.getElementById('receipt-total').textContent = finalPrice;
             
-            // 모달 열기
+            // 4. 모달 열기!
             document.getElementById("order-receipt-modal").style.display = "flex"; 
+
+            // ✨ 5. 폭죽 터뜨리기! ✨
+            triggerFireworks();
         }
 
         function closeOrderModal() {
@@ -989,11 +1181,9 @@
         }
 
         function finishOrder() {
-            // 주문이 끝났으니 장바구니를 싹 비움
+            // 주문 완료 후 장바구니 싹 비우고 쇼핑 목록으로 이동
             cart = [];
             localStorage.setItem("forlog_cart", JSON.stringify(cart));
-            
-            // 원래 쇼핑하던 상품 목록 페이지로 다시 이동
             window.location.href = 'products_index.html';
         }
 
