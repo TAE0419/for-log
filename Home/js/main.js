@@ -1,16 +1,34 @@
 const cloverWrap = document.querySelector(".cloverWarp");
 
 if (cloverWrap) {
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 8; i++) {
         const num = String(i).padStart(2, "0");
+        const card = document.createElement("div");
+        const cardInner = document.createElement("div");
+        const front = document.createElement("div");
+        const back = document.createElement("div");
         const object = document.createElement("object");
+        const backImg = document.createElement("img");
 
+        card.className = "cloverCard";
+        cardInner.className = "cloverCardInner";
+        front.className = "cloverCardFace cloverCardFront";
+        back.className = "cloverCardFace cloverCardBack";
         object.type = "image/svg+xml";
         object.data = `./img/forlog-forlog_products/clover-products${num}.svg`;
+        backImg.src = `./img/SVG files/clover_back/${i}-01.svg`;
+        backImg.alt = `clover back ${i}`;
 
-        cloverWrap.appendChild(object);
+        front.appendChild(object);
+        back.appendChild(backImg);
+        cardInner.appendChild(front);
+        cardInner.appendChild(back);
+        card.appendChild(cardInner);
+        cloverWrap.appendChild(card);
     }
 }
+
+
  $(function(){
             $('.gnb > li').mouseenter(function(){
                 $('.snb').stop().slideUp(300)
@@ -34,6 +52,10 @@ if (cloverWrap) {
             })
             //사이드(슬라이드 메뉴) :: 아코디언 구현
             $('.hamGnb>li>a').click(function(e){
+                if ($(this).attr('href') !== '#') {
+                    return true
+                }
+
                 e.preventDefault() //a태그가 원래 가지고 있던 기능을 막기
 
                 let myMenu = $(this).siblings('.hamSnb') //클릭한 li a태그의 형제(hamSnb)
@@ -81,6 +103,87 @@ if (cloverWrap) {
 if (txt1) {
     observer2.observe(txt1);
 }
+// 쇼트컷의 이미지가 올라오는 부분
+ const slowUp=document.querySelector(".boxUp")
+        const observer10=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (slowUp) {
+    observer10.observe(slowUp);
+}
+
+ const slowUp2=document.querySelector(".boxDown")
+        const observer11=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (slowUp2) {
+    observer11.observe(slowUp2);
+}
+
+// 끝-----------------------------
+
+// About For-log의 시작(옵저버)----------------------
+ const pikabu=document.querySelector(".character span:nth-child(1)")
+        const observer12=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (pikabu) {
+    observer12.observe(pikabu);
+}
+
+ const pikabu2=document.querySelector(".character span:nth-child(2)")
+        const observer13=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (pikabu2) {
+    observer13.observe(pikabu2);
+}
+
+//끝남-----------------------------
 
 const fadeSlider = document.querySelector(".slider");
 const fadeDots = document.querySelectorAll(".dots > div");

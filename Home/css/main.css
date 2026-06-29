@@ -11,12 +11,13 @@
         }
         .headerInner{
             width: 90%;  height:60%;
-            background-color: rgba(255, 254, 243, 0.5); border-radius: 50px;
+            background-color: color-mix(in srgb, var(--bg-color) 70%, transparent);
+            
+            border-radius: 50px;
             display:grid; grid-template-columns: 15% 80% 5%; 
             padding: 0 40px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             backdrop-filter: blur(4px);
-             
         }
         .logo{
             display: flex; justify-content: center; align-items: center;
@@ -76,13 +77,13 @@
             transition: all 0.2s;
         }
         .ham:hover span:nth-child(1){
-            transform: translateY(8px) rotate(45deg);
+            transform: rotate(-26deg) translateY(3px);
         }
         .ham:hover span:nth-child(2){
             opacity: 0;
         }
         .ham:hover span:nth-child(3){
-            transform: translateY(-8px) rotate(-45deg);
+            transform: rotate(26deg) translateY(-3px);
         }
         .dim{
             width: 100%; height: 100vh;
@@ -192,6 +193,34 @@ video {
     width: min(33vw, 350px);
     transform: scale(1.3);
     z-index: 50;
+    animation: moveMain 3s infinite;
+    animation-direction: alternate;
+}
+@keyframes moveMain{
+    0%{
+        transform: scale(1.55) rotate(0);
+        bottom: 16rem;
+    }
+    20%{
+        transform: scale(1.55) rotate(-5deg);
+        bottom: 22rem;
+        right: 12rem;
+    }
+    50%{
+        transform: scale(1.44) rotate(0);
+        right: 12rem;
+        bottom: 16rem;
+    }
+    70%{
+        transform: scale(1.55) rotate(0);
+        bottom: 22rem;
+        right: 15rem;
+    }
+    100%{
+        transform: scale(1.44) rotate(0);
+        right: 15rem;
+        bottom: 16rem;
+    }
 }
 
 .mainWrap {
@@ -473,6 +502,13 @@ video {
     /* gap: 30rem; */
     align-items: center;
     justify-items: start;
+    transform: translateY(10rem);
+    opacity: 0.2;
+    transition: all 0.4s;
+}
+.boxUp.on{
+    transform: translateY(0);
+    opacity: 1;
 }
 .boxUp>img{
     width: 100%;
@@ -542,6 +578,13 @@ video {
     align-items: center;
     justify-items: end;
     margin-bottom: 15rem;
+    transform: translateY(10rem);
+    opacity: 0.2;
+    transition: all 0.5s;
+}
+.boxDown.on{
+    transform: translateY(0);
+    opacity: 1;
 }
 .boxDown>div{
     margin-top: 10rem;
@@ -610,6 +653,19 @@ video {
     height: 40rem;
     transform: scale(1.55);
     object-fit: contain;
+    transition: all 0.5s;
+    animation: moveFrog 3s ease-in-out infinite;
+}
+@keyframes moveFrog{
+    0%{
+        transform: scale(1.55);
+    }
+    50%{
+        transform: scale(1.7) rotate(-25deg);
+    }
+    100%{
+        transform: scale(1.55);
+    }
 }
 
 .textWarp{
@@ -618,21 +674,39 @@ video {
     gap: 6rem;
 }
 .character span:nth-child(1){
+    display: block;
     font-family: "cloud";
     font-size: clamp(3rem, 7vw, 7rem);
     color: #DB824A;
     text-align: end;
     text-shadow: 0 3px 10px rgba(156, 106, 77, 0.35);
+    transform: translateX(12rem);
+    transition: all 0.4s;
+    opacity: 0.3;
+}
+.character span:nth-child(1).on{
+    transform: translateX(0);
+    opacity: 1;
+}
+.character span:nth-child(1):hover{
+    transform: translateY(-2rem);
 }
 .character span:nth-child(2){
+    display: block;
     font-family: "cloud";
     font-size: clamp(1.4rem, 3vw, 2.3rem);
     font-weight: 500;
     color: #24331C;
     text-align: end;
+    transform: translateX(6rem);
+    transition: all 0.4s;
+    opacity: 0.3;
+}
+.character span:nth-child(2).on{
+    transform: translateX(0);
+    opacity: 1;
 }
 .sec4{
-    
     width: 100%;
     min-height: 100vh;
     background-color:#24331C;
@@ -640,6 +714,7 @@ video {
 .sec4 > img{
     width: 100%;
 }
+
 .galleryStart{
     margin: auto 10rem;
     margin-top: 15rem;
@@ -657,6 +732,11 @@ video {
     color: #fffdeb;
     text-align: end;
     text-shadow: 0 3px 10px rgba(17, 27, 13, 0.8);
+    transform: translateY(0)
+}
+.galleryStart span:hover{
+    /* transform: translateY(-6rem); */
+    transform: rotate(-1deg);
 }
 .secondWrap{
     width: 100%;
@@ -670,17 +750,81 @@ video {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5rem;
+    
 }
 
-.cloverWarp object {
+.cloverCard {
     width: 100%;
-    /* height: 20rem; */
+    aspect-ratio: 1 / 1;
+    perspective: 1000px;
+    cursor: pointer;
 }
-.secondWrap img {
+
+.cloverCardInner {
+    position: relative;
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease;
+}
+
+.cloverCard:hover .cloverCardInner {
+    transform: rotateY(180deg);
+}
+
+.cloverCardFace {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+}
+
+.cloverCard object,
+.cloverCard img {
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    /* height: 20rem; */
+}
+
+.cloverCardBack {
+    transform: rotateY(180deg);
+}
+.anotherIMG{
+    background-image: url("../img/character image/PNG/choro-gi5.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100vh;
+    /* height: 100%; */
+    /* object-fit: contain; */
+    cursor: pointer;
+    transition: all 0.1s;
+    animation: movingUp 2.5s infinite;
+}
+@keyframes movingUp{
+    0%{
+        transform: rotate(0);
+    }
+    50%{
+        transform: rotate(-5deg);
+    }
+    100%{
+        transform: rotate(5deg);
+    }
+}
+
+.anotherIMG:hover {
+    background-image: url("../img/another-01.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    transform: scale(1.5);
+    object-fit: contain;
+    cursor: pointer;
 }
 @media (max-width: 1200px) {
     .galleryStart {
@@ -936,7 +1080,7 @@ footer{
 .productSection {
     width: 100%;
     padding: 0;
-    overflow: hidden;
+    overflo2w: hidden;
     position: absolute;
     top: 50%;
     transform: translateY(calc(-50% - 2.6rem));
@@ -953,6 +1097,7 @@ footer{
 }
 
 .categoryTitle {
+    
     width: auto;
     margin: 0;
     position: absolute;
@@ -1051,6 +1196,7 @@ footer{
 }
 
 .productInfo h4 {
+    font-family: "sans-serif";
     font-size: clamp(0.9rem, 1.1vw, 1.1rem);
     font-weight: 800;
     color: #111;
@@ -1061,8 +1207,9 @@ footer{
 }
 
 .productInfo p {
+    font-family: "sans-serif";
     font-size: clamp(0.76rem, 0.95vw, 0.92rem);
-    line-height: 1.4;
+    line-height: 1.2;
     color: #333;
 }
 
