@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>FOR-LOG | SUPPORT</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="support.css">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./support.css">
 </head>
 <body>
     <header>
@@ -58,7 +59,7 @@
                     <li><a href="#news">NEWS</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#location">LOCATION</a></li>
-                    <li><a href="#">LOG IN</a></li>
+                    <li><a href="#../products/login.html">LOG IN</a></li>
                 </ul>
             </li>
         </ul>
@@ -103,40 +104,49 @@
         <h2><span class="dot">&#8226;</span> FAQ <span>&#51088;&#51452; &#47931;&#45716; &#51656;&#47928;</span></h2>
         <div class="faq-accordion">
             <div class="faq-item">
-                <div class="faq-question"><span class="q-icon">Q.</span><p>I forgot my password.</p><span class="arrow-icon">&#9662;</span></div>
-                <div class="faq-answer"><span class="a-icon">A.</span><p>Use the password reset link on the login page. A reset mail will be sent to your registered email address.</p></div>
+                <div class="faq-question"><span class="q-icon">Q.</span><p>비밀번호를 분실했습니다.</p><span class="arrow-icon">&#9662;</span></div>
+                <div class="faq-answer"><span class="a-icon">A.</span><p>로그인 페이지의 비밀번호 재설정 링크를 이용해 주세요. 가입하신 이메일 주소로 재설정 메일이 발송됩니다.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><span class="q-icon">Q.</span><p>What happens when I delete my account?</p><span class="arrow-icon">&#9662;</span></div>
-                <div class="faq-answer"><span class="a-icon">A.</span><p>Your account information and saved records are removed permanently, so please back up anything important first.</p></div>
+                <div class="faq-question"><span class="q-icon">Q.</span><p>계정을 삭제하면 어떻게 되나요?</p><span class="arrow-icon">&#9662;</span></div>
+                <div class="faq-answer"><span class="a-icon">A.</span><p>계정 정보와 저장된 기록이 영구히 삭제되므로, 중요한 데이터는 미리 백업해 두시기 바랍니다.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><span class="q-icon">Q.</span><p>When is customer support available?</p><span class="arrow-icon">&#9662;</span></div>
-                <div class="faq-answer"><span class="a-icon">A.</span><p>FOR-LOG support is available on weekdays from 10:00 to 17:00, excluding lunch time, weekends, and holidays.</p></div>
+                <div class="faq-question"><span class="q-icon">Q.</span><p>고객 센터 운영 시간은 어떻게 되나요?</p><span class="arrow-icon">&#9662;</span></div>
+                <div class="faq-answer"><span class="a-icon">A.</span><p>FOR-LOG 고객 센터는 평일 10:00부터 17:00까지 운영되며, 점심시간, 주말 및 공휴일은 제외됩니다.</p></div>
             </div>
         </div>
     </section>
 
-    <section class="section location-section" id="location">
-        <h2><span class="dot">&#8226;</span> LOCATION <span>&#50724;&#49884;&#45716; &#44600;</span></h2>
+<section class="section location-section" id="location">
+        <h2><span class="dot">&#8226;</span> LOCATION <span>오시는 길</span></h2>
         <div class="wave-deco bottom-wave"></div>
-        <div class="map-api-box"></div>
+        <div style="width: min(90%, 1500px); margin: 0 auto; position: relative;">
+            <div class="map-api-box" id="map" style="margin: 40px 0;"></div>
+            <!-- 검색창기능) -->
+            <div style="position: absolute; top: 55px; left: 15px; z-index: 10; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); display: flex; gap: 6px;">
+                <input type="text" id="keyword" placeholder="맛집,카페,주차장 등 입력" style="border: 1px solid #ccc; padding: 6px 10px; border-radius: 4px; font-size: 14px; width: 220px;">
+                <button onclick="searchPlaces()" style="background: var(--main-color, #2C4224); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;">검색</button>
+            </div>
+        </div>
+
         <div class="location-info-container">
             <div class="info-inner">
                 <div class="info-block">
-                    <div class="info-tag-title">&#50724;&#49884;&#45716; &#48169;&#48277;</div>
-                    <div class="info-row"><span class="icon"></span><p>Bus stop FOR-LOG, 3 minutes on foot</p></div>
-                    <div class="info-row"><span class="icon"></span><p>Exit 4, go straight 200m</p></div>
+                    <div class="info-tag-title">오시는 방법</div>
+                    <div class="info-row"><span class="icon"></span><p>그린 포레스트 버스정류장 도보 3분</p></div>
+                    <div class="info-row"><span class="icon"></span><p>1번 출구에서 200m 직진</p></div>
                 </div>
                 <div class="info-block">
-                    <div class="info-tag-title">&#51452;&#49548; &#48143; &#50672;&#46973;&#52376;</div>
-                    <div class="info-row"><span class="icon"></span><p>100 Chorok-ro, FOR-LOG Bldg. 3F</p></div>
-                    <div class="info-row"><span class="icon"></span><p>1544-0000<br>support@for-log.com</p></div>
+                    <div class="info-tag-title">주소 및 연락처</div>
+                    <div class="info-row"><span class="icon"></span><p>경기도 안산시 상록구 광덕산2로 376 FOR-LOG 3F</p></div>
+                    <div class="info-row"><span class="icon"></span><p>1544-0000<br>info@company.com</p></div>
                 </div>
             </div>
         </div>
     </section>
 
+    
     <footer>
         <div class="left">
             <div class="info">
@@ -158,6 +168,7 @@
         </div>
     </footer>
 
-    <script src="support.js"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f31372f50de7327023abf3be4282e61c&libraries=services"></script>
+    <script src="./support.js"></script>
 </body>
 </html>
