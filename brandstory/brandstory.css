@@ -5,28 +5,99 @@ section{
     background-color: var(--bg-color);
 }
 .first{
-    font: var(--title-font);
+    /* font: var(--title-font); */
     color: var(--sub-color);
+    display: flex; justify-content: center;align-items: center;
+    gap: 5rem;
 }
-.light{
+.first>.titleBox>h1{
+    font: var(--title-font);
+}
+.first>.titleBox>.light{
+    height: 5rem;
     display:flex; justify-content: space-between;
 }
+.first>.glassesChologi{
+    width: 25%; overflow: hidden;   
+    display: flex; justify-content: center; align-items: center;
+}
+.first>.glassesChologi>img{
+     width: 100%; object-fit: cover;
+}
+@media (max-width: 1024px) {
+    .first>.glassesChologi{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .first>.glassesChologi{
+        display: none;
+    }
+}
 
-/* ==========================의의=================================== */
+/* ============================================의의=================================================== */
 .seconde{
-    background-color: var(--dark-color);
+    background-color: var(--dark-color); flex-direction: column;
+    position: relative; z-index: -100;
+}
+.seconde>.textBox{
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    gap: 3.5rem; margin-top: -8rem;
 }
 .seconde>.textBox>h1{
-    font: var(--big2-font); 
+    font: var(--big3-font); 
     color: var(--bg-color);
-    text-align: center;
+    text-align: center; margin-bottom: -2rem;
 }
 .seconde>.textBox>p{
     font: var(--small2-font); 
     color: var(--bg-color);
-    text-align: center;
+    text-align: center; 
 }
-/* ==========================컨셉=================================== */
+/* ==================식물픽토그램================= */
+.seconde>.plantPictogram{
+    width: 100%; height: 7rem;
+    overflow: hidden;
+    position: absolute; top: 13%; z-index: -1;
+}
+.seconde>.plantPictogram>.slider{
+    width: max-content; height: 100%; display: flex; gap: 70px;
+    animation: slideRight 30s linear infinite;
+}
+.seconde>.plantPictogram>.slider>img{
+    height: 100%;
+}
+@keyframes slideRight {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+/* ===================잡화픽토그램===================== */
+.seconde>.productPictogram{
+    width: 100%; height: 16rem;
+    overflow: hidden;
+    position: absolute; bottom: 8%; 
+}
+.seconde>.productPictogram>.slider{
+    width: max-content; height: 100%; display: flex; gap: 100px;
+    animation: slideLeft 70s linear infinite;
+}
+.seconde>.productPictogram>.slider>img{
+    height: 100%;
+}
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ======================================================컨셉============================================================== */
 .third{
     width: 100%; height: 300vh; position: relative;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -46,15 +117,19 @@ section{
     object-fit: cover
 }
 .third>.titleBox{
-    font: var(--title-font); color: var(--main-color);
-    display: flex; align-items: center; gap: 70px;
+    display: flex; align-items: center; gap: 4rem;
+    margin: 5rem;
+}
+.third>.titleBox>h1{
+    font: var(--subtitle-font); color: var(--main-color);
 }
 .third>.titleBox>.circle{
-    width: 100px;height: 100px;background-color: var(--point-color);
+    width: 4rem;height: 4rem;background-color: var(--point-color);
     border-radius: 50%;
 }
 .clovers{
     display: flex; width: 100%; justify-content: center;
+    margin-top: 3rem; overflow: hidden;
 }
 .oneClover{
     width: 50%; flex-shrink: 0;  position: relative;
@@ -63,23 +138,141 @@ section{
    width: 100%;
 }
 .whiteClover{
-    width: 100%;
+    width: 100%; height: 100%;
     position: absolute; left: 0;top: 0;
 }
 .whiteClover>img{
     width: 100%; position: absolute;
 }
 .whiteClover>.textBox{
-    position: absolute; left: 50%;top: 50%;
-
+    width: 70%;
+    position: absolute; left:50%; top: 50%; transform: translate(-50%,-50%);
+    text-align: center; gap: 2rem;
     display: flex; justify-content: center; align-items: center; flex-direction: column;
 }
-
-
+.whiteClover>.textBox>h2{
+    font: var(--big3-font);
+}
+.whiteClover>.textBox>p{
+    font: var(--small2-font);
+}
+.whiteClover>.textBox.first{
+    color: var(--point-color);
+}
+.whiteClover>.textBox.second{
+    color: var(--main-color);
+}
+.whiteClover>.textBox.third{
+    color: var(--dark-color);
+}
+@media (max-width: 768px) {
+    .third{
+        height: 200rem;
+    }
+    .oneClover.side{
+        display: none;
+    }
+    .oneClover{
+        width: 100%;
+    }
+    .third>.titleBox{
+        margin-top: 40rem;
+    }
+}
+/* ==================================================마스코트=================================================================== */
+.fourth{
+    width: 100%; height: 150vh; 
+    position: relative; z-index: -10;
+}
 .fourth>.stripe{
     width: 100%; height: 100%; overflow: hidden;
-    position: absolute; left: 0;
+    position: absolute; left: 0; z-index: -1;
 }
 .fourth>.stripe>img{
     width: 100%; object-fit: cover;
+}
+.fourth>.gradiantone{
+    width: 100%; height: 350px;
+    position: absolute; top: 0;left: 0; z-index: 1;
+    background: #FFFEF3;
+    background: linear-gradient(0deg, rgba(255, 254, 243, 0) 0%, rgba(255, 254, 243, 1) 95%);
+    object-fit: cover;
+}
+.fourth>.gradiantwo{
+    width: 100%; height: 350px;
+    position: absolute; bottom: 0; left: 0; z-index: 1;
+    background: #FFFEF3;
+    background: linear-gradient(180deg, rgba(255, 254, 243, 0) 0%, rgba(255, 254, 243, 1) 95%);
+    object-fit: cover;
+}
+.fourth>.circle{
+    width: 80%; height: 55%;
+    position: relative;
+    background-color: var(--bg-color); border-radius: 100%;
+}
+/* ========초로기========== */
+.fourth>.circle>.titleBox{
+    display: flex; justify-content: start; align-items:center; gap: 1rem;
+    color: var(--dark-color); 
+}
+.fourth>.circle>.titleBox>h1{
+    font: var(--title-font);
+}
+.fourth>.circle>.titleBox>p{
+    font: var(--big3-font); margin-bottom: -60px;
+}
+/* ========내용========== */
+.fourth>.circle>.detailBox{
+    display: flex; justify-content: start; align-items: start; gap: 3rem;
+    margin-left: 5rem;
+}
+.fourth>.circle>.detailBox>.leftBox{
+    display: flex;   flex-direction: column; gap: 3rem; 
+}
+.fourth>.circle>.detailBox>.leftBox>.circle{
+    width: 3rem; height:3rem; background-color: var(--main-color);
+    border-radius: 50%;
+}
+.fourth>.circle>.detailBox>.leftBox>.circle.circleOne{
+    background-color: var(--dark-color);
+}
+.fourth>.circle>.detailBox>.leftBox>.circle.circleThree{
+    background-color: var(--point-color);
+}
+.fourth>.circle>.detailBox>.rightBox{
+    width: 45%;
+    display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 2rem;
+}
+.fourth>.circle>.detailBox>.rightBox>p{
+    font: var(--small2-font);
+}
+.fourth>.circle>.detailBox>.rightBox>img{
+    width: 80%;
+}
+.fourth>.circle>.imgBox{
+    width: 50%; height: 38rem; overflow: hidden;
+    position: absolute; bottom: 0;right: 0;
+    /* background-color: aliceblue; */
+
+}
+.fourth>.circle>.imgBox>img{
+    width: 100%;height: 100%; object-fit: cover;
+}
+@media (max-width: 768px) {
+    .fourth>.circle{
+        display: flex; flex-direction: column; align-items: center;
+    }
+    .fourth>.circle>.detailBox{
+        display: flex; justify-content: center; align-items: center; gap: 3rem;
+        margin-left: 1rem;  margin-top: 1rem;
+    }
+    .fourth>.circle>.detailBox>.rightBox{
+        width: 60%;
+        display: flex; justify-content: center; align-items: center; flex-direction: column;
+    }
+    .fourth>.circle>.imgBox{
+        width: 80%; height: 43rem; overflow: hidden;
+        position: absolute; bottom: 0;right: 50%; transform: translateX(50%);
+        /* background-color: antiquewhite; */
+    }
 }
