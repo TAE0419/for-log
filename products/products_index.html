@@ -14,31 +14,76 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
     <link rel="stylesheet" href="./products_index.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
-
-    <header class="top-nav">
-        <div class="nav-inner">
-            <div class="logo bubbly-font">FOR-LOGO</div>
-            <nav class="nav-menu">
-                <li><a href="#">BRANDSTORY</a></li>
-                <li><a href="products_index.html" class="active">PRODUCT</a></li>
-                <li><a href="cart_test.html">CART</a></li>
-                <li><a href="#">ABOUT</a></li>
-            </nav>
-            <div class="nav-actions">
-                <button aria-label="메뉴"><i class="fa-solid fa-bars"></i></button>
-                <button type="button" id="open-cart" aria-label="장바구니 열기">
-                    <i class="fa-solid fa-bag-shopping"></i> <span id="cart-count"
-                        style="color: var(--terra-orange); font-weight: 800;">0</span>
-                </button>
+    <header>
+        <div class="headerInner">
+            <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a>
+            </div>
+            <ul class="gnb">
+                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                    <ul class="snb">
+                        <li><a href="#">CONCEPT</a></li>
+                        <li><a href="#">CHOLOGI</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../products/products_index.html">PRODUCT</a>
+                    <ul class="snb">
+                        <li><a href="../products/products_index.html">SHOP</a></li>
+                        <li><a href="../products/cart_test.html">CART</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../support/index.html">SUPPORT</a>
+                    <ul class="snb">
+                        <li><a href="#news">NEWS</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#location">LOCATION</a></li>
+                        <li><a href="../products/login.html">LOG IN</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="ham">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </header>
 
+    <div class="dim"></div>
+    <div class="hamSideMenu">
+        <div class="close">&#10006;</div>
+        <ul class="hamGnb">
+            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <ul class="hamSnb">
+                    <li><a href="../brandstory/brandstory.html">CONCEPT</a></li>
+                    <li><a href="#">CHOLOGI</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/products_index.html">PRODUCT</a>
+                <ul class="hamSnb">
+                    <li><a href="../products/products_index.html">SHOP</a></li>
+                    <li><a href="../products/cart_test.html">CART</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../support/index.html">SUPPORT</a>
+                <ul class="hamSnb">
+                    <li><a href="#news">NEWS</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#location">LOCATION</a></li>
+                    <li><a href="../products/login.html">LOG IN</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     <div class="striped-bg">
         <main class="page">
 
@@ -49,16 +94,16 @@
                     <div class="swiper hero-swiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide hero-slide">
-                                <img src="./img/Asset1.png"
-                                    alt="공지 슬라이드 1">
+                                <img src="./img/Asset1.png" alt="공지 슬라이드 1">
                             </div>
                             <div class="swiper-slide hero-slide">
-                                <img src="./img/Asset2.png"
-                                    alt="공지 슬라이드 2">
+                                <img src="./img/Asset2.png" alt="공지 슬라이드 2">
                             </div>
                             <div class="swiper-slide hero-slide">
-                                <img src="./img/Asset3.svg"
-                                    alt="공지 슬라이드 3">
+                                <img src="./img/Asset3.png" alt="공지 슬라이드 3">
+                            </div>
+                            <div class="swiper-slide hero-slide">
+                                <img src="./img/Asset4.png" alt="공지 슬라이드 4">
                             </div>
                         </div>
                         <div class="swiper-pagination"></div>
@@ -74,7 +119,8 @@
                     <article class="clover-blob">
                         <h3 class="bubbly-font">What's<br>Your<br>Forlog?</h3>
                         <p>오늘의 기분에 어울리는 그린 제품을
-                            <br/>추천해드립니다</p>
+                            <br />추천해드립니다
+                        </p>
                         <button class="clover-btn" type="button" data-category-jump=".category-section">확인하기 →</button>
                     </article>
 
@@ -144,27 +190,64 @@
     </section>
 
     <footer>
-        <div class="footer-band band-orange">
-            <div class="footer-req-text">
-                <p>01. 반응형(모바일) 구현 필수</p>
-                <p>02. HTML, CSS, JavaScript, jQuery plugin, API, CANVAS, JSON 활용</p>
-                <p>03. localStorage/Cookie 활용 필수</p>
-                <hr style="border:none; border-top: 1px dashed rgba(255,255,255,0.5); margin: 20px 0;">
+        <div class="left">
+            <div class="info">
+                <p>주소 : 서울특별시 강남구 테헤란로 427 위워크타워 10층</p>
+                <p>대표 : 김태은</p>
+                <p>사업자등록번호 : 123-45-67890</p>
+                <p>이메일 : info@company.com</p>
+                <p>이용약관 | 개인정보처리방침</p>
+                <p>© 2023 Company. All rights reserved.</p>
             </div>
-            <div class="footer-bottom-row">
-                <h2 class="footer-logo bubbly-font">FOR-LOGO</h2>
-                <div class="social-icons">
-                    <i class="fa-brands fa-youtube"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-solid fa-comment-dots"></i>
-                </div>
+            <div class="line">
+                <hr style="border: none; border-top: 2px dashed var(--bg-color);">
+            </div>
+            <div class="logo">
+                <img src="../common/img/logo(white).png" alt="logo">
+            </div>
+        </div>
+        <div class="right">
+            <div class="sns">
+                <img src="../common/img/youtube.png" alt="sns">
+                <img src="../common/img/instagram.png" alt="sns">
+                <img src="../common/img/blog.png" alt="sns">
             </div>
         </div>
     </footer>
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        $(function () {
+            $('.gnb > li').mouseenter(function () {
+                $('.snb').stop().slideUp(300);
+                $(this).children('.snb').stop().slideDown(300);
+            });
+            $('.gnb > li').mouseleave(function () {
+                $('.snb').stop().slideUp(300);
+            });
+
+            $('.ham').click(function () {
+                $('.dim').addClass('on');
+                $('.hamSideMenu').addClass('on');
+            });
+            $('.dim').click(function () {
+                $('.dim').removeClass('on');
+                $('.hamSideMenu').removeClass('on');
+            });
+            $('.close').click(function () {
+                $('.dim').removeClass('on');
+                $('.hamSideMenu').removeClass('on');
+            });
+
+            $('.hamGnb > li > a').click(function (e) {
+                e.preventDefault();
+                let myMenu = $(this).siblings('.hamSnb');
+                $('.hamSnb').not(myMenu).stop().slideUp(300);
+                $(this).siblings('.hamSnb').stop().slideToggle(300);
+            });
+        });
+
         // 💡 경로 단순화: 같은 폴더에 있으므로 파일 이름만 정확히 지정합니다!
         const PRODUCT_URL = "./products.json";
         let allProducts = [];
@@ -202,14 +285,14 @@
         }
 
         // 2. 상품 카드 HTML 템플릿
-       function getProductCardHtml(product) {
-    // 1. 로컬 스토리지에서 해당 상품이 이미 찜(좋아요) 상태인지 체크하는 로직 추가
-    const wishes = JSON.parse(localStorage.getItem("forlog_wishes")) || [];
-    const isWished = wishes.includes(product.id);
-    const heartIcon = isWished ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
-    const activeClass = isWished ? 'active' : '';
+        function getProductCardHtml(product) {
+            // 1. 로컬 스토리지에서 해당 상품이 이미 찜(좋아요) 상태인지 체크하는 로직 추가
+            const wishes = JSON.parse(localStorage.getItem("forlog_wishes")) || [];
+            const isWished = wishes.includes(product.id);
+            const heartIcon = isWished ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+            const activeClass = isWished ? 'active' : '';
 
-    return `
+            return `
         <div class="product-card" data-product-id="${product.id}">
             <div class="product-visual">
                 ${product.isNew ? '<span class="badge-new">new</span>' : ''}
@@ -231,7 +314,7 @@
             <button class="add-cart-btn" data-product-id="${product.id}" type="button">Add to cart</button>
         </div>
     `;
-}
+        }
 
         // 3. 위클리 베스트 렌더링
         function renderWeekly() {
@@ -407,8 +490,8 @@
                         delay: 3500,
                         disableOnInteraction: false
                     },
-                    pagination: { 
-                        el: '.hero-slider-container .swiper-pagination', 
+                    pagination: {
+                        el: '.hero-slider-container .swiper-pagination',
                         clickable: true
                     }
                 });
@@ -438,7 +521,7 @@
         }
 
         // 장바구니 수량 실시간 업데이트 함수
-       function updateCartCount() {
+        function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem("forlog_cart")) || [];
             const countEl = document.querySelector("#cart-count");
             if (countEl) {
@@ -448,72 +531,84 @@
         }
 
         // 장바구니 담기 실행 로직 (이벤트 위임 방식)
-       document.body.addEventListener("click", function(e) {
-    // 1. 장바구니 버튼 클릭 시 (가장 먼저 처리)
-    const cartBtn = e.target.closest(".add-cart-btn");
-    if (cartBtn) {
-        const productId = parseInt(cartBtn.getAttribute("data-product-id"));
-        const targetProduct = allProducts.find(p => p.id === productId);
-        
-        if (targetProduct) {
-            let cart = JSON.parse(localStorage.getItem("forlog_cart")) || [];
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: targetProduct.id,
-                    name: targetProduct.name,
-                    price: targetProduct.price,
-                    image: targetProduct.image,
-                    quantity: 1
-                });
+        document.body.addEventListener("click", function (e) {
+            // 1. 장바구니 버튼 클릭 시 (가장 먼저 처리)
+            const cartBtn = e.target.closest(".add-cart-btn");
+            if (cartBtn) {
+                const productId = parseInt(cartBtn.getAttribute("data-product-id"));
+                const targetProduct = allProducts.find(p => p.id === productId);
+
+                if (targetProduct) {
+                    let cart = JSON.parse(localStorage.getItem("forlog_cart")) || [];
+                    const existingItem = cart.find(item => item.id === productId);
+
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: targetProduct.id,
+                            name: targetProduct.name,
+                            price: targetProduct.price,
+                            image: targetProduct.image,
+                            quantity: 1
+                        });
+                    }
+
+                    localStorage.setItem("forlog_cart", JSON.stringify(cart));
+                    if (typeof updateCartCount === 'function') updateCartCount(); // 상단 숫자 업데이트
+
+                    // 기존 기본 alert 알림창 대신 커스텀 확인 모달 띄우기
+                    openCartConfirmModal();
+                }
+                return; // 여기서 종료 (이벤트가 모달 여는 곳까지 안 넘어감)
             }
-            
-            localStorage.setItem("forlog_cart", JSON.stringify(cart));
-            if (typeof updateCartCount === 'function') updateCartCount(); // 상단 숫자 업데이트
-            alert(`🐸 [${targetProduct.name}] 장바구니에 담겼습니다!`);
-        }
-        return; // 여기서 종료 (이벤트가 모달 여는 곳까지 안 넘어감)
-    }
 
-    // 2. 찜하기 버튼 클릭 시
-    const wishBtn = e.target.closest(".wish-inline-btn");
-    if (wishBtn) {
-        const productId = parseInt(wishBtn.getAttribute("data-product-id"));
-        let wishes = JSON.parse(localStorage.getItem("forlog_wishes")) || [];
-        const icon = wishBtn.querySelector("i");
-        
-        if (wishes.includes(productId)) {
-            wishes = wishes.filter(id => id !== productId);
-            wishBtn.classList.remove("active");
-            if (icon) icon.className = "fa-regular fa-heart";
-        } else {
-            wishes.push(productId);
-            wishBtn.classList.add("active");
-            if (icon) icon.className = "fa-solid fa-heart";
-        }
-        
-        localStorage.setItem("forlog_wishes", JSON.stringify(wishes));
-        return; // 여기서 종료
-    }
+            // 2. 찜하기 버튼 클릭 시
+            const wishBtn = e.target.closest(".wish-inline-btn");
+            if (wishBtn) {
+                const productId = parseInt(wishBtn.getAttribute("data-product-id"));
+                let wishes = JSON.parse(localStorage.getItem("forlog_wishes")) || [];
+                const icon = wishBtn.querySelector("i");
 
-    // 3. 상품 카드 클릭 시 (장바구니/찜 버튼이 아닐 때만 작동)
-    const card = e.target.closest(".product-card");
-    if (card) {
-        const productId = parseInt(card.getAttribute("data-product-id"));
-        if (productId) {
-            openProductModal(productId);
-        }
-    }
-});
+                if (wishes.includes(productId)) {
+                    wishes = wishes.filter(id => id !== productId);
+                    wishBtn.classList.remove("active");
+                    if (icon) icon.className = "fa-regular fa-heart";
+                } else {
+                    wishes.push(productId);
+                    wishBtn.classList.add("active");
+                    if (icon) icon.className = "fa-solid fa-heart";
+                }
+
+                localStorage.setItem("forlog_wishes", JSON.stringify(wishes));
+                return; // 여기서 종료
+            }
+
+            // 3. 상품 카드 클릭 시 (장바구니/찜 버튼이 아닐 때만 작동)
+            const card = e.target.closest(".product-card");
+            if (card) {
+                const productId = parseInt(card.getAttribute("data-product-id"));
+                if (productId) {
+                    openProductModal(productId);
+                }
+            }
+        });
 
         // ========================================================
         //  모달창 열고 닫기 핵심 로직
         // ========================================================
-        
+
         // 1. 모달창 열기 함수
+        function getProductModalTag(product) {
+            if (product.weeklyBest) return "Weekly Best";
+            if (product.isNew) return "NEW";
+            if (product.subCategory === "stationery") return "Desk";
+            if (product.subCategory === "acc" || product.subCategory === "plush") return "Fashion";
+            if (product.category === "frog") return "Chorogi";
+            if (product.category === "plant" || product.subCategory === "living") return "Living";
+            return "FOR-LOG";
+        }
+
         function openProductModal(productId) {
             // 전역 데이터(allProducts)에서 클릭된 상품의 id와 일치하는 데이터 찾기
             const product = allProducts.find(p => p.id === productId);
@@ -521,11 +616,12 @@
 
             // 모달창 HTML 구조 안에 데이터 매핑하기
             document.getElementById("modal-img").src = product.image;
+            document.getElementById("modal-tag").textContent = getProductModalTag(product);
             document.getElementById("modal-title").textContent = product.name;
             document.getElementById("modal-price").textContent = `${product.price.toLocaleString()}원`;
-            
+
             document.getElementById("modal-desc").textContent = product.description || "초로기가 보장하는 멋진 라이프스타일 굿즈 아이템!";
-            
+
             document.getElementById("modal-cart-btn").setAttribute("data-product-id", product.id);
 
             document.getElementById("product-modal").style.display = "flex";
@@ -536,11 +632,19 @@
             document.getElementById("product-modal").style.display = "none";
         }
 
+        // 장바구니 추가 완료 모달 열기/닫기 함수
+        function openCartConfirmModal() {
+            document.getElementById("cart-confirm-modal").style.display = "flex";
+        }
+        function closeCartConfirmModal() {
+            document.getElementById("cart-confirm-modal").style.display = "none";
+        }
+
         // 3. 위클리 슬라이드 클릭 감지 (이벤트 위임)
-        document.body.addEventListener("click", function(e) {
+        document.body.addEventListener("click", function (e) {
             // 클릭된 요소 근처에 위클리 슬라이드 내부의 .product-card가 있는지 탐색
             const card = e.target.closest(".weekly-swiper .product-card");
-            
+
             if (card && !e.target.classList.contains("add-cart-btn") && !e.target.closest(".wish-btn")) {
                 // 카드 내부에 있는 장바구니 버튼에서 id를 훔쳐옵니다
                 const cartBtn = card.querySelector(".add-cart-btn");
@@ -566,16 +670,35 @@
                     <img id="modal-img" src="" alt="상품 이미지">
                 </div>
                 <div class="modal-info-area">
-                    <span class="modal-tag">Weekly Best 🔥</span>
+                    <span id="modal-tag" class="modal-tag">FOR-LOG</span>
                     <h2 id="modal-title">상품 이름</h2>
                     <div id="modal-price" class="modal-price">0원</div>
                     <p id="modal-desc" class="modal-desc">초로기가 보장하는 멋진 라이프스타일 굿즈 아이템 멘트 설명.</p>
-                    <button type="button" id="modal-cart-btn" class="add-cart-btn" data-product-id="">Add to cart</button>
+                    <button type="button" id="modal-cart-btn" class="add-cart-btn" data-product-id="">Add to
+                        cart</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 장바구니 이동 확인 커스텀 모달 -->
+    <div id="cart-confirm-modal" class="custom-modal" style="display: none; z-index: 10000;">
+        <div class="modal-overlay" onclick="closeCartConfirmModal()"></div>
+        <div class="modal-content" style="max-width: 380px; text-align: center; padding: 40px 30px;">
+            <h3 style="font-size: 1.4rem; color: var(--dark-color); margin-bottom: 15px; font-weight: 800;">장바구니에 담겼습니다!
+                🐸</h3>
+            <p style="color: var(--sub-color); margin-bottom: 25px; font-size: 1rem; word-break: keep-all;">바로 장바구니 페이지로
+                이동하시겠습니까?</p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button type="button" onclick="closeCartConfirmModal()"
+                    style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--line); background: #fff; cursor: pointer; font-weight: 700; color: var(--dark-color); transition: all 0.2s;">쇼핑
+                    계속하기</button>
+                <button type="button" onclick="location.href='cart_test.html'"
+                    style="padding: 12px 24px; border-radius: 50px; border: none; background: var(--point-color); color: #fff; cursor: pointer; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 10px rgba(213,118,64,0.2);">장바구니로
+                    이동</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 
