@@ -66,8 +66,8 @@ if (cloverWrap) {
             })
         })
 
-        const best=document.querySelector(".BestGallery")
-        const observer=new IntersectionObserver(function(entries){
+        const rule=document.querySelector(".BestGallery")
+        const observer30=new IntersectionObserver(function(entries){
             entries.forEach(function(entry){
                 if(entry.isIntersecting){
                     entry.target.classList.add("on")
@@ -81,8 +81,8 @@ if (cloverWrap) {
 
         })
 
-        if (best) {
-    observer.observe(best);
+        if (rule) {
+    observer30.observe(rule);
 }
 // 여기는 Shot어쩌고의 자리
     const txt1=document.querySelector(".heroContent2")
@@ -181,6 +181,24 @@ if (txt1) {
 
         if (pikabu2) {
     observer13.observe(pikabu2);
+}
+
+ const characterImg=document.querySelector(".character img")
+        const observer14=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+        })
+
+        if (characterImg) {
+    observer14.observe(characterImg);
 }
 
 //끝남-----------------------------
@@ -296,42 +314,104 @@ function makeProductDrag() {
         let scrollLeft = 0;
         let autoTimer = null;
         let pressedCard = null;
+        let segmentStart = 0;
+        let segmentWidth = 0;
+        let cardStep = 0;
+        let slideIndex = 0;
 
-        function getCardStep() {
-            const firstCard = viewport.querySelector(".productCard");
+        function setupInfiniteTrack() {
             const track = viewport.querySelector(".productTrack");
 
-            if (!firstCard || !track) {
-                return viewport.clientWidth * 0.75;
+            if (!track || track.dataset.infiniteReady === "true") return;
+
+            const originalCards = Array.from(track.querySelectorAll(".productCard"));
+
+            if (originalCards.length === 0) return;
+
+            const beforeClones = originalCards.map(function (card) {
+                const clone = card.cloneNode(true);
+                clone.classList.add("productCardClone");
+                return clone;
+            });
+
+            const afterClones = originalCards.map(function (card) {
+                const clone = card.cloneNode(true);
+                clone.classList.add("productCardClone");
+                return clone;
+            });
+
+            beforeClones.reverse().forEach(function (clone) {
+                track.insertBefore(clone, track.firstChild);
+            });
+
+            afterClones.forEach(function (clone) {
+                track.appendChild(clone);
+            });
+
+            segmentStart = originalCards[0].offsetLeft;
+            segmentWidth = afterClones[0].offsetLeft - originalCards[0].offsetLeft;
+            cardStep = originalCards[1]
+                ? originalCards[1].offsetLeft - originalCards[0].offsetLeft
+                : originalCards[0].offsetWidth;
+
+            syncCircleBackgroundSize();
+            viewport.scrollLeft = segmentStart;
+            slideIndex = 0;
+            track.dataset.infiniteReady = "true";
+        }
+
+        function syncCircleBackgroundSize() {
+            const band = viewport.closest(".productBand");
+
+            if (!band || !cardStep) return;
+
+            const circleGap = 360.2;
+            const svgHeight = 1450.6;
+            const backgroundSize = (cardStep * svgHeight / circleGap / band.offsetHeight) * 100;
+
+            band.style.setProperty("--circle-bg-size", `${backgroundSize}%`);
+        }
+
+        function normalizeInfiniteScroll() {
+            if (!segmentWidth) return;
+
+            if (viewport.scrollLeft < segmentStart - 1) {
+                viewport.scrollLeft += segmentWidth;
             }
 
-            const trackStyle = window.getComputedStyle(track);
-            const gap = parseFloat(trackStyle.columnGap || trackStyle.gap) || 0;
+            if (viewport.scrollLeft >= segmentStart + segmentWidth - 1) {
+                viewport.scrollLeft -= segmentWidth;
+            }
 
-            return firstCard.offsetWidth + gap;
+            slideIndex = Math.round((segmentStart - viewport.scrollLeft) / getCardStep());
+        }
+
+        function getCardStep() {
+            if (!cardStep) {
+                const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+
+                return 30 * rootFontSize;
+            }
+
+            return cardStep;
         }
 
         function startAutoSlide() {
             stopAutoSlide();
 
             autoTimer = setInterval(function () {
-                const maxScroll = viewport.scrollWidth - viewport.clientWidth;
                 const cardStep = getCardStep();
-                const nextScroll = viewport.scrollLeft + cardStep;
+                const totalSteps = Math.max(1, Math.round(segmentWidth / cardStep));
 
-                if (nextScroll >= maxScroll - 5) {
-                    viewport.scrollTo({
-                        left: 0,
-                        behavior: "smooth"
-                    });
-                    return;
-                }
+                normalizeInfiniteScroll();
+                slideIndex = (slideIndex + 1) % totalSteps;
 
-                viewport.scrollBy({
-                    left: cardStep,
+                viewport.scrollTo({
+                    left: segmentStart - (slideIndex * cardStep),
                     behavior: "smooth"
                 });
-            }, 3000);
+                setTimeout(normalizeInfiniteScroll, 700);
+            }, 2000);
         }
 
         function stopAutoSlide() {
@@ -377,6 +457,7 @@ function makeProductDrag() {
             }
 
             pressedCard = null;
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
@@ -384,6 +465,7 @@ function makeProductDrag() {
             isDown = false;
             pressedCard = null;
             viewport.classList.remove("dragging");
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
@@ -392,9 +474,11 @@ function makeProductDrag() {
             isDown = false;
             pressedCard = null;
             viewport.classList.remove("dragging");
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
+        setupInfiniteTrack();
         startAutoSlide();
     });
 }
@@ -454,4 +538,75 @@ function closeProductModal() {
 
     modal.classList.remove("on");
     document.body.classList.remove("modalOpen");
+}
+
+const mainPopup = document.querySelector("#mainPopup");
+
+function setMainPopupCookie(name, value, days) {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+}
+
+function getMainPopupCookie(name) {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find(function (item) {
+        return item.startsWith(name + "=");
+    });
+
+    return cookie ? cookie.split("=")[1] : null;
+}
+
+function updateMainPopupState() {
+    if (!mainPopup) return;
+
+    const visibleItems = mainPopup.querySelectorAll(".mainPopupItem:not(.hide)");
+
+    mainPopup.classList.toggle("hide", visibleItems.length === 0);
+}
+
+if (mainPopup) {
+    const popupItems = mainPopup.querySelectorAll(".mainPopupItem");
+
+    popupItems.forEach(function (item) {
+        const popupId = item.dataset.popupId;
+        const cookieName = `mainPopupPreview_${popupId}`;
+
+        if (getMainPopupCookie(cookieName) === "close") {
+            item.classList.add("hide");
+        }
+
+        item.querySelector(".mainPopupClose").addEventListener("click", function () {
+            const todayCheckbox = item.querySelector(".mainPopupToday input");
+
+            if (todayCheckbox && todayCheckbox.checked) {
+                setMainPopupCookie(cookieName, "close", 1);
+            }
+
+            item.classList.add("hide");
+            updateMainPopupState();
+        });
+    });
+
+    updateMainPopupState();
+}
+
+// 베스트 리뷰의 자리
+        const View=document.querySelector(".sec5>div>span")
+        const observerView=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (View) {
+    observerView.observe(View);
 }
