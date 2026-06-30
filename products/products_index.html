@@ -17,7 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -123,7 +123,7 @@
                             <br />그린 제품을
                             <br />추천해드립니다
                         </p>
-                        <button class="clover-btn" type="button" data-category-jump=".category-section">확인하기 →</button>
+                        <button class="clover-btn" type="button" data-category-jump=".nnnbox">확인하기 →</button>
                     </article>
 
                     <div class="swiper weekly-swiper" style="width: 100%; min-width: 0;">
@@ -138,7 +138,7 @@
                 <div class="timeline-container" id="category-list">
                 </div>
             </section>
-
+            <div class="nnnbox"></div>
         </main>
     </div>
 
@@ -153,7 +153,6 @@
         </div>
 
         <div class="wavy-divider"></div>
-
         <div class="product-grid" id="product-grid"></div>
     </main>
 
@@ -176,6 +175,11 @@
                     <button type="button" class="ans-btn" onclick="nextQuestion(true)">그렇다 (YES)</button>
                     <button type="button" class="ans-btn" onclick="nextQuestion(false)">아니다 (NO)</button>
                 </div>
+
+                <button type="button" class="test-reset-btn" onclick="restartTest()">
+                   <i class="fa-solid fa-arrow-rotate-left"></i> 첫 화면으로 돌아가기
+                 </button>
+
             </div>
 
             <div id="test-result-view" class="test-view" style="display: none;">
@@ -185,7 +189,7 @@
                 <div class="result-products-grid" id="result-products-box">
                 </div>
 
-                <button type="button" class="retry-btn" onclick="restartTest()">다시 테스트하기 <i
+                <button type="button" class="retry-btn" onclick="restartTest()">첫 화면으로 돌아가기 <i
                         class="fa-solid fa-rotate-right"></i></button>
             </div>
 
@@ -336,13 +340,13 @@
             document.getElementById("weekly-wrapper").innerHTML = weeklyProducts.map(p => `
                 <div class="swiper-slide">${getProductCardHtml(p)}</div>
             `).join("");
-            
+
             new Swiper('.weekly-swiper', {
                 slidesPerView: 1.2, /* 초소형 모바일에서 1개씩 */
                 spaceBetween: 15,
-                breakpoints: { 
+                breakpoints: {
                     480: { slidesPerView: 2, spaceBetween: 20 },
-                    768: { slidesPerView: 3, spaceBetween: 20 } 
+                    768: { slidesPerView: 3, spaceBetween: 20 }
                 }
             });
         }
@@ -371,9 +375,26 @@
 
             grid.innerHTML = filtered.map(p => getProductCardHtml(p)).join("");
 
-            const allTitleEl = document.querySelector('.all-title');
-            if (allTitleEl) {
-                allTitleEl.textContent = currentCategory.toUpperCase();
+            // 타이틀 텍스트 변경 및 GSAP 통통 튀는 애니메이션 추가
+            const allTitleEl = document.querySelector('.all-title'); //
+            if (allTitleEl) { //
+                allTitleEl.textContent = currentCategory.toUpperCase(); //
+
+                // ✨ 선생님 취향 저격! 글자가 밑에서 위로 슥 올라오며 커지는 탄력 애니메이션
+                gsap.fromTo(allTitleEl,
+                    {
+                        opacity: 0, 
+                        y: 30, 
+                        scale: 0.8     
+                    },
+                    {
+                        opacity: 1,    
+                        y: 0,            
+                        scale: 1,        
+                        duration: 0.5,   
+                        ease: "back.out(1.7)" 
+                    }
+                );
             }
         }
 
@@ -489,6 +510,7 @@
 
         function restartTest() {
             document.getElementById("test-result-view").style.display = "none";
+            document.getElementById("test-question-view").style.display = "none";
             document.getElementById("test-start-view").style.display = "flex";
         }
 
@@ -544,7 +566,21 @@
 
         // 장바구니 담기 실행 로직 (이벤트 위임 방식)
         document.body.addEventListener("click", function (e) {
-            // 1. 장바구니 버튼 클릭 시 (가장 먼저 처리)
+
+            // 1. 확인하기(클로버 블랍) 버튼 클릭 시 스크롤 점프 기능
+            const jumpBtn = e.target.closest(".clover-btn");
+            if (jumpBtn) {
+                const targetSelector = jumpBtn.getAttribute("data-category-jump"); // ".product-grid" 가져오기
+                const targetEl = document.querySelector(targetSelector);
+
+                if (targetEl) {
+                    // 해당 위치로 부드럽게 스크롤 이동
+                    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+                return; // 다른 이벤트로 전파되지 않도록 종료
+            }
+
+            // 2. 장바구니 버튼 클릭 시 
             const cartBtn = e.target.closest(".add-cart-btn");
             if (cartBtn) {
                 const productId = parseInt(cartBtn.getAttribute("data-product-id"));
@@ -606,12 +642,12 @@
                     const y = (rect.top + rect.height / 2) / window.innerHeight;
 
                     confetti({
-                        particleCount: 30, 
-                        spread: 360, 
+                        particleCount: 30,
+                        spread: 360,
                         startVelocity: 10,
-                        ticks: 45, 
-                        origin: { x: x, y: y }, 
-                        colors: ['#FF1493', '#FF6600', '#ADFF2F', '#00FFFF'], 
+                        ticks: 45,
+                        origin: { x: x, y: y },
+                        colors: ['#FF1493', '#FF6600', '#ADFF2F', '#00FFFF'],
                         zIndex: 9999,
                         scalar: 0.5,
                         disableForReducedMotion: true
