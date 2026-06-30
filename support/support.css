@@ -221,7 +221,9 @@
             }
         }
 
-
+/*--------------
+  공통적으로들어가는영역
+  -------------- */
 body,
 .support-hero-section,
 .news-section,
@@ -234,6 +236,9 @@ body {
     background-color: var(--bg-color);
 }
 
+/* --------- 
+    색션 1 이미지
+--------------*/
 .section h2 {
     font-size: 100px;
     font-weight: 900;
@@ -322,6 +327,10 @@ body {
     background-blend-mode: normal;      /* 배경 이미지와 색상이 섞이지 않고 깔끔하게 겹치도록 설정합니다 */
 }
 
+
+/* ------------
+     색션 2 공지사항
+-----------------*/
 .news-list-stripe-bg {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -402,6 +411,10 @@ body {
     border-radius: 10px;
     margin-left: 8px;
 }
+
+/* -----------
+    색션 3 자주묻는질문답변
+----------------- */
 
 .faq-section {
     margin-top: 140px;
@@ -487,6 +500,9 @@ body {
     transform: rotate(180deg);
 }
 
+/* -------------
+   색션 4 오시는길 
+ ----------------*/
 .location-section {
     padding-bottom: 120px;
 }
@@ -539,6 +555,131 @@ body {
     border-radius: 50%;
     background-color: var(--point-color);
     flex: 0 0 auto;
+}
+
+.location-section input,
+.location-section button,
+.location-section .info-row p {
+    font-family: "Malgun Gothic", Dotum, AppleSDGothicNeo, sans-serif !important;
+}
+
+/* ===================================================
+   ⭐ [수정완료] 글자 겹침 방지 및 크기 확장 말풍선 디자인 
+====================================================== */
+
+/* 말풍선 전체 박스 (가로 폭을 340px로 넉넉하게 늘려 가독성 확보) */
+.map-overlay-box {
+    position: relative;
+    width: 340px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 1px solid #cbdcc0;
+    font-family: "Malgun Gothic", sans-serif;
+    overflow: visible; 
+}
+
+/* 아래쪽 말풍선 꼬리표 삼각형 */
+.map-overlay-box::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 10px solid #fff;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 0 solid transparent;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+}
+
+/* 상단 초록색 타이틀 바 */
+.map-overlay-box .overlay-header {
+    background: #006644;
+    padding: 10px 14px;
+    border-radius: 7px 7px 0 0;
+}
+
+/* FOR-LOG 로고 타이틀 스타일 */
+.map-overlay-box .overlay-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* 하단 콘텐츠 영역 정렬 */
+.map-overlay-box .overlay-body {
+    display: flex;
+    padding: 14px;
+    gap: 14px;
+    background: #fff;
+    border-radius: 0 0 7px 7px;
+    align-items: center;
+}
+
+/* 왼쪽 개구리(smile 1.png) 상자 규격조정 */
+.map-overlay-box .overlay-img {
+    width: 65px;
+    height: 65px;
+    flex: 0 0 auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    overflow: hidden;
+}
+
+.map-overlay-box .overlay-img img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+
+/* 오른쪽 설명 주소창 영역 (텍스트 잘림 현상 제거) */
+.map-overlay-box .overlay-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.map-overlay-box .overlay-content p {
+    margin: 0 0 4px 0 !important; 
+    line-height: 1.4;
+    white-space: normal; /* 글자가 박스 안에서 자연스럽게 줄바꿈되도록 수정 */
+}
+
+.map-overlay-box .overlay-content .addr {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+}
+
+.map-overlay-box .overlay-content .sub {
+    font-size: 11px;
+    color: #666;
+}
+
+.map-overlay-box .overlay-content .lnk {
+    font-size: 11px;
+    color: #006644;
+    text-decoration: underline;
+    margin-top: 2px;
+    font-weight: bold;
+}
+
+/* 페이지네이션 및 목록 리스트 공통 폰트 지정 유지 */
+#pagination {
+    display: none !important;
+}
+#placesList,
+#placesList h5,
+#placesList span {
+    font-family: "Malgun Gothic", Dotum, AppleSDGothicNeo, sans-serif !important;
 }
 
  /* -----------------------------------------
@@ -602,70 +743,72 @@ body {
             cursor: pointer;
         }
 
-@media (max-width: 1000px) {
-    .gnb {
-        display: none;
-    }
+        /* -----------------------------------------
+           [반응형 영역 스타일]
+        -------------------------------------------- */
+    @media (max-width: 1000px) {
+        .gnb {
+            display: none;
+        }
 
-    .hamSideMenu {
-        width: 70%;
-    }
+        .hamSideMenu {
+            width: 70%;
+        }
 
-    .ham {
-        align-items: flex-end;
-    }
+        .ham {
+            align-items: flex-end;
+        }
 
-    .headerInner {
-        grid-template-columns: 1fr 48px;
-    }
+        .headerInner {
+            grid-template-columns: 1fr 48px;
+        }
 
-    .section h2 {
-        font-size: 54px;
-        flex-wrap: wrap;
-    }
+        .section h2 {
+            font-size: 54px;
+            flex-wrap: wrap;
+        }
 
-    .section h2 .dot {
-        margin-left: 0;
-        font-size: 72px;
-    }
+        .section h2 .dot {
+            margin-left: 0;
+            font-size: 72px;
+        }
 
-    .support-main-title {
-        font-size: 92px;
-    }
+        .support-main-title {
+            font-size: 92px;
+        }
 
-    .support-hero-section {
-        min-height: 720px;
-    }
+        .support-hero-section {
+            min-height: 720px;
+        }
 
-    .news-table-header-inner,
-    .news-item {
-        grid-template-columns: 15% 50% 15% 20%;
-    }
+        .news-table-header-inner,
+        .news-item {
+            grid-template-columns: 15% 50% 15% 20%;
+        }
 
-    .news-item > div {
-        font-size: 16px;
-    }
+        .news-item > div {
+            font-size: 16px;
+        }
 
-    .info-inner,
-    footer {
-        flex-direction: column;
-    }
+        .info-inner,
+        footer {
+            flex-direction: column;
+        }
 
-    footer {
-        height: auto;
-        gap: 40px;
-    }
+        footer {
+            height: auto;
+            gap: 40px;
+        }
 
-    .left {
-        width: 100%;
-    }
+        .left {
+            width: 100%;
+        }
 
-    .sns {
-        flex-direction: row;
-    }
-}
+        .sns {
+            flex-direction: row;
+        }
+   }
 
-/* news scroll + responsive logo fixes */
 .news-table-body-inner {
     max-height: 360px;
     overflow-y: auto;
