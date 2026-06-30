@@ -1,6 +1,6 @@
 [
     {
-        "category": "인테리어",
+        "category": "INTERIOR",
         "items": [
             {
                 "title": "몬스테라 화분(Green 시리즈)",
@@ -41,7 +41,7 @@
         ]
     },
     {
-        "category": "데스크",
+        "category": "DESK",
         "items": [
             {
                 "title": "그린 마스킹테이프",
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "category": "패션",
+        "category": "FASHION",
         "items": [
             {
                 "title": "플라워 무드등",
@@ -123,7 +123,7 @@
         ]
     },
     {
-        "category": "리빙",
+        "category": "CHOROGI",
         "items": [
             {
                 "title": "그린 유선노트",
