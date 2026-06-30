@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./FontAndColor/FontAndColor.css">
+    <link rel="stylesheet" href="../FontAndColor/FontAndColor.css">
     <style>
+        * {
+            margin: 0;padding: 0;box-sizing: border-box; list-style: none; text-decoration: none;
+        }
         header{
             width: 100%; height:90px;
             display: flex; justify-content: center; align-items: center;
@@ -14,24 +17,14 @@
         }
         .headerInner{
             width: 90%;  height:60%;
-            border-radius: 50px;
+            background-color: var(--bg-color); border-radius: 50px;
             display:grid; grid-template-columns: 15% 80% 5%; 
             padding: 0 40px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+             
         }
-        .headerInner::before {
-        content: "";
-        position: absolute; top: 0; left: 0; 
-        width: 100%; height: 100%;
-        background-color: color-mix(in srgb, var(--bg-color) 90%, transparent);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        border-radius: 50px;
-        z-index: -1; /* 내용물 뒤로 깔리게 하기 */
-    }
         .logo{
-            display: flex; justify-content: center; align-items: center;min-width:250px;
+            display: flex; justify-content: center; align-items: center;
         }
         .logo>a{
             width: 75%; height: 51%;
@@ -64,7 +57,6 @@
             top: 100%;/*부모의 밑바닥 끝에 위치해라*/
             width: 150px;
             background-color: color-mix(in srgb, var(--main-color) 80%, transparent);
-            backdrop-filter: blur(4px);
             color: var(--bg-color);
             border-radius:  0 0 15px 15px;
             z-index: 200;
@@ -100,7 +92,6 @@
         .dim{
             width: 100%; height: 100vh;
             background-color: color-mix(in srgb, var(--dark-color) 50%, transparent);
-            backdrop-filter: blur(4px);
             position: fixed; left: 0;top: 0;
             opacity: 0;
             visibility: hidden;
@@ -162,23 +153,23 @@
 <body>
     <header>
         <div class="headerInner">
-            <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a></div>
+            <div class="logo"><a href="#"><img src="../img/logo(black) 2.png" alt="logo"></a></div>
             <ul class="gnb">
-                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <li><a href="#">BRANDSTORY</a>
                 <ul class="snb">
                     <li><a href="#">CONCEPT</a></li>
                     <li><a href="#">CHOLOGI</a></li>
                 </ul>
                 </li>
                 <li>
-                    <a href="../products/products_index.html">PRODUCT</a>
+                    <a href="#">PRODUCT</a>
                     <ul class="snb">
                         <li><a href="#">SHOP</a></li>
                         <li><a href="#">CART</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="../support/html/index.html">SUPPORT</a>
+                    <a href="#">SUPPORT</a>
                     <ul class="snb">
                         <li><a href="#">NEWS</a></li>
                         <li><a href="#">FAQ</a></li>
@@ -199,21 +190,21 @@
     <div class="hamSideMenu">
         <div class="close">&#10006;</div>
         <ul class="hamGnb">
-            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+            <li><a href="#">BRANDSTORY</a>
             <ul class="hamSnb">
-                <li><a href="../brandstory/brandstory.html">CONCEPT</a></li>
+                <li><a href="#">CONCEPT</a></li>
                 <li><a href="#">CHOLOGI</a></li>
             </ul>
             </li>
             <li>
-                <a href="../products/products_index.html">PRODUCT</a>
+                <a href="#">PRODUCT</a>
                 <ul class="hamSnb">
-                    <li><a href="../products/products_index.html">SHOP</a></li>
-                    <li><a href="../products/cart_test.html">CART</a></li>
+                    <li><a href="#">SHOP</a></li>
+                    <li><a href="#">CART</a></li>
                 </ul>
             </li>
             <li>
-                <a href="../support/html/index.html">SUPPORT</a>
+                <a href="#">SUPPORT</a>
                 <ul class="hamSnb">
                     <li><a href="#">NEWS</a></li>
                     <li><a href="#">FAQ</a></li>
@@ -224,7 +215,38 @@
         </ul>
     </div>
     <script>
-        
+        $(function(){
+            $('.gnb > li').mouseenter(function(){
+                $('.snb').stop().slideUp(300)
+                $(this).children('.snb').stop().slideDown(300)
+            })
+            $('.gnb > li').mouseleave(function(){
+                $('.snb').stop().slideUp(300)
+            })
+
+            $('.ham').click(function(){
+                $('.dim').addClass('on')
+                $('.hamSideMenu').addClass('on')
+            })
+            $('.dim').click(function(){
+                $('.dim').removeClass('on')
+                $('.hamSideMenu').removeClass('on')
+            })
+            $('.close').click(function(){
+                $('.dim').removeClass('on')
+                $('.hamSideMenu').removeClass('on')
+            })
+            //사이드(슬라이드 메뉴) :: 아코디언 구현
+            $('.hamGnb>li>a').click(function(e){
+                e.preventDefault() //a태그가 원래 가지고 있던 기능을 막기
+
+                let myMenu = $(this).siblings('.hamSnb') //클릭한 li a태그의 형제(hamSnb)
+
+                $('.hamSnb').not(myMenu).stop().slideUp(300) //내가 클릭한 메뉴 말고 다 닫기
+
+                $(this).siblings('.hamSnb').stop().slideToggle(300) //내가 선택한 메뉴의 서브메뉴만 보이기
+            })
+        })
     </script>
 </body>
 </html>
