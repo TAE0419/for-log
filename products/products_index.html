@@ -218,6 +218,9 @@
         </div>
     </footer>
 
+    <div class="roundG4"></div>
+    <script src="../products/mouseEffect.js"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
@@ -335,7 +338,7 @@
             `).join("");
             
             new Swiper('.weekly-swiper', {
-                slidesPerView: 1.2, /* 초소형 모바일에서 1개씩(옆 카드가 살짝 보이게) */
+                slidesPerView: 1.2, /* 초소형 모바일에서 1개씩 */
                 spaceBetween: 15,
                 breakpoints: { 
                     480: { slidesPerView: 2, spaceBetween: 20 },
@@ -351,7 +354,7 @@
 
             let filtered = allProducts;
 
-            // 카테고리 선택에 따른 필터링 조건 (JSON을 고치지 않는 방식)
+            // 카테고리 선택에 따른 필터링 조건
             if (currentCategory !== "all") {
                 filtered = allProducts.filter(p => {
                     if (currentCategory === "living") return p.category === "plant" || p.subCategory === "living";
