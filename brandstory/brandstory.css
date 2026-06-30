@@ -8,7 +8,7 @@ section{
     /* font: var(--title-font); */
     color: var(--sub-color);
     display: flex; justify-content: center;align-items: center;
-    gap: 5rem;
+    gap: 7rem;
 }
 .first>.titleBox>h1{
     font: var(--title-font);
@@ -18,7 +18,7 @@ section{
     display:flex; justify-content: space-between;
 }
 .first>.glassesChologi{
-    width: 25%; overflow: hidden;   
+    width: 25%; overflow: hidden; 
     display: flex; justify-content: center; align-items: center;
 }
 .first>.glassesChologi>img{
@@ -250,7 +250,7 @@ section{
     width: 80%;
 }
 .fourth>.circle>.imgBox{
-    width: 50%; height: 38rem; overflow: hidden;
+    width: 48%; height: 42rem; overflow: hidden;
     position: absolute; bottom: 0;right: 0;
     /* background-color: aliceblue; */
 
@@ -274,5 +274,115 @@ section{
         width: 80%; height: 43rem; overflow: hidden;
         position: absolute; bottom: 0;right: 50%; transform: translateX(50%);
         /* background-color: antiquewhite; */
+    }
+}
+/* =======================================색깔============================================================== */
+.fifth{
+    width: 100%; height: 170vh;
+    flex-direction: column; gap: 7rem;
+}
+.fifth>.up{
+    display: flex; align-items: start; justify-content: center;
+    width: 75%; gap: 7rem;
+}
+.fifth>.up>.titleBox>.circle{
+    width: 3rem;height: 3rem; border-radius: 50%;
+    background-color: var(--point-color); margin-top: 5rem;
+}
+.fifth>.up>.titleBox{
+    display: flex; justify-content: center; align-items: start; gap: 3rem;
+}
+.fifth>.up>.titleBox>.textBox{
+    width: 35rem;
+}
+.fifth>.up>.titleBox>.textBox>h1{
+    font: var(--subtitle-font);
+        color: var(--main-color);
+}
+.fifth>.up>.titleBox>.textBox>p{
+    font: var(--small2-font);
+}
+.fifth>.up>.colorBox{
+    display: flex; align-items: center;justify-content: center; flex-direction: column;
+    gap: 2rem; width: 40rem; margin-top: 1rem;
+}
+.fifth>.up>.colorBox>div{
+    width: 100%; height: 4rem; border-radius: 100px;
+    display: flex; justify-content: start; align-items: center;
+    color: var(--bg-color); font: var(--small2-font); padding-left: 2rem; padding-right: 2rem;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.3);
+}
+.fifth>.up>.colorBox>.main{
+    background-color: var(--main-color);
+}
+.fifth>.up>.colorBox>.sub{
+    background-color: var(--sub-color);
+}
+.fifth>.up>.colorBox>.dark{
+    background-color: var(--dark-color);
+}
+.fifth>.up>.colorBox>.point{
+    background-color: var(--point-color);
+}
+.fifth>.up>.colorBox>.bg{
+    background-color: var(--bg-color); color: var(--dark-color);
+}
+@media (max-width: 768px) {
+    .fifth{
+        height: 120rem;
+    }
+    .fifth>.up{
+        align-items: center; flex-direction: column;
+        gap: 2rem; width: 90%;
+    }
+    .fifth>.up>.colorBox{
+        width:55rem;
+    }
+}
+/* =================로고================ */
+.fifth>.down{
+    display: flex; align-items: start; justify-content: space-between;
+    flex-direction: column;
+    width: 75%;
+}
+.fifth>.down>.titleBox{
+    display: flex; justify-content: center; align-items: start; gap: 3rem; 
+}
+.fifth>.down>.titleBox>.circle{
+    width: 3rem;height: 3rem; border-radius: 50%;
+    background-color: var(--point-color); margin-top: 5rem;
+}
+.fifth>.down>.titleBox>h1{
+    font: var(--subtitle-font); color: var(--main-color);
+}
+.fifth>.down>.logoBox{
+    width: 100%; height: 25rem; border-radius: 3px;
+    background-color: var(--dark-color);
+    /* overflow: hidden; */
+    display: flex;
+}
+.fifth>.down>.logoBox>.logo{
+    height:100%; width: 60%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden; padding: 8rem; gap: 1rem;
+}
+.fifth>.down>.logoBox>.logo>img{
+    width: 100%; height: 100%; object-fit: cover;
+}
+.fifth>.down>.logoBox>div>hr{
+    border: none;
+    border-left: 2px dotted var(--bg-color); /* 💡 동그란 점선(dotted) 적용 */
+    height: 100%;
+}
+.fifth>.down>.logoBox>p{
+    width: 40%; height: 100%; padding: 3rem;
+    font:var(--small2-font); color: var(--bg-color);
+}
+@media (max-width: 768px) {
+    .fifth>.down{
+        align-items: center;
+}
+    .fifth>.down>.logoBox>.logo{
+        height:100%; width: 70%;
     }
 }
