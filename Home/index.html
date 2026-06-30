@@ -33,69 +33,8 @@
             </article>
         </div>
     </div>
-     <header>
-        <div class="headerInner">
-            <div class="logo"><a href="../Home/index.html"><img src="./img/png files(and logo)/logo(black).png" alt="logo"></a></div>
-            <ul class="gnb">
-                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-                <ul class="snb">
-                    <li><a href="#">CONCEPT</a></li>
-                    <li><a href="#">CHOLOGI</a></li>
-                </ul>
-                </li>
-                <li>
-                    <a href="../products/products_index.html">PRODUCT</a>
-                    <ul class="snb">
-                        <li><a href="#">SHOP</a></li>
-                        <li><a href="#">CART</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="../support/index.html">SUPPORT</a>
-                    <ul class="snb">
-                        <li><a href="#">NEWS</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">LOCATION</a></li>
-                        <li><a href="#">LOG IN</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="ham">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </header>
+    <div id="commonHeader"></div>
 <!-- =============================햄버거 누르면 나타나는 전체메뉴=========================== -->
-    <div class="dim"></div>
-    <div class="hamSideMenu">
-        <div class="close">&#10006;</div>
-        <ul class="hamGnb">
-            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-            <ul class="hamSnb">
-                <li><a href="#">CONCEPT</a></li>
-                <li><a href="#">CHOLOGI</a></li>
-            </ul>
-            </li>
-            <li>
-                <a href="../products/products_index.html">PRODUCT</a>
-                <ul class="hamSnb">
-                    <li><a href="#">SHOP</a></li>
-                    <li><a href="#">CART</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="../support/index.html">SUPPORT</a>
-                <ul class="hamSnb">
-                    <li><a href="#">NEWS</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">LOCATION</a></li>
-                    <li><a href="#">LOG IN</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
     <!-- 화면 시작 섹션1 -->
     <div class="mainWrap">
         <div class="characterWrap">
@@ -252,6 +191,24 @@
     </footer>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        fetch("../common/header.html")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const commonHeader = document.querySelector("#commonHeader");
+                const header = doc.querySelector("header");
+                const dim = doc.querySelector(".dim");
+                const hamSideMenu = doc.querySelector(".hamSideMenu");
+
+                if (commonHeader && header && dim && hamSideMenu) {
+                    commonHeader.append(header, dim, hamSideMenu);
+                }
+            });
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>
