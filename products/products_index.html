@@ -466,7 +466,7 @@
             else if (bestCat === 'chorogi') msgEl.textContent = "초로기 귀여움에 중독된 골수 포로그 팬 타입인 당신을 위한 픽!";
             else msgEl.textContent = "방구석 감성 아틀리에 인테리어 전문가 타입인 당신을 위한 픽!";
 
-            // 💡 핵심: JSON 데이터(allProducts)에서 최고 평점 카테고리와 일치하는 제품들을 필터링해 상위 2개 추출
+            // 핵심: JSON 데이터(allProducts)에서 최고 평점 카테고리와 일치하는 제품들을 필터링해 상위 2개 추출
             let recommended = allProducts.filter(p => {
                 if (bestCat === "living") return p.category === "plant" || p.subCategory === "living";
                 if (bestCat === "desk") return p.subCategory === "stationery";
