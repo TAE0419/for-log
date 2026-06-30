@@ -30,28 +30,28 @@ if (cloverWrap) {
 
 
  $(function(){
-            $('.gnb > li').mouseenter(function(){
+            $(document).on('mouseenter', '.gnb > li', function(){
                 $('.snb').stop().slideUp(300)
                 $(this).children('.snb').stop().slideDown(300)
             })
-            $('.gnb > li').mouseleave(function(){
+            $(document).on('mouseleave', '.gnb > li', function(){
                 $('.snb').stop().slideUp(300)
             })
 
-            $('.ham').click(function(){
+            $(document).on('click', '.ham', function(){
                 $('.dim').addClass('on')
                 $('.hamSideMenu').addClass('on')
             })
-            $('.dim').click(function(){
+            $(document).on('click', '.dim', function(){
                 $('.dim').removeClass('on')
                 $('.hamSideMenu').removeClass('on')
             })
-            $('.close').click(function(){
+            $(document).on('click', '.close', function(){
                 $('.dim').removeClass('on')
                 $('.hamSideMenu').removeClass('on')
             })
             //사이드(슬라이드 메뉴) :: 아코디언 구현
-            $('.hamGnb>li>a').click(function(e){
+            $(document).on('click', '.hamGnb>li>a', function(e){
                 if ($(this).attr('href') !== '#') {
                     return true
                 }
