@@ -1,39 +1,61 @@
 const cloverWrap = document.querySelector(".cloverWarp");
 
 if (cloverWrap) {
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 8; i++) {
         const num = String(i).padStart(2, "0");
+        const card = document.createElement("div");
+        const cardInner = document.createElement("div");
+        const front = document.createElement("div");
+        const back = document.createElement("div");
         const object = document.createElement("object");
+        const backImg = document.createElement("img");
 
+        card.className = "cloverCard";
+        cardInner.className = "cloverCardInner";
+        front.className = "cloverCardFace cloverCardFront";
+        back.className = "cloverCardFace cloverCardBack";
         object.type = "image/svg+xml";
         object.data = `./img/forlog-forlog_products/clover-products${num}.svg`;
+        backImg.src = `./img/SVG files/clover_back/${i}-01.svg`;
+        backImg.alt = `clover back ${i}`;
 
-        cloverWrap.appendChild(object);
+        front.appendChild(object);
+        back.appendChild(backImg);
+        cardInner.appendChild(front);
+        cardInner.appendChild(back);
+        card.appendChild(cardInner);
+        cloverWrap.appendChild(card);
     }
 }
+
+
  $(function(){
-            $('.gnb > li').mouseenter(function(){
+            $(document).on('mouseenter', '.gnb > li', function(){
                 $('.snb').stop().slideUp(300)
                 $(this).children('.snb').stop().slideDown(300)
             })
-            $('.gnb > li').mouseleave(function(){
+            $(document).on('mouseleave', '.gnb > li', function(){
                 $('.snb').stop().slideUp(300)
             })
 
-            $('.ham').click(function(){
+            $(document).on('click', '.ham', function(){
                 $('.dim').addClass('on')
                 $('.hamSideMenu').addClass('on')
             })
-            $('.dim').click(function(){
+            $(document).on('click', '.dim', function(){
                 $('.dim').removeClass('on')
                 $('.hamSideMenu').removeClass('on')
             })
-            $('.close').click(function(){
+            $(document).on('click', '.close', function(){
                 $('.dim').removeClass('on')
                 $('.hamSideMenu').removeClass('on')
             })
             //사이드(슬라이드 메뉴) :: 아코디언 구현
-            $('.hamGnb>li>a').click(function(e){
+            $(document).on('click', '.hamGnb>li>a', function(e){
+                if ($(this).attr('href') !== '#') {
+                    return true
+                }
+
                 e.preventDefault() //a태그가 원래 가지고 있던 기능을 막기
 
                 let myMenu = $(this).siblings('.hamSnb') //클릭한 li a태그의 형제(hamSnb)
@@ -44,8 +66,8 @@ if (cloverWrap) {
             })
         })
 
-        const best=document.querySelector(".BestGallery")
-        const observer=new IntersectionObserver(function(entries){
+        const rule=document.querySelector(".BestGallery")
+        const observer30=new IntersectionObserver(function(entries){
             entries.forEach(function(entry){
                 if(entry.isIntersecting){
                     entry.target.classList.add("on")
@@ -59,8 +81,8 @@ if (cloverWrap) {
 
         })
 
-        if (best) {
-    observer.observe(best);
+        if (rule) {
+    observer30.observe(rule);
 }
 // 여기는 Shot어쩌고의 자리
     const txt1=document.querySelector(".heroContent2")
@@ -81,6 +103,105 @@ if (cloverWrap) {
 if (txt1) {
     observer2.observe(txt1);
 }
+// 쇼트컷의 이미지가 올라오는 부분
+ const slowUp=document.querySelector(".boxUp")
+        const observer10=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (slowUp) {
+    observer10.observe(slowUp);
+}
+
+ const slowUp2=document.querySelector(".boxDown")
+        const observer11=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (slowUp2) {
+    observer11.observe(slowUp2);
+}
+
+// 끝-----------------------------
+
+// About For-log의 시작(옵저버)----------------------
+ const pikabu=document.querySelector(".character span:nth-child(1)")
+        const observer12=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (pikabu) {
+    observer12.observe(pikabu);
+}
+
+ const pikabu2=document.querySelector(".character span:nth-child(2)")
+        const observer13=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (pikabu2) {
+    observer13.observe(pikabu2);
+}
+
+ const characterImg=document.querySelector(".character img")
+        const observer14=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+        })
+
+        if (characterImg) {
+    observer14.observe(characterImg);
+}
+
+//끝남-----------------------------
 
 const fadeSlider = document.querySelector(".slider");
 const fadeDots = document.querySelectorAll(".dots > div");
@@ -193,42 +314,104 @@ function makeProductDrag() {
         let scrollLeft = 0;
         let autoTimer = null;
         let pressedCard = null;
+        let segmentStart = 0;
+        let segmentWidth = 0;
+        let cardStep = 0;
+        let slideIndex = 0;
 
-        function getCardStep() {
-            const firstCard = viewport.querySelector(".productCard");
+        function setupInfiniteTrack() {
             const track = viewport.querySelector(".productTrack");
 
-            if (!firstCard || !track) {
-                return viewport.clientWidth * 0.75;
+            if (!track || track.dataset.infiniteReady === "true") return;
+
+            const originalCards = Array.from(track.querySelectorAll(".productCard"));
+
+            if (originalCards.length === 0) return;
+
+            const beforeClones = originalCards.map(function (card) {
+                const clone = card.cloneNode(true);
+                clone.classList.add("productCardClone");
+                return clone;
+            });
+
+            const afterClones = originalCards.map(function (card) {
+                const clone = card.cloneNode(true);
+                clone.classList.add("productCardClone");
+                return clone;
+            });
+
+            beforeClones.reverse().forEach(function (clone) {
+                track.insertBefore(clone, track.firstChild);
+            });
+
+            afterClones.forEach(function (clone) {
+                track.appendChild(clone);
+            });
+
+            segmentStart = originalCards[0].offsetLeft;
+            segmentWidth = afterClones[0].offsetLeft - originalCards[0].offsetLeft;
+            cardStep = originalCards[1]
+                ? originalCards[1].offsetLeft - originalCards[0].offsetLeft
+                : originalCards[0].offsetWidth;
+
+            syncCircleBackgroundSize();
+            viewport.scrollLeft = segmentStart;
+            slideIndex = 0;
+            track.dataset.infiniteReady = "true";
+        }
+
+        function syncCircleBackgroundSize() {
+            const band = viewport.closest(".productBand");
+
+            if (!band || !cardStep) return;
+
+            const circleGap = 360.2;
+            const svgHeight = 1450.6;
+            const backgroundSize = (cardStep * svgHeight / circleGap / band.offsetHeight) * 100;
+
+            band.style.setProperty("--circle-bg-size", `${backgroundSize}%`);
+        }
+
+        function normalizeInfiniteScroll() {
+            if (!segmentWidth) return;
+
+            if (viewport.scrollLeft < segmentStart - 1) {
+                viewport.scrollLeft += segmentWidth;
             }
 
-            const trackStyle = window.getComputedStyle(track);
-            const gap = parseFloat(trackStyle.columnGap || trackStyle.gap) || 0;
+            if (viewport.scrollLeft >= segmentStart + segmentWidth - 1) {
+                viewport.scrollLeft -= segmentWidth;
+            }
 
-            return firstCard.offsetWidth + gap;
+            slideIndex = Math.round((segmentStart - viewport.scrollLeft) / getCardStep());
+        }
+
+        function getCardStep() {
+            if (!cardStep) {
+                const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+
+                return 30 * rootFontSize;
+            }
+
+            return cardStep;
         }
 
         function startAutoSlide() {
             stopAutoSlide();
 
             autoTimer = setInterval(function () {
-                const maxScroll = viewport.scrollWidth - viewport.clientWidth;
                 const cardStep = getCardStep();
-                const nextScroll = viewport.scrollLeft + cardStep;
+                const totalSteps = Math.max(1, Math.round(segmentWidth / cardStep));
 
-                if (nextScroll >= maxScroll - 5) {
-                    viewport.scrollTo({
-                        left: 0,
-                        behavior: "smooth"
-                    });
-                    return;
-                }
+                normalizeInfiniteScroll();
+                slideIndex = (slideIndex + 1) % totalSteps;
 
-                viewport.scrollBy({
-                    left: cardStep,
+                viewport.scrollTo({
+                    left: segmentStart - (slideIndex * cardStep),
                     behavior: "smooth"
                 });
-            }, 3000);
+                setTimeout(normalizeInfiniteScroll, 700);
+            }, 2000);
         }
 
         function stopAutoSlide() {
@@ -274,6 +457,7 @@ function makeProductDrag() {
             }
 
             pressedCard = null;
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
@@ -281,6 +465,7 @@ function makeProductDrag() {
             isDown = false;
             pressedCard = null;
             viewport.classList.remove("dragging");
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
@@ -289,9 +474,11 @@ function makeProductDrag() {
             isDown = false;
             pressedCard = null;
             viewport.classList.remove("dragging");
+            normalizeInfiniteScroll();
             startAutoSlide();
         });
 
+        setupInfiniteTrack();
         startAutoSlide();
     });
 }
@@ -351,4 +538,75 @@ function closeProductModal() {
 
     modal.classList.remove("on");
     document.body.classList.remove("modalOpen");
+}
+
+const mainPopup = document.querySelector("#mainPopup");
+
+function setMainPopupCookie(name, value, days) {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+}
+
+function getMainPopupCookie(name) {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find(function (item) {
+        return item.startsWith(name + "=");
+    });
+
+    return cookie ? cookie.split("=")[1] : null;
+}
+
+function updateMainPopupState() {
+    if (!mainPopup) return;
+
+    const visibleItems = mainPopup.querySelectorAll(".mainPopupItem:not(.hide)");
+
+    mainPopup.classList.toggle("hide", visibleItems.length === 0);
+}
+
+if (mainPopup) {
+    const popupItems = mainPopup.querySelectorAll(".mainPopupItem");
+
+    popupItems.forEach(function (item) {
+        const popupId = item.dataset.popupId;
+        const cookieName = `mainPopupPreview_${popupId}`;
+
+        if (getMainPopupCookie(cookieName) === "close") {
+            item.classList.add("hide");
+        }
+
+        item.querySelector(".mainPopupClose").addEventListener("click", function () {
+            const todayCheckbox = item.querySelector(".mainPopupToday input");
+
+            if (todayCheckbox && todayCheckbox.checked) {
+                setMainPopupCookie(cookieName, "close", 1);
+            }
+
+            item.classList.add("hide");
+            updateMainPopupState();
+        });
+    });
+
+    updateMainPopupState();
+}
+
+// 베스트 리뷰의 자리
+        const View=document.querySelector(".sec5>div>span")
+        const observerView=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add("on")
+                }
+                // }else{
+                //     entry.target.classList.remove("on")
+                // }
+            })
+        },{
+            threshold: 0.3
+
+        })
+
+        if (View) {
+    observerView.observe(View);
 }

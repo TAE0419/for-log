@@ -7,18 +7,21 @@
     <title>FOR-LOG - CART</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- 🌟 추가됨: 폭죽 파티클 효과를 위한 canvas-confetti 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
 
     <style>
         /* FOR-LOG 프로젝트 전용 테마 컬러 정의 */
         :root {
-            --main-color: #AAB664; 
+            --main-color: #AAB664;
             --sub-color: #6F8B41;
-            --bg-color: #FFFEF3; 
-            --point-color: #DB824A; 
+            --bg-color: #FFFEF3;
+            --point-color: #DB824A;
             --dark-color: #24331C;
-            --line-color: #E2E8F0;   
+            --line-color: #E2E8F0;
         }
 
         * {
@@ -35,72 +38,98 @@
         }
 
         /* -----------------------------------------
-           [헤더 영역 스타일 (팀장님 원본 설계 100% 동기화)]
+           [헤더 영역 스타일]
         -------------------------------------------- */
         header {
-            width: 100%; height: 90px;
-            display: flex; justify-content: center; align-items: center;
-            position: fixed; top: 0; left: 0; z-index: 100;
+            width: 100%;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
         }
-        
+
         .headerInner {
-            width: 90%; height: 60%;
-            background-color: var(--bg-color); /* 팀장님 원본 */
+            width: 90%;
+            height: 60%;
+            background-color: var(--bg-color);
             border-radius: 50px;
-            display: grid; grid-template-columns: 15% 80% 5%; 
+            display: grid;
+            grid-template-columns: 15% 80% 5%;
             padding: 0 40px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             position: relative;
         }
 
         .headerInner::before {
             content: "";
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: color-mix(in srgb, var(--bg-color) 90%, transparent);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             border-radius: 50px;
-            z-index: -1; 
+            z-index: -1;
         }
-        
-        /* 📌 팀장님 핵심 규칙: 모바일에서도 휙 작아지지 않게 min-width 고정 지탱 */
+
         .logo {
-            display: flex; justify-content: center; align-items: center; min-width: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 250px;
         }
-        
-        .logo > a {
-            width: 75%; height: 51%;
-            display: flex; justify-content: center; align-items: center;
+
+        .logo>a {
+            width: 75%;
+            height: 51%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
+
         .logo img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
-        
+
         .gnb {
-            height: 100%; 
-            display: flex; justify-content: end;
+            height: 100%;
+            display: flex;
+            justify-content: end;
         }
-        
-        .gnb > li {
-            height: 100%; position: relative; margin-right: 100px;
-            transition: all 0.2s; font: var(--small2-font); color: var(--dark-color);
+
+        .gnb>li {
+            height: 100%;
+            position: relative;
+            margin-right: 100px;
+            transition: all 0.2s;
+            font: var(--small2-font);
+            color: var(--dark-color);
         }
-        
-        .gnb > li:hover {
+
+        .gnb>li:hover {
             color: var(--main-color);
         }
-        
-        .gnb > li > a {
-            width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
+
+        .gnb>li>a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: all 0.1s;
         }
-        
+
         .snb {
-            position: absolute; left: 50%; 
+            position: absolute;
+            left: 50%;
             transform: translateX(-50%);
             top: 100%;
             width: 150px;
@@ -112,81 +141,97 @@
             padding: 15px;
             display: none;
         }
-        
+
         .snb li {
-            padding: 5px 0; font: var(--small2-font);
+            padding: 5px 0;
+            font: var(--small2-font);
         }
 
         .ham {
             width: 100%;
-            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
-        
+
         .ham span {
-            width: 25px; height: 2px; border-radius: 5px;
-            background-color: var(--dark-color); margin: 3px 0;
+            width: 25px;
+            height: 2px;
+            border-radius: 5px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
             transition: all 0.2s;
         }
-        
+
         .ham:hover span:nth-child(1) {
             transform: rotate(-26deg) translateY(3px);
         }
-        
+
         .ham:hover span:nth-child(2) {
             opacity: 0;
         }
-        
+
         .ham:hover span:nth-child(3) {
             transform: rotate(26deg) translateY(-3px);
         }
-        
+
         .dim {
-            width: 100%; height: 100vh;
+            width: 100%;
+            height: 100vh;
             background-color: color-mix(in srgb, var(--dark-color) 50%, transparent);
             backdrop-filter: blur(4px);
-            position: fixed; left: 0; top: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
             z-index: 500;
         }
-        
+
         .dim.on {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .hamSideMenu {
-            width: 22rem; height: 100vh;
+            width: 22rem;
+            height: 100vh;
             background-color: var(--bg-color);
-            position: fixed; right: -100%; top: 0;
-            padding: 32px; transition: all 0.3s;
+            position: fixed;
+            right: -100%;
+            top: 0;
+            padding: 32px;
+            transition: all 0.3s;
             z-index: 1000;
         }
-        
+
         .hamSideMenu.on {
             right: 0;
         }
-        
-        .hamGnb > li {
+
+        .hamGnb>li {
             margin-top: 70px;
-            font: var(--small-font); color: var(--dark-color);
+            font: var(--small-font);
+            color: var(--dark-color);
             transition: all 0.2s;
         }
-        
-        .hamGnb > li:hover {
+
+        .hamGnb>li:hover {
             color: var(--main-color);
         }
-        
+
         .hamSnb {
             display: none;
         }
-        
+
         .hamSnb li {
             margin-top: 20px;
-            font: var(--small2-font); color: var(--main-color);
+            font: var(--small2-font);
+            color: var(--main-color);
         }
-        
+
         .close {
             width: 20px;
             color: var(--point-color);
@@ -194,15 +239,23 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        
+
         .close:hover {
             scale: 1.2;
         }
-        
-        @media(max-width:1000px){
-            .gnb { display: none; }
-            .hamSideMenu { width: 70%; }
-            .ham { align-items: end; }
+
+        @media(max-width:1000px) {
+            .gnb {
+                display: none;
+            }
+
+            .hamSideMenu {
+                width: 70%;
+            }
+
+            .ham {
+                align-items: end;
+            }
         }
 
         /* -----------------------------------------
@@ -216,7 +269,7 @@
 
         .cart-page {
             padding: clamp(120px, 12vh, 180px) 0 100px;
-            min-height: calc(100vh - 90px - 31rem); 
+            min-height: calc(100vh - 90px - 31rem);
         }
 
         .cart-inner {
@@ -239,7 +292,7 @@
             font-weight: 900;
             text-transform: uppercase;
             font-family: var(--font-cloud);
-            font-size: clamp(3.5rem, 8vw, 8rem); 
+            font-size: clamp(3.5rem, 8vw, 8rem);
             line-height: 0.8;
         }
 
@@ -284,10 +337,22 @@
             border-bottom: 2px dashed var(--main-color);
         }
 
-        .cart-table th:nth-child(1) { text-align: left; width: 45%; }
-        .cart-table th:nth-child(2) { width: 20%; }
-        .cart-table th:nth-child(3) { width: 15%; }
-        .cart-table th:nth-child(4) { width: 20%; }
+        .cart-table th:nth-child(1) {
+            text-align: left;
+            width: 45%;
+        }
+
+        .cart-table th:nth-child(2) {
+            width: 20%;
+        }
+
+        .cart-table th:nth-child(3) {
+            width: 15%;
+        }
+
+        .cart-table th:nth-child(4) {
+            width: 20%;
+        }
 
         .cart-item-row {
             border-bottom: 1.5px dashed var(--main-color);
@@ -320,7 +385,8 @@
         }
 
         .cart-item-img img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
@@ -382,31 +448,38 @@
             border-bottom: 1px solid var(--main-color);
         }
 
-        /* 💡 반응형 개선: 모바일 기기(768px 이하)에서 테이블 레이아웃을 카드 형태로 수직 전환 */
+        /* 반응형 개선 */
         @media (max-width: 768px) {
             .cart-table thead {
-                display: none; 
+                display: none;
             }
-            .cart-table, .cart-table tbody, .cart-item-row, .cart-item-row td {
+
+            .cart-table,
+            .cart-table tbody,
+            .cart-item-row,
+            .cart-item-row td {
                 display: block;
                 width: 100%;
             }
+
             .cart-item-row {
                 background-color: #ffffff;
                 border: 1px solid var(--line-color);
                 border-radius: 20px;
                 padding: 20px;
                 margin-bottom: 20px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
             }
+
             .cart-item-row td {
                 padding: 12px 0;
                 border: none;
-                text-align: right; 
+                text-align: right;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
+
             .cart-item-info-cell {
                 justify-content: flex-start;
                 padding-bottom: 15px;
@@ -414,17 +487,38 @@
                 margin-bottom: 5px;
                 width: 100%;
             }
+
             .cart-item-img {
-                width: 80px; height: 80px; 
+                width: 80px;
+                height: 80px;
             }
-            .cart-item-row td:nth-child(2)::before { content: "가격"; color: var(--sub-color); font-weight: 700; font-size: 0.95rem; }
-            .cart-item-row td:nth-child(3)::before { content: "수량"; color: var(--sub-color); font-weight: 700; font-size: 0.95rem; }
-            .cart-item-row td:nth-child(4)::before { content: "합계"; color: var(--point-color); font-weight: 700; font-size: 0.95rem; }
-            
+
+            .cart-item-row td:nth-child(2)::before {
+                content: "가격";
+                color: var(--sub-color);
+                font-weight: 700;
+                font-size: 0.95rem;
+            }
+
+            .cart-item-row td:nth-child(3)::before {
+                content: "수량";
+                color: var(--sub-color);
+                font-weight: 700;
+                font-size: 0.95rem;
+            }
+
+            .cart-item-row td:nth-child(4)::before {
+                content: "합계";
+                color: var(--point-color);
+                font-weight: 700;
+                font-size: 0.95rem;
+            }
+
             .row-delete-btn {
                 margin-left: auto;
                 padding: 6px 12px;
             }
+
             .empty-row td {
                 display: block;
                 text-align: center;
@@ -467,6 +561,7 @@
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
+            outline: none;
         }
 
         .summary-divider {
@@ -501,6 +596,7 @@
 
         .sidebar-order-btn:hover {
             background-color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         /* 하단 버튼 시스템 */
@@ -511,7 +607,7 @@
             margin-top: 30px;
             border-top: 1.5px dashed var(--main-color);
             padding-top: 40px;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -534,23 +630,29 @@
             background-color: var(--main-color);
             color: white;
         }
-        .btn-secondary:hover { background-color: var(--sub-color); }
+
+        .btn-secondary:hover {
+            background-color: var(--sub-color);
+        }
 
         .btn-danger {
             background-color: transparent;
             border: 2px solid var(--point-color);
             color: var(--point-color);
         }
+
         .btn-danger:hover {
             background-color: var(--point-color);
             color: white;
         }
 
-        /* 장바구니 비우기 확인 모달 */
+        /* 일반 모달 */
         .confirm-modal {
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: 10000;
             display: flex;
             align-items: center;
@@ -559,7 +661,8 @@
 
         .confirm-modal-overlay {
             position: absolute;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             background: rgba(33, 44, 27, 0.5);
             backdrop-filter: blur(2px);
         }
@@ -573,7 +676,7 @@
             max-width: 380px;
             text-align: center;
             z-index: 10;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .confirm-modal-buttons {
@@ -603,53 +706,233 @@
         }
 
         /* -----------------------------------------
-           [푸터 영역 스타일 (팀원님 오리지널 코드 완전 보존)]
+           ✨ 대망의 화려한 주문 완료 영수증 모달 ✨
+        -------------------------------------------- */
+        .fancy-receipt-modal .confirm-modal-overlay {
+            background: rgba(36, 51, 28, 0.7);
+            backdrop-filter: blur(8px);
+        }
+
+        .fancy-receipt-content {
+            position: relative;
+            background: #ffffff;
+            width: 90%;
+            max-width: 480px;
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 30px 60px rgba(170, 182, 100, 0.4), 0 0 80px rgba(219, 130, 74, 0.2);
+            border: 4px solid var(--main-color);
+            animation: modalPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes modalPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .celebrate-icon {
+            font-size: 4.5rem;
+            color: var(--point-color);
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIcon 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceIcon {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg) scale(1);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(5deg) scale(1.1);
+            }
+        }
+
+        .fancy-receipt-title {
+            font-family: var(--font-cloud);
+            font-size: 4rem;
+            color: var(--main-color);
+            margin-bottom: 5px;
+            line-height: 1;
+            text-shadow: 3px 3px 0px rgba(170, 182, 100, 0.2);
+        }
+
+        .fancy-receipt-subtitle {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+        }
+
+        /* 진짜 영수증처럼 보이게 하는 내부 박스 */
+        .receipt-paper {
+            background: var(--bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 35px;
+            position: relative;
+            border: 1px dashed var(--sub-color);
+            text-align: left;
+        }
+
+        /* 영수증 펀칭 구멍 효과 */
+        .receipt-paper::before,
+        .receipt-paper::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .receipt-paper::before {
+            left: -16px;
+            border-right: 1px dashed var(--sub-color);
+        }
+
+        .receipt-paper::after {
+            right: -16px;
+            border-left: 1px dashed var(--sub-color);
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .receipt-row.total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--main-color);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--point-color);
+        }
+
+        /* ✨ 고급스러운 빛(Shimmer) 애니메이션 버튼 ✨ */
+        .btn-finish-order {
+            position: relative;
+            background: linear-gradient(135deg, var(--point-color), #c96f38);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(219, 130, 74, 0.3);
+            transition: all 0.3s;
+            overflow: hidden;
+            /* 영역 밖으로 나가는 빛 자르기 */
+        }
+
+        /* 빛이 차르르 지나가는 가상 요소 */
+        .btn-finish-order::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shimmerBtn 2.5s infinite;
+        }
+
+        .btn-finish-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(219, 130, 74, 0.5);
+        }
+
+        @keyframes shimmerBtn {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 200%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* -----------------------------------------
+           [푸터 영역 스타일]
         -------------------------------------------- */
         footer {
-            width: 100%; height: 31rem;
+            width: 100%;
+            height: 31rem;
             background-color: var(--point-color);
             padding: 50px;
-            display: flex; justify-content: space-between;
+            display: flex;
+            justify-content: space-between;
         }
-        
+
         footer .left {
-            display: flex; flex-direction: column; gap: 30px; justify-content: space-between;
-            width: 70rem; 
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: space-between;
+            width: 70rem;
         }
-        
+
         footer .info {
             font: var(--small2-font);
             color: var(--bg-color);
-            display: flex; flex-direction: column; gap: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        
+
         footer .line {
             width: 90%;
         }
-        
-        /* 헤더 로고와 충돌 스코핑 제어 보호막 유지 */
+
         footer .logo {
             width: 80%;
         }
-        
-        footer .logo > img {
+
+        footer .logo>img {
             width: 100%;
         }
-        
+
         footer .right {
-            display: flex; flex-direction: column; gap: 60px;
-            align-items: center; justify-content: center;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* 📌 오리지널 세로 배열 레이아웃 유지 */
         footer .sns {
             display: flex;
             flex-direction: column;
-            gap: 30px; 
+            gap: 30px;
             align-items: center;
         }
-        
-        footer .right > img,
+
+        footer .right>img,
         footer .sns img {
             width: 3rem;
             cursor: pointer;
@@ -661,13 +944,14 @@
 
     <header>
         <div class="headerInner">
-            <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a></div>
+            <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a>
+            </div>
             <ul class="gnb">
                 <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-                <ul class="snb">
-                    <li><a href="#">CONCEPT</a></li>
-                    <li><a href="#">CHOLOGI</a></li>
-                </ul>
+                    <ul class="snb">
+                        <li><a href="#">CONCEPT</a></li>
+                        <li><a href="#">CHOLOGI</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="../products/products_index.html">PRODUCT</a>
@@ -679,10 +963,10 @@
                 <li>
                     <a href="../support/html/index.html">SUPPORT</a>
                     <ul class="snb">
-                        <li><a href="#">NEWS</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">LOCATION</a></li>
-                        <li><a href="#">LOG IN</a></li>
+                        <li><a href="#news">NEWS</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#location">LOCATION</a></li>
+                        <li><a href="../products/login.html">LOG IN</a></li>
                     </ul>
                 </li>
             </ul>
@@ -714,10 +998,10 @@
             <li>
                 <a href="../support/html/index.html">SUPPORT</a>
                 <ul class="hamSnb">
-                    <li><a href="#">NEWS</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">LOCATION</a></li>
-                    <li><a href="#">LOG IN</a></li>
+                    <li><a href="#news">NEWS</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#location">LOCATION</a></li>
+                    <li><a href="../products/login.html">LOG IN</a></li>
                 </ul>
             </li>
         </ul>
@@ -753,7 +1037,7 @@
                     <div class="summary-row">
                         <select class="delivery-select-box" id="sidebar-delivery-select">
                             <option value="regular">일반 배송</option>
-                            <option value="express">급행 배송</option>
+                            <option value="express">샛별 배송</option>
                         </select>
                         <span id="sidebar-shipping-fee" class="value-text">+ 3,000원</span>
                     </div>
@@ -766,17 +1050,20 @@
                         <div class="total-label">최종 결제 금액</div>
                         <div id="sidebar-final-price" class="total-value">0원</div>
                     </div>
-                    <button type="button" class="sidebar-order-btn" onclick="alert('주문 단계로 이동합니다! 🌿')">주문하기</button>
+
+                    <button type="button" class="sidebar-order-btn" onclick="executeOrder()">주문하기</button>
                 </aside>
             </div>
 
             <div class="cart-buttons">
-                <button type="button" class="btn btn-secondary" onclick="location.href='products_index.html'">쇼핑 계속하기</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='products_index.html'">쇼핑
+                    계속하기</button>
                 <button type="button" class="btn btn-danger" onclick="openClearModal()">장바구니 비우기</button>
             </div>
         </div>
     </main>
 
+    <!-- 기존 장바구니 비우기 모달 -->
     <div id="clear-confirm-modal" class="confirm-modal" style="display: none;">
         <div class="confirm-modal-overlay" onclick="closeClearModal()"></div>
         <div class="confirm-modal-content">
@@ -789,8 +1076,39 @@
         </div>
     </div>
 
+    <!-- 🌟 화려하고 거대한 주문 완료 영수증 🌟 -->
+    <div id="order-receipt-modal" class="confirm-modal fancy-receipt-modal" style="display: none;">
+        <div class="confirm-modal-overlay" onclick="closeOrderModal()"></div>
+        <div class="confirm-modal-content fancy-receipt-content">
+            <!-- 둥둥 떠다니는 아이콘 -->
+            <div class="celebrate-icon"><i class="fa-solid fa-gift"></i></div>
+
+            <h3 class="fancy-receipt-title">THANK YOU!</h3>
+            <p class="fancy-receipt-subtitle">성공적으로 주문이 완료되었습니다 💚</p>
+
+            <!-- 펀치 구멍 뚫린 리얼한 영수증 내역 영역 -->
+            <div class="receipt-paper">
+                <div class="receipt-row">
+                    <span style="color: var(--sub-color);">주문 일자</span>
+                    <span id="receipt-date">2026.06.29</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--sub-color);">주문 번호</span>
+                    <span id="receipt-order-num">FL-12345678</span>
+                </div>
+                <div class="receipt-row total">
+                    <span>최종 결제 금액</span>
+                    <span id="receipt-total">0원</span>
+                </div>
+            </div>
+
+            <!-- 빛이 스르륵 흐르는 영수증 최종 버튼 -->
+            <button type="button" class="btn-finish-order" onclick="finishOrder()">✨ 달콤한 굿즈 만나러 가기 ✨</button>
+        </div>
+    </div>
+
     <footer>
-        <div class="left"> 
+        <div class="left">
             <div class="info">
                 <p>주소 : 서울특별시 강남구 테헤란로 427 위워크타워 10층</p>
                 <p>대표 : 김태은</p>
@@ -814,6 +1132,9 @@
             </div>
         </div>
     </footer>
+
+    <div class="roundG4"></div>
+    <script src="../products/mouseEffect.js"></script>
 
     <script>
         $(function () {
@@ -844,13 +1165,19 @@
                 $('.hamSnb').not(myMenu).stop().slideUp(300);
                 $(this).siblings('.hamSnb').stop().slideToggle(300);
             });
+
+            // 배송 옵션을 변경할 때마다 즉시 배송비를 재계산하도록 이벤트 연결
+            $('#sidebar-delivery-select').change(function () {
+                const totalProductPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                updateSummary(totalProductPrice);
+            });
         });
 
         let sampleCart = [
             { id: 1, name: "FOR-LOG 시그니처 유리 머그컵", price: 14000, quantity: 1, image: "img/mug.png" },
             { id: 2, name: "반짝반짝 투명 초록이 스마트폰 케이스", price: 15000, quantity: 2, image: "img/case.png" }
         ];
-        
+
         if (!localStorage.getItem("forlog_cart")) {
             localStorage.setItem("forlog_cart", JSON.stringify(sampleCart));
         }
@@ -875,7 +1202,7 @@
                         <td>
                             <div class="cart-item-info-cell">
                                 <div class="cart-item-img">
-                                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/70x70?text=FORLOG'">
+                                    <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/70x70?text=FORLOG'">
                                 </div>
                                 <span class="cart-item-name">${item.name}</span>
                                 <button class="row-delete-btn" onclick="deleteItem(${item.id})">삭제</button>
@@ -913,12 +1240,12 @@
             renderCartTable();
         }
 
-        function openClearModal() { 
+        function openClearModal() {
             if (cart.length === 0) {
                 alert("이미 장바구니가 비어 있습니다. 🌿");
                 return;
             }
-            document.getElementById("clear-confirm-modal").style.display = "flex"; 
+            document.getElementById("clear-confirm-modal").style.display = "flex";
         }
         function closeClearModal() { document.getElementById("clear-confirm-modal").style.display = "none"; }
         function executeClearCart() {
@@ -928,15 +1255,108 @@
             closeClearModal();
         }
 
-        // 합계 및 배송비 정산 시스템
         function updateSummary(totalProductPrice) {
-            const isFree = totalProductPrice >= 30000 || totalProductPrice === 0;
-            const shippingFee = isFree ? 0 : 3000;
+            const deliveryType = document.getElementById('sidebar-delivery-select').value;
+            let shippingFee = 0;
+            let shippingText = "";
+
+            if (totalProductPrice > 0) {
+                if (deliveryType === 'express') {
+                    // 샛별 배송은 무조건 5,000원 부과
+                    shippingFee = 5000;
+                    shippingText = `+ ${shippingFee.toLocaleString()}원`;
+                } else {
+                    // 일반 배송은 30,000원 이상 무료
+                    const isFree = totalProductPrice >= 30000;
+                    shippingFee = isFree ? 0 : 3000;
+                    shippingText = isFree ? "무료배송" : `+ ${shippingFee.toLocaleString()}원`;
+                }
+            } else {
+                shippingFee = 0;
+                shippingText = "0원";
+            }
+
             const discount = totalProductPrice > 0 ? 1000 : 0;
+
             sidebarProductPriceEl.textContent = `${totalProductPrice.toLocaleString()}원`;
-            sidebarShippingFeeEl.textContent = isFree ? "무료배송" : `+ ${shippingFee.toLocaleString()}원`;
+            sidebarShippingFeeEl.textContent = shippingText;
             sidebarDiscountPriceEl.textContent = `-${discount.toLocaleString()}원`;
             sidebarFinalPriceEl.textContent = `${Math.max(0, totalProductPrice + shippingFee - discount).toLocaleString()}원`;
+        }
+
+        // ✨ 폭죽을 양옆에서 터뜨려주는 함수 ✨
+        function triggerFireworks() {
+            var duration = 3 * 1000; // 3초 동안 폭죽
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10001 }; // zIndex를 높여서 모달 위로!
+
+            // FOR-LOG 브랜드 컬러 (올리브그린, 오렌지, 딥그린)
+            var colors = ['#AAB664', '#DB824A', '#6F8B41', '#ffffff'];
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function () {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+
+                // 왼쪽에서 팡!
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+                // 오른쪽에서 팡!
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+            }, 250);
+        }
+
+        // 🌟 주문 완료 로직
+        function executeOrder() {
+            if (cart.length === 0) {
+                alert("장바구니가 비어 있습니다. 상품을 먼저 담아주세요! 🌿");
+                return;
+            }
+
+            // 1. 그럴싸한 가짜 주문번호 생성
+            const orderNum = "FL-" + Math.floor(Math.random() * 100000000);
+            document.getElementById('receipt-order-num').textContent = orderNum;
+
+            // 2. 오늘 날짜 연동
+            const today = new Date();
+            const dateStr = today.getFullYear() + "." + String(today.getMonth() + 1).padStart(2, '0') + "." + String(today.getDate()).padStart(2, '0');
+            document.getElementById('receipt-date').textContent = dateStr;
+
+            // 3. 사이드바에서 최종 결제 금액 스틸해오기
+            const finalPrice = sidebarFinalPriceEl.textContent;
+            document.getElementById('receipt-total').textContent = finalPrice;
+
+            // 4. 모달 열기!
+            document.getElementById("order-receipt-modal").style.display = "flex";
+
+            // ✨ 5. 폭죽 터뜨리기! ✨
+            triggerFireworks();
+        }
+
+        function closeOrderModal() {
+            document.getElementById("order-receipt-modal").style.display = "none";
+        }
+
+        function finishOrder() {
+            // 주문 완료 후 장바구니 싹 비우고 쇼핑 목록으로 이동
+            cart = [];
+            localStorage.setItem("forlog_cart", JSON.stringify(cart));
+            window.location.href = 'products_index.html';
         }
 
         document.addEventListener("DOMContentLoaded", renderCartTable);

@@ -9,69 +9,32 @@
     <title>FOR-LOG</title>
 </head>
 <body>
-    <header>
-        <div class="headerInner">
-            <div class="logo"><a href="../Home/index.html"><img src="./img/png files(and logo)/logo(black).png" alt="logo"></a></div>
-            <ul class="gnb">
-                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-                <ul class="snb">
-                    <li><a href="#">CONCEPT</a></li>
-                    <li><a href="#">CHOLOGI</a></li>
-                </ul>
-                </li>
-                <li>
-                    <a href="../products/products_index.html">PRODUCT</a>
-                    <ul class="snb">
-                        <li><a href="#">SHOP</a></li>
-                        <li><a href="#">CART</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="../support/html/index.html">SUPPORT</a>
-                    <ul class="snb">
-                        <li><a href="#">NEWS</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">LOCATION</a></li>
-                        <li><a href="#">LOG IN</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="ham">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <div class="mainPopup" id="mainPopup" aria-label="event popup">
+        <div class="mainPopupInner">
+            <article class="mainPopupItem" data-popup-id="popUp1">
+                <img src="./img/popUp1.png" alt="FOR-LOG event popup 1">
+                <div class="mainPopupControl">
+                    <label class="mainPopupToday">
+                        <input type="checkbox">
+                        <span>&#50724;&#45720;&#54616;&#47336; &#44536;&#47564; &#48372;&#44592;</span>
+                    </label>
+                    <button type="button" class="mainPopupClose">&#45803;&#44592;</button>
+                </div>
+            </article>
+            <article class="mainPopupItem" data-popup-id="popUp3">
+                <img src="./img/popUp3.png" alt="FOR-LOG event popup 3">
+                <div class="mainPopupControl">
+                    <label class="mainPopupToday">
+                        <input type="checkbox">
+                        <span>&#50724;&#45720;&#54616;&#47336; &#44536;&#47564; &#48372;&#44592;</span>
+                    </label>
+                    <button type="button" class="mainPopupClose">&#45803;&#44592;</button>
+                </div>
+            </article>
         </div>
-    </header>
-<!-- =============================햄버거 누르면 나타나는 전체메뉴=========================== -->
-    <div class="dim"></div>
-    <div class="hamSideMenu">
-        <div class="close">&#10006;</div>
-        <ul class="hamGnb">
-            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-            <ul class="hamSnb">
-                <li><a href="#">CONCEPT</a></li>
-                <li><a href="#">CHOLOGI</a></li>
-            </ul>
-            </li>
-            <li>
-                <a href="../products/products_index.html">PRODUCT</a>
-                <ul class="hamSnb">
-                    <li><a href="#">SHOP</a></li>
-                    <li><a href="#">CART</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="../support/html/index.html">SUPPORT</a>
-                <ul class="hamSnb">
-                    <li><a href="#">NEWS</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">LOCATION</a></li>
-                    <li><a href="#">LOG IN</a></li>
-                </ul>
-            </li>
-        </ul>
     </div>
+    <div id="commonHeader"></div>
+<!-- =============================햄버거 누르면 나타나는 전체메뉴=========================== -->
     <!-- 화면 시작 섹션1 -->
     <div class="mainWrap">
         <div class="characterWrap">
@@ -114,6 +77,7 @@
         <div class="heroContent2">
                 <div class="circle"></div><span>SHORTCUT</span>
         </div>
+        <div class="inner2">
         <div class="boxUp">
             <img src="./img/character image/table-character2.png" alt="Brand story">
             <div class="whiteCircle"><span>
@@ -128,11 +92,20 @@
             <div class="whiteCircle"><span class="p_span">News</span></div>
             <img src="./img/character image/welcome.png" alt="Location">
         </div>
+        </div>
     </section>
         <!-- 섹션2 끝 -->
         <!-- 섹션3 시작 -->
     <section class="sec3">
         <div class="inner">
+            <!-- 움직이는 것들-옵저버 끝나고 -->
+            <div class="spakleGreenBox">
+                <div class="spk1"></div>
+                <div class="spk2"></div>
+                <div class="spk3"></div>
+                <div class="spk4"></div>
+            </div>
+            <!-- 끝 -->
             <div class="character">
                 <img src="./img/character image/PNG/choro-gi6.png" alt="웃는 초로기">
                 <div class="textWarp">
@@ -152,7 +125,7 @@
             <div class="cloverWarp"></div>
             <div class="secondWrap">
                 <span class="BestGallery">BEST<br>GALLERY</span>
-                <img src="./img/character image/PNG/choro-gi5.png" alt="꽃에 물주는 choro-gi">
+                <div class="anotherIMG"></div>
             </div>
         </div>
     </section>
@@ -218,6 +191,24 @@
     </footer>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        fetch("../common/header.html")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const commonHeader = document.querySelector("#commonHeader");
+                const header = doc.querySelector("header");
+                const dim = doc.querySelector(".dim");
+                const hamSideMenu = doc.querySelector(".hamSideMenu");
+
+                if (commonHeader && header && dim && hamSideMenu) {
+                    commonHeader.append(header, dim, hamSideMenu);
+                }
+            });
+    </script>
     <script src="./js/main.js"></script>
 </body>
 </html>
