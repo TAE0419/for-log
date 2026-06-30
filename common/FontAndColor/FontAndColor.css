@@ -3,6 +3,7 @@
 }
 html{
     font-size: 16px;
+    scroll-behavior: smooth; 
 }
 @media (max-width: 1024px) {
 html {
@@ -37,7 +38,7 @@ font-size: 10px;
     /* 💡 반응형 폰트 설정 (clamp 적용) */
     /* 규칙: clamp(모바일에서_최소_크기, 화면_비례_크기, PC에서_최대_크기) */
     
-    --title-font: 900 clamp(3rem, 15vw, 15rem)/1.1 var(--font-cloud);
+    --title-font: 900 clamp(10rem, 20vw, 15rem)/1.1 var(--font-cloud);
     --subtitle-font: 900 clamp(2rem, 13vw, 10rem)/1.2 var(--font-cloud);
     
     --big1-font: 900 clamp(1.75rem, 5vw, 4rem)/1.2 var(--font-default);
