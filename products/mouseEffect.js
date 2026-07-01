@@ -1,4 +1,14 @@
 // ==========================================
+// 0. 다른 팀원 페이지 아이콘 자동 복구용 폰트어썸 강제 주입 로직
+// ==========================================
+if (!document.querySelector('link[href*="font-awesome"]') && !document.querySelector('link[href*="fontawesome"]')) {
+    const faLink = document.createElement('link');
+    faLink.rel = 'stylesheet';
+    faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    document.head.appendChild(faLink);
+}
+
+// ==========================================
 // 1. 공통 스타일 주입 (탑버튼 + 완벽한 원형 스타일 + 플로팅 로그인 상태 버튼)
 // ==========================================
 const style = document.createElement('style');
@@ -25,7 +35,7 @@ style.textContent = `
         border-radius: 50% !important;
     }
 
-    /* 💡 [추가] 우측 하단 플로팅 로그인/로그아웃 버튼 */
+    /* 우측 하단 플로팅 로그인/로그아웃 버튼 */
     .btn-auth-floating {
         position: fixed;
         bottom: 105px; right: 40px; /* 탑버튼(40px)의 65px 위에 넉넉하게 배치 */
@@ -34,7 +44,6 @@ style.textContent = `
         color: #fff;
         border: none; border-radius: 50%;
         z-index: 10001;
-        font-size: 18px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         display: flex; align-items: center; justify-content: center;
         cursor: pointer;
@@ -75,6 +84,11 @@ style.textContent = `
     .btn-auth-floating:hover .tooltip-text {
         visibility: visible;
         opacity: 1;
+    }
+
+    /* 💡 SVG 자체 아이콘 흔들림 없이 중앙 고정 */
+    .btn-auth-floating svg {
+        display: block;
     }
 `;
 document.head.appendChild(style);
@@ -117,8 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
         else { topBtn.classList.remove('is-show'); }
     });
 
-    // --- [B] 💡 로그인/로그아웃 플로팅 버튼 동적 생성 ---
-    // 로그인이나 회원가입 화면 자체에서는 중복 노출을 피하기 위해 렌더링하지 않음
+    // --- [B] 로그인/로그아웃 플로팅 버튼 동적 생성 ---
     const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
     
     if (!isAuthPage) {
@@ -126,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const authBtn = document.createElement('button');
         authBtn.type = 'button';
         
-        // 폴더 위치에 구애받지 않는 영리한 상대 경로 자동 산출
         let loginPath = 'login.html';
         let indexPath = 'products_index.html';
         if (!window.location.pathname.includes('/products/')) {
@@ -135,11 +147,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (loggedInUser) {
-            // 로그인 상태일 때: 유저명 표기 + 클릭 시 로그아웃 처리
+            // 로그인 상태일 때: 유저 체크인 SVG 아이콘 + 툴팁
             authBtn.className = 'btn-auth-floating is-logged-in';
             authBtn.innerHTML = `
-                <i class="fa-solid fa-user-check"></i>
-                <span class="tooltip-text">${loggedInUser}님 로그인 중<br/>(클릭 시 로그아웃 🍀)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+                    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0-8a3 3 0 1 1-3 3 3 3 0 0 1 3-3zm9 11.48a1 1 0 0 0-1.41.07L16 19.11l-1.78-1.77a1 1 0 0 0-1.41 1.41l2.5 2.5a1 1 0 0 0 1.41 0l4.35-4.35a1 1 0 0 0-.07-1.42zM12 14a8 8 0 0 0-8 8 1 1 0 0 0 2 0 6 6 0 0 1 10.74-3.71 1 1 0 1 0 1.58-1.3A8 8 0 0 0 12 14z"/>
+                </svg>
+                <span class="tooltip-text">${loggedInUser}님 로그인 중 (로그아웃 🍀)</span>
             `;
             authBtn.addEventListener('click', () => {
                 if (confirm(`${loggedInUser}님, 로그아웃 하시겠습니까?`)) {
@@ -149,10 +163,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         } else {
-            // 비로그인 상태일 때: 자물쇠 아이콘 + 클릭 시 로그인 창 이동
+            // 비로그인 상태일 때: 깔끔한 자물쇠 SVG 아이콘 + 툴팁
             authBtn.className = 'btn-auth-floating';
             authBtn.innerHTML = `
-                <i class="fa-solid fa-lock"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+                    <path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3zm3 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                </svg>
                 <span class="tooltip-text">로그인하기 🌱</span>
             `;
             authBtn.addEventListener('click', () => {
@@ -164,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- [C] 완벽한 원형 레이어 생성 ---
     for (var i = 0; i < sparkles; i++) {
-        // 작은 원 (지름 5px)
         var rats = createDiv(5, 5); 
         rats.style.visibility = "hidden";
         rats.style.zIndex = "999";
@@ -200,7 +215,6 @@ function sparkle() {
             
             star[c].style.clip = "auto"; 
             
-            // 옐로우-그린 라인 색상 주입
             star[c].style.backgroundColor = YGColour();
             star[c].style.visibility = "visible";
             starv[c] = 50;
