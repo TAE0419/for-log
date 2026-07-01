@@ -28,13 +28,111 @@ if (cloverWrap) {
     }
 }
 
+const wateringArea = document.querySelector(".anotherIMG");
+
+if (wateringArea && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const drops = [];
+    let lastTime = 0;
+    let spawnTimer = 0;
+    let wateringAnimationId = null;
+
+    canvas.className = "wateringCanvas";
+    wateringArea.appendChild(canvas);
+
+    function resizeWateringCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = wateringArea.getBoundingClientRect();
+
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function makeWaterDrop(width, height) {
+        const startX = width * 0.34;
+        const startY = height * 0.58;
+        const targetX = width * (0.22 + Math.random() * 0.13);
+        const targetY = height * (0.72 + Math.random() * 0.06);
+
+        drops.push({
+            x: startX + Math.random() * width * 0.025,
+            y: startY + Math.random() * height * 0.015,
+            vx: (targetX - startX) * (0.55 + Math.random() * 0.25),
+            vy: (targetY - startY) * (0.1 + Math.random() * 0.12),
+            gravity: height * (1.25 + Math.random() * 0.35),
+            life: 0,
+            maxLife: 0.8 + Math.random() * 0.28,
+            radius: Math.max(2, width * (0.0035 + Math.random() * 0.002)),
+            alpha: 0.72 + Math.random() * 0.22
+        });
+    }
+
+    function drawWaterDrop(drop) {
+        const fade = Math.max(0, 1 - drop.life / drop.maxLife);
+
+        ctx.save();
+        ctx.globalAlpha = drop.alpha * Math.min(1, drop.life * 8) * fade;
+        ctx.fillStyle = "#bfe8df";
+        ctx.strokeStyle = "rgba(255, 253, 235, 0.65)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(drop.x, drop.y, drop.radius * 0.78, drop.radius * 1.35, -0.25, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function animateWatering(timestamp) {
+        if (!lastTime) lastTime = timestamp;
+
+        const delta = Math.min((timestamp - lastTime) / 1000, 0.04);
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        lastTime = timestamp;
+        spawnTimer += delta;
+
+        while (spawnTimer > 0.045) {
+            makeWaterDrop(width, height);
+            spawnTimer -= 0.045;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = drops.length - 1; i >= 0; i -= 1) {
+            const drop = drops[i];
+
+            drop.life += delta;
+            drop.x += drop.vx * delta;
+            drop.y += drop.vy * delta + drop.gravity * drop.life * delta;
+
+            if (drop.life >= drop.maxLife || drop.y > height * 0.82) {
+                drops.splice(i, 1);
+                continue;
+            }
+
+            drawWaterDrop(drop);
+        }
+
+        wateringAnimationId = requestAnimationFrame(animateWatering);
+    }
+
+    resizeWateringCanvas();
+    wateringAnimationId = requestAnimationFrame(animateWatering);
+    window.addEventListener("resize", resizeWateringCanvas);
+}
+
 const eventPop = document.querySelector(".eventPop");
 
 if (eventPop) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const clovers = [];
-    const duration = 2600;
+    const duration = 3200;
     const fadeOutDuration = 550;
     let startTime = 0;
     let animationId = null;
@@ -223,15 +321,17 @@ if (eventPop) {
         if (local <= 0) return;
 
         const baseSize = Math.min(width, height);
-        const moveEnd = 0.68;
+        const moveEnd = 0.82;
         const moveProgress = Math.min(local / moveEnd, 1);
-        const zoom = local > 0.46 ? eventEaseOut((local - 0.46) / 0.54) : 0;
+        const zoom = local > 0.52 ? eventEaseOut((local - 0.52) / 0.48) : 0;
         const drift = eventEaseInOut(moveProgress);
-        const startX = width * 0.34;
-        const endX = width * 0.62;
-        const startY = height * 0.38;
-        const endY = height * 0.58;
-        const arc = Math.sin(moveProgress * Math.PI) * baseSize * 0.18;
+        const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
+        const floorOffset = rootFontSize * 10;
+        const startX = width * 0.12;
+        const endX = width * 0.66;
+        const startY = height * 0.26;
+        const endY = height - floorOffset;
+        const arc = Math.sin(moveProgress * Math.PI) * baseSize * 0.28;
         const x = eventLerp(startX, endX, drift);
         const y = eventLerp(startY, endY, drift) - arc;
         const cloverSize = baseSize * 0.08;
@@ -472,6 +572,43 @@ if (txt1) {
     observer14.observe(characterImg);
 }
 
+// 클래스명을 CSS와 똑같이 .characterWrap으로 맞춰주세요!
+const cham = document.querySelector(".character span:nth-child(2)");
+
+const observerBB = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+        if(entry.isIntersecting){
+            const target = entry.target;
+            
+            // 1. 먼저 옵저버 전용 클래스를 추가해서 첫 번째 애니메이션 시작!
+            target.classList.add("on"); 
+            
+            // 2. 첫 번째 애니메이션이 끝나는 시점을 감시하는 이벤트 리스너 등록
+            // CSS가 transition 기반이라면 'transitionend', @keyframes 기반이라면 'animationend' 사용
+            target.addEventListener("animationend", function handleNextAnimation() {
+                
+                // 여기에 옵저버 애니메이션이 끝난 후 실행할 코드를 적습니다.
+                console.log("옵저버 애니메이션 종료! 다음 애니메이션을 시작합니다.");
+                
+                // 예시: 다음 애니메이션을 트리거할 클래스 추가
+                target.classList.add("next-animation-on");
+                
+                // 이벤트를 한 번만 실행하고 제거 (메모리 관리 및 중복 실행 방지)
+                target.removeEventListener("animationend", handleNextAnimation);
+            });
+
+            // 한 번 들어와서 실행됐다면 옵저버 관찰을 종료 (원치 않으시면 지우셔도 됩니다)
+            observerBB.unobserve(target);
+        }
+    });
+}, {
+    threshold: 0.3
+});
+
+if (cham) {
+    observerBB.observe(cham);
+}
+
 //끝남-----------------------------
 
 const fadeSlider = document.querySelector(".slider");
@@ -578,7 +715,8 @@ if (reviewStart) {
 function makeProductDrag() {
     const viewports = document.querySelectorAll(".productViewport");
 
-    viewports.forEach(function (viewport) {
+    viewports.forEach(function (viewport, viewportIndex) {
+        const slideDirection = viewportIndex % 2 === 0 ? 1 : -1;
         let isDown = false;
         let isMoved = false;
         let startX = 0;
@@ -710,13 +848,12 @@ function makeProductDrag() {
 
             autoTimer = setInterval(function () {
                 const cardStep = getCardStep();
-                const totalSteps = Math.max(1, Math.round(segmentWidth / cardStep));
 
                 normalizeInfiniteScroll();
-                slideIndex = (slideIndex + 1) % totalSteps;
+                const nextScrollLeft = viewport.scrollLeft - (cardStep * slideDirection);
 
                 viewport.scrollTo({
-                    left: segmentStart - (slideIndex * cardStep),
+                    left: nextScrollLeft,
                     behavior: "smooth"
                 });
                 setTimeout(normalizeInfiniteScroll, 700);
@@ -921,3 +1058,4 @@ if (mainPopup) {
         if (View) {
     observerView.observe(View);
 }
+
