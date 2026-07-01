@@ -7,13 +7,13 @@
     <title>FORLOG - Playful Green Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
+    <link rel="stylesheet" href="./products_index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
-    <link rel="stylesheet" href="./products_index.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -28,8 +28,8 @@
             <ul class="gnb">
                 <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
                     <ul class="snb">
-                        <li><a href="#">CONCEPT</a></li>
-                        <li><a href="#">CHOLOGI</a></li>
+                        <li><a href="../brandstory/brandstory.html#concept">CONCEPT</a></li>
+                        <li><a href="../brandstory/brandstory.html#chologi">CHOLOGI</a></li>
                     </ul>
                 </li>
                 <li>
@@ -42,10 +42,15 @@
                 <li>
                     <a href="../support/index.html">SUPPORT</a>
                     <ul class="snb">
-                        <li><a href="#news">NEWS</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#location">LOCATION</a></li>
-                        <li><a href="../products/login.html">LOG IN</a></li>
+                        <li><a href="../support/index.html#news">NEWS</a></li>
+                        <li><a href="../support/index.html#faq">FAQ</a></li>
+                        <li><a href="../support/index.html#location">LOCATION</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../products/login.html">LOG IN</a>
+                    <ul class="snb">
+                        <li><a href="../products/signup.html">SIGN UP</a></li>
                     </ul>
                 </li>
             </ul>
@@ -142,18 +147,23 @@
         </main>
     </div>
 
-    <main class="page" style="padding-bottom: 100px;">
+    <main class="page product-list-section">
         <div class="all-section-head">
             <h2 class="all-title bubbly-font">ALL</h2>
+
             <select class="sort-select" id="sort-select">
                 <option value="newest">신상품순</option>
                 <option value="price-low">낮은가격순</option>
                 <option value="price-high">높은가격순</option>
             </select>
+
         </div>
 
         <div class="wavy-divider"></div>
+
         <div class="product-grid" id="product-grid"></div>
+
+        <div id="pagination" class="pagination-container"></div>
     </main>
 
     <section class="band-green">
@@ -177,8 +187,8 @@
                 </div>
 
                 <button type="button" class="test-reset-btn" onclick="restartTest()">
-                   <i class="fa-solid fa-arrow-rotate-left"></i> 첫 화면으로 돌아가기
-                 </button>
+                    <i class="fa-solid fa-arrow-rotate-left"></i> 첫 화면으로 돌아가기
+                </button>
 
             </div>
 
@@ -215,9 +225,9 @@
         </div>
         <div class="right">
             <div class="sns">
-                <img src="../common/img/youtube.png" alt="sns">
-                <img src="../common/img/instagram.png" alt="sns">
-                <img src="../common/img/blog.png" alt="sns">
+                <img src="../common/img/youtube.png" alt="youtube">
+                <img src="../common/img/instagram.png" alt="instagram">
+                <img src="../common/img/blog.png" alt="blog">
             </div>
         </div>
     </footer>
@@ -279,6 +289,10 @@
         let currentCategory = "all";
         let currentSort = "newest";
 
+        // 페이지네이션용 변수 추가
+        let currentPage = 1;
+        const itemsPerPage = 8; // 4열 x 2줄 = 8개
+
         // 1. 카테고리 타임라인 렌더링
         function renderCategories() {
             const categories = ["all", "Living", "Desk", "Chorogi", "Fashion"];
@@ -294,12 +308,23 @@
                 categoryList.innerHTML = `<div class="timeline-line"></div>` + btnHtml;
             }
 
+            // 카테고리 버튼 클릭 이벤트 안에서
             document.querySelectorAll(".category-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     currentCategory = btn.dataset.category;
+                    currentPage = 1; // 카테고리가 바뀌면 무조건 1페이지로 리셋
                     renderProducts();
                 });
             });
+
+            // 2. 정렬(신상품순, 가격순) 셀렉트 박스 이벤트 안에서
+            if (sortSelect) {
+                sortSelect.addEventListener("change", () => {
+                    currentSort = sortSelect.value;
+                    currentPage = 1; // 정렬 방식이 바뀌어도 무조건 1페이지로 리셋!
+                    renderProducts();
+                });
+            }
         }
 
         // 2. 상품 카드 HTML 템플릿
@@ -342,7 +367,7 @@
             `).join("");
 
             new Swiper('.weekly-swiper', {
-                slidesPerView: 1.2, /* 초소형 모바일에서 1개씩 */
+                slidesPerView: 1.2,
                 spaceBetween: 15,
                 breakpoints: {
                     480: { slidesPerView: 2, spaceBetween: 20 },
@@ -358,7 +383,7 @@
 
             let filtered = allProducts;
 
-            // 카테고리 선택에 따른 필터링 조건
+            // 카테고리 필터링
             if (currentCategory !== "all") {
                 filtered = allProducts.filter(p => {
                     if (currentCategory === "living") return p.category === "plant" || p.subCategory === "living";
@@ -369,34 +394,84 @@
                 });
             }
 
+            // 정렬 로직
             if (currentSort === "price-low") filtered.sort((a, b) => a.price - b.price);
             else if (currentSort === "price-high") filtered.sort((a, b) => b.price - a.price);
             else filtered.sort((a, b) => b.id - a.id);
 
-            grid.innerHTML = filtered.map(p => getProductCardHtml(p)).join("");
+            // 1. 하단에 페이지네이션 번호 버튼들 그리기 호출
+            renderPagination(filtered.length);
 
-            // 타이틀 텍스트 변경 및 GSAP 통통 튀는 애니메이션 추가
-            const allTitleEl = document.querySelector('.all-title'); //
-            if (allTitleEl) { //
-                allTitleEl.textContent = currentCategory.toUpperCase(); //
+            // 2. 현재 페이지에 맞는 8개만 잘라내기 (핵심!)
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedProducts = filtered.slice(startIndex, endIndex);
 
-                // ✨ 선생님 취향 저격! 글자가 밑에서 위로 슥 올라오며 커지는 탄력 애니메이션
+            // 3. 잘라낸 데이터(paginatedProducts)로 화면 렌더링
+            grid.innerHTML = paginatedProducts.map(p => getProductCardHtml(p)).join("");
+
+            // 타이틀 애니메이션
+            const allTitleEl = document.querySelector('.all-title');
+            if (allTitleEl) {
+                allTitleEl.textContent = currentCategory.toUpperCase();
+
                 gsap.fromTo(allTitleEl,
                     {
-                        opacity: 0, 
-                        y: 30, 
-                        scale: 0.8     
+                        opacity: 0,
+                        y: 40
                     },
                     {
-                        opacity: 1,    
-                        y: 0,            
-                        scale: 1,        
-                        duration: 0.5,   
-                        ease: "back.out(1.7)" 
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power3.out"
                     }
                 );
             }
         }
+
+        // 전체 상품 개수를 바탕으로 하단에 1, 2, 3 버튼을 만들어주는 함수
+        function renderPagination(totalItems) {
+            const paginationEl = document.getElementById("pagination");
+            if (!paginationEl) return;
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            // 상품이 너무 적어 1페이지뿐이면 버튼 영역 숨기기
+            if (totalPages <= 1) {
+                paginationEl.innerHTML = "";
+                return;
+            }
+
+            let html = '';
+
+            // 이전(<) 버튼
+            html += `<button type="button" class="page-arrow" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>`;
+
+            // 숫자 버튼 생성 (1, 2, 3 ...)
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button type="button" class="page-num ${currentPage === i ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+
+            // 다음(>) 버튼
+            html += `<button type="button" class="page-arrow" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>`;
+
+            paginationEl.innerHTML = html;
+        }
+
+        // 페이지 번호를 클릭했을 때 실행되는 함수 수정
+        function changePage(pageNumber) {
+            currentPage = pageNumber;
+            renderProducts(); // 바뀐 페이지 번호로 상품 다시 불러오기
+
+            // 스크롤 대상을 거대한 빅로고 대신 상품 그리드(#product-grid)로 변경
+            const targetEl = document.getElementById("product-grid");
+            if (targetEl) {
+                const topPos = targetEl.getBoundingClientRect().top + window.scrollY - 90;
+                window.scrollTo({ top: topPos, behavior: "smooth" });
+            }
+        }
+
 
         // 장바구니 UI 기능
         const cartDrawer = document.getElementById("cart-drawer");
@@ -699,6 +774,8 @@
             document.getElementById("modal-cart-btn").setAttribute("data-product-id", product.id);
 
             document.getElementById("product-modal").style.display = "flex";
+
+
         }
 
         // 2. 모달창 닫기 함수
@@ -709,7 +786,41 @@
         // 장바구니 추가 완료 모달 열기/닫기 함수
         function openCartConfirmModal() {
             document.getElementById("cart-confirm-modal").style.display = "flex";
+
+            // 모달이 뜰 때 양옆에서 축포 터뜨리기
+            const duration = 1500;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10001 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function () {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                const colors = ['#9EAB57', '#657F38', '#D57640', '#FFFEF3'];
+
+                // 왼쪽에서 터짐
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    colors: colors,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+                }));
+                // 오른쪽에서 터짐
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    colors: colors,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+                }));
+            }, 250);
         }
+
         function closeCartConfirmModal() {
             document.getElementById("cart-confirm-modal").style.display = "none";
         }
@@ -728,6 +839,8 @@
             }
         });
 
+
+
         // 모든 준비가 끝나면 실행
         fetchProducts();
     </script>
@@ -736,43 +849,66 @@
 
     <div id="product-modal" class="custom-modal" style="display: none;">
         <div class="modal-overlay" onclick="closeModal()"></div>
-        <div class="modal-content">
+        <div class="modal-content product-detail-modal">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+
             <div class="modal-body">
                 <div class="modal-img-area">
                     <img id="modal-img" src="" alt="상품 이미지">
                 </div>
+
                 <div class="modal-info-area">
-                    <span id="modal-tag" class="modal-tag">FOR-LOG</span>
+                    <div class="info-top">
+                        <span id="modal-tag" class="modal-tag">FOR-LOG</span>
+                        <div class="modal-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="count">(4.9)</span>
+                        </div>
+                    </div>
+
                     <h2 id="modal-title">상품 이름</h2>
                     <div id="modal-price" class="modal-price">0원</div>
-                    <p id="modal-desc" class="modal-desc">초로기가 보장하는 멋진 라이프스타일 굿즈 아이템 멘트 설명.</p>
-                    <button type="button" id="modal-cart-btn" class="add-cart-btn" data-product-id="">Add to
-                        cart</button>
+
+                    <hr class="detail-divider">
+
+                    <div class="product-spec-zone">
+                        <div class="spec-item">
+                            <span class="spec-label">배송정보</span>
+                            <span class="spec-value">무료배송 <span class="highlight-badge">FOR-LOG 멤버십</span></span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">국내배송</span>
+                            <span class="spec-value">우체국택배 (평일 14시 전 결제 시 당일출고)</span>
+                        </div>
+                    </div>
+
+                    <hr class="detail-divider">
+
+                    <div class="desc-container">
+                        <p id="modal-desc" class="modal-desc">초로기가 보장하는 멋진 라이프스타일 굿즈 아이템 멘트 설명.</p>
+                    </div>
+
+                    <div class="modal-action-row">
+                        <button type="button" id="modal-cart-btn" class="add-cart-btn" data-product-id="">
+                            <i class="fa-solid fa-shopping-bag"></i> Add to cart
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 장바구니 이동 확인 커스텀 모달 -->
-    <div id="cart-confirm-modal" class="custom-modal" style="display: none; z-index: 10000;">
+    <div id="cart-confirm-modal" class="custom-modal" style="display: none;">
         <div class="modal-overlay" onclick="closeCartConfirmModal()"></div>
-        <div class="modal-content" style="max-width: 380px; text-align: center; padding: 40px 30px;">
-            <h3 style="font-size: 1.4rem; color: var(--dark-color); margin-bottom: 15px; font-weight: 800;">장바구니에 담겼습니다!
-                🐸</h3>
-            <p style="color: var(--sub-color); margin-bottom: 25px; font-size: 1rem; word-break: keep-all;">바로 장바구니 페이지로
-                이동하시겠습니까?</p>
-            <div style="display: flex; gap: 12px; justify-content: center;">
-                <button type="button" onclick="closeCartConfirmModal()"
-                    style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--line); background: #fff; cursor: pointer; font-weight: 700; color: var(--dark-color); transition: all 0.2s;">쇼핑
-                    계속하기</button>
-                <button type="button" onclick="location.href='cart_test.html'"
-                    style="padding: 12px 24px; border-radius: 50px; border: none; background: var(--point-color); color: #fff; cursor: pointer; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 10px rgba(213,118,64,0.2);">장바구니로
-                    이동</button>
+        <div class="modal-content cart-confirm-content">
+            <h3>장바구니에 담겼습니다! 🍀</h3>
+            <p>바로 장바구니 페이지로 이동하시겠습니까?</p>
+            <div class="modal-btn-group">
+                <button type="button" class="btn-continue" onclick="closeCartConfirmModal()">쇼핑 계속하기</button>
+                <button type="button" class="btn-go-cart" onclick="location.href='cart_test.html'">장바구니로 이동</button>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
