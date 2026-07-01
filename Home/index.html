@@ -8,6 +8,46 @@
     <link rel="stylesheet" href="./css/main.css">
     <title>FOR-LOG</title>
 </head>
+
+<header>
+    <div class="headerInner">
+        <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a></div>
+        <ul class="gnb">
+            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <ul class="snb">
+                    <li><a href="../brandstory/brandstory.html#concept">CONCEPT</a></li>
+                    <li><a href="../brandstory/brandstory.html#chologi">CHOLOGI</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/products_index.html">PRODUCT</a>
+                <ul class="snb">
+                    <li><a href="../products/products_index.html">SHOP</a></li>
+                    <li><a href="../products/cart_test.html">CART</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../support/index.html">SUPPORT</a>
+                <ul class="snb">
+                    <li><a href="../support/index.html#news">NEWS</a></li>
+                    <li><a href="../support/index.html#faq">FAQ</a></li>
+                    <li><a href="../support/index.html#location">LOCATION</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/login.html">LOG IN</a>
+                <ul class="snb">
+                    <li><a href="../products/signup.html">SIGN UP</a></li>
+                </ul>
+            </li>
+        </ul>
+            <div class="ham">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    </div>
+</header>
 <body>
     <div class="eventPop">
 
@@ -198,26 +238,28 @@
             <img src="./common/img/blog.png" alt="sns">
         </div>
     </footer>
+    <div class="roundG4"></div>
+    <script src="../products/mouseEffect.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        fetch("../common/header.html")
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (html) {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
-                const commonHeader = document.querySelector("#commonHeader");
-                const header = doc.querySelector("header");
-                const dim = doc.querySelector(".dim");
-                const hamSideMenu = doc.querySelector(".hamSideMenu");
+   <script>
+fetch("../common/header.html")
+    .then(function (response) {
+        return response.text();
+    })
+    .then(function (html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
 
-                if (commonHeader && header && dim && hamSideMenu) {
-                    commonHeader.append(header, dim, hamSideMenu);
-                }
-            });
-    </script>
+        const commonHeader = document.querySelector("#commonHeader");
+        const dim = doc.querySelector(".dim");
+        const hamSideMenu = doc.querySelector(".hamSideMenu");
+
+        if (commonHeader && dim && hamSideMenu) {
+            commonHeader.append(dim, hamSideMenu);
+        }
+    });
+</script>
     <script src="./js/main.js"></script>
 </body>
 </html>
