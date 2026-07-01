@@ -28,6 +28,277 @@ if (cloverWrap) {
     }
 }
 
+const eventPop = document.querySelector(".eventPop");
+
+if (eventPop) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const clovers = [];
+    const duration = 2600;
+    const fadeOutDuration = 550;
+    let startTime = 0;
+    let animationId = null;
+
+    canvas.className = "eventPopCanvas";
+    eventPop.appendChild(canvas);
+    document.body.classList.add("eventIntroPlaying");
+
+    function eventEaseOut(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+
+    function eventEaseInOut(t) {
+        return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function eventLerp(a, b, t) {
+        return a + (b - a) * t;
+    }
+
+    function eventKeyframeValue(t, frames) {
+        if (t <= frames[0][0]) return frames[0][1];
+
+        for (let i = 1; i < frames.length; i += 1) {
+            const prev = frames[i - 1];
+            const next = frames[i];
+
+            if (t <= next[0]) {
+                const local = (t - prev[0]) / (next[0] - prev[0]);
+                return eventLerp(prev[1], next[1], eventEaseInOut(local));
+            }
+        }
+
+        return frames[frames.length - 1][1];
+    }
+
+    function resizeEventCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        makeEventClovers(width, height);
+        drawEventPop(0);
+    }
+
+    function makeEventClovers(width, height) {
+        const colors = ["#5e7e3a", "#7f9850", "#aab664", "#c3ca75"];
+        const gap = Math.max(54, Math.min(width, height) * 0.09);
+        const cols = Math.ceil(width / gap) + 3;
+        const rows = Math.ceil(height / gap) + 3;
+
+        clovers.length = 0;
+
+        for (let row = -1; row < rows; row += 1) {
+            for (let col = -1; col < cols; col += 1) {
+                const x = col * gap + Math.random() * gap * 0.55;
+                const y = row * gap + Math.random() * gap * 0.55;
+                const dist = Math.hypot(x - width / 2, y - height / 2);
+                const maxDist = Math.hypot(width / 2, height / 2);
+                const angle = Math.atan2(y - height / 2, x - width / 2);
+
+                clovers.push({
+                    x,
+                    y,
+                    size: gap * (0.65 + Math.random() * 0.28),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    lineColor: Math.random() > 0.35 ? "#34552c" : "#fffdeb",
+                    rotation: Math.random() * Math.PI * 2,
+                    delay: (dist / maxDist) * 0.32,
+                    moveX: Math.cos(angle) * (24 + Math.random() * 54),
+                    moveY: Math.sin(angle) * (24 + Math.random() * 54)
+                });
+            }
+        }
+    }
+
+    function drawEventClover(item, progress) {
+        const local = Math.max(0, Math.min(1, (progress - item.delay) / 0.68));
+        const eased = eventEaseOut(local);
+        const alpha = 1 - eased;
+        const size = item.size * (1 - eased * 0.25);
+
+        if (alpha <= 0.01) return;
+
+        ctx.save();
+        ctx.translate(item.x + item.moveX * eased, item.y + item.moveY * eased);
+        ctx.rotate(item.rotation + eased * 1.4);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = item.color;
+
+        for (let i = 0; i < 4; i += 1) {
+            ctx.save();
+            ctx.rotate((Math.PI / 2) * i);
+            ctx.beginPath();
+            ctx.ellipse(-size * 0.13, -size * 0.24, size * 0.27, size * 0.36, -Math.PI / 5, 0, Math.PI * 2);
+            ctx.ellipse(size * 0.13, -size * 0.24, size * 0.27, size * 0.36, Math.PI / 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        ctx.strokeStyle = item.lineColor;
+        ctx.lineWidth = Math.max(1.3, size * 0.045);
+        ctx.lineCap = "round";
+        ctx.globalAlpha = alpha * 0.78;
+
+        for (let i = 0; i < 4; i += 1) {
+            ctx.save();
+            ctx.rotate((Math.PI / 2) * i);
+            ctx.beginPath();
+            ctx.moveTo(0, -size * 0.05);
+            ctx.lineTo(0, -size * 0.36);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        ctx.restore();
+    }
+
+    function drawEventCloverShape(x, y, size, rotation, fillColor, lineColor, alpha) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = fillColor;
+
+        for (let i = 0; i < 4; i += 1) {
+            ctx.save();
+            ctx.rotate((Math.PI / 2) * i);
+            ctx.beginPath();
+            ctx.ellipse(-size * 0.13, -size * 0.24, size * 0.27, size * 0.36, -Math.PI / 5, 0, Math.PI * 2);
+            ctx.ellipse(size * 0.13, -size * 0.24, size * 0.27, size * 0.36, Math.PI / 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        if (lineColor) {
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = Math.max(1.3, size * 0.045);
+            ctx.lineCap = "round";
+            ctx.globalAlpha = alpha * 0.78;
+
+            for (let i = 0; i < 4; i += 1) {
+                ctx.save();
+                ctx.rotate((Math.PI / 2) * i);
+                ctx.beginPath();
+                ctx.moveTo(0, -size * 0.05);
+                ctx.lineTo(0, -size * 0.36);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        ctx.restore();
+    }
+
+    function drawEventCloverReveal(x, y, size, rotation) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+
+        for (let i = 0; i < 4; i += 1) {
+            ctx.save();
+            ctx.rotate((Math.PI / 2) * i);
+            ctx.beginPath();
+            ctx.ellipse(-size * 0.13, -size * 0.24, size * 0.27, size * 0.36, -Math.PI / 5, 0, Math.PI * 2);
+            ctx.ellipse(size * 0.13, -size * 0.24, size * 0.27, size * 0.36, Math.PI / 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        ctx.restore();
+    }
+
+    function drawEventFinalMotion(progress, width, height) {
+        const start = 0.46;
+        const local = Math.max(0, Math.min(1, (progress - start) / (1 - start)));
+
+        if (local <= 0) return;
+
+        const baseSize = Math.min(width, height);
+        const moveEnd = 0.68;
+        const moveProgress = Math.min(local / moveEnd, 1);
+        const zoom = local > 0.46 ? eventEaseOut((local - 0.46) / 0.54) : 0;
+        const drift = eventEaseInOut(moveProgress);
+        const startX = width * 0.34;
+        const endX = width * 0.62;
+        const startY = height * 0.38;
+        const endY = height * 0.58;
+        const arc = Math.sin(moveProgress * Math.PI) * baseSize * 0.18;
+        const x = eventLerp(startX, endX, drift);
+        const y = eventLerp(startY, endY, drift) - arc;
+        const cloverSize = baseSize * 0.08;
+        const visibleCloverSize = cloverSize + (baseSize * 1.2 * zoom);
+        const visibleAlpha = Math.min(local * 3.2, 1) * (1 - zoom * 0.25);
+        const rotation = -0.35 + moveProgress * 1.05;
+
+        drawEventCloverShape(
+            x,
+            y,
+            visibleCloverSize,
+            rotation,
+            "#aab664",
+            "#6d883f",
+            visibleAlpha
+        );
+
+        if (zoom > 0) {
+            const revealSize = visibleCloverSize + (baseSize * 2.8 * zoom);
+
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.fillStyle = "#000";
+            drawEventCloverReveal(x, y, revealSize, rotation);
+            ctx.restore();
+        }
+    }
+
+    function drawEventPop(progress) {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#fffdeb";
+        ctx.fillRect(0, 0, width, height);
+
+        clovers.forEach(function (item) {
+            drawEventClover(item, progress);
+        });
+
+        drawEventFinalMotion(progress, width, height);
+    }
+
+    function animateEventPop(timestamp) {
+        if (!startTime) startTime = timestamp;
+
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+
+        drawEventPop(progress);
+
+        if (progress < 1) {
+            animationId = requestAnimationFrame(animateEventPop);
+            return;
+        }
+
+        eventPop.classList.add("hide");
+        cancelAnimationFrame(animationId);
+
+        setTimeout(function () {
+            document.body.classList.remove("eventIntroPlaying");
+        }, fadeOutDuration);
+    }
+
+    resizeEventCanvas();
+    animationId = requestAnimationFrame(animateEventPop);
+    window.addEventListener("resize", resizeEventCanvas);
+}
 
  $(function(){
             $(document).on('mouseenter', '.gnb > li', function(){
@@ -318,6 +589,7 @@ function makeProductDrag() {
         let segmentWidth = 0;
         let cardStep = 0;
         let slideIndex = 0;
+        let centerUpdateFrame = null;
 
         function setupInfiniteTrack() {
             const track = viewport.querySelector(".productTrack");
@@ -358,6 +630,7 @@ function makeProductDrag() {
             viewport.scrollLeft = segmentStart;
             slideIndex = 0;
             track.dataset.infiniteReady = "true";
+            updateCenterCard();
         }
 
         function syncCircleBackgroundSize() {
@@ -384,6 +657,42 @@ function makeProductDrag() {
             }
 
             slideIndex = Math.round((segmentStart - viewport.scrollLeft) / getCardStep());
+            updateCenterCard();
+        }
+
+        function updateCenterCard() {
+            const cards = Array.from(viewport.querySelectorAll(".productCard"));
+
+            if (cards.length === 0) return;
+
+            const viewportRect = viewport.getBoundingClientRect();
+            const viewportCenter = viewportRect.left + (viewportRect.width / 2);
+            let closestCard = null;
+            let closestDistance = Infinity;
+
+            cards.forEach(function (card) {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + (cardRect.width / 2);
+                const distance = Math.abs(viewportCenter - cardCenter);
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestCard = card;
+                }
+            });
+
+            cards.forEach(function (card) {
+                card.classList.toggle("is-center", card === closestCard);
+            });
+        }
+
+        function requestCenterCardUpdate() {
+            if (centerUpdateFrame) return;
+
+            centerUpdateFrame = requestAnimationFrame(function () {
+                centerUpdateFrame = null;
+                updateCenterCard();
+            });
         }
 
         function getCardStep() {
@@ -470,6 +779,8 @@ function makeProductDrag() {
         });
 
         viewport.addEventListener("mouseenter", stopAutoSlide);
+        viewport.addEventListener("scroll", requestCenterCardUpdate);
+        window.addEventListener("resize", requestCenterCardUpdate);
         viewport.addEventListener("mouseleave", function () {
             isDown = false;
             pressedCard = null;
