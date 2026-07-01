@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- 🌟 추가됨: 폭죽 파티클 효과를 위한 canvas-confetti 라이브러리 -->
+    <!-- 폭죽 파티클 효과를 위한 canvas-confetti 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <link rel="stylesheet" href="../common/FontAndColor/FontAndColor.css">
@@ -706,7 +706,7 @@
         }
 
         /* -----------------------------------------
-           ✨ 대망의 화려한 주문 완료 영수증 모달 ✨
+           화려한 주문 완료 영수증 모달 
         -------------------------------------------- */
         .fancy-receipt-modal .confirm-modal-overlay {
             background: rgba(36, 51, 28, 0.7);
@@ -827,7 +827,7 @@
             color: var(--point-color);
         }
 
-        /* ✨ 고급스러운 빛(Shimmer) 애니메이션 버튼 ✨ */
+        /* 고급스러운 빛 애니메이션 버튼  */
         .btn-finish-order {
             position: relative;
             background: linear-gradient(135deg, var(--point-color), #c96f38);
@@ -842,7 +842,6 @@
             box-shadow: 0 10px 20px rgba(219, 130, 74, 0.3);
             transition: all 0.3s;
             overflow: hidden;
-            /* 영역 밖으로 나가는 빛 자르기 */
         }
 
         /* 빛이 차르르 지나가는 가상 요소 */
@@ -942,41 +941,45 @@
 
 <body>
 
-    <header>
-        <div class="headerInner">
-            <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a>
-            </div>
-            <ul class="gnb">
-                <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
-                    <ul class="snb">
-                        <li><a href="#">CONCEPT</a></li>
-                        <li><a href="#">CHOLOGI</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="../products/products_index.html">PRODUCT</a>
-                    <ul class="snb">
-                        <li><a href="../products/products_index.html">SHOP</a></li>
-                        <li><a href="../products/cart_test.html">CART</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="../support/html/index.html">SUPPORT</a>
-                    <ul class="snb">
-                        <li><a href="#news">NEWS</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#location">LOCATION</a></li>
-                        <li><a href="../products/login.html">LOG IN</a></li>
-                    </ul>
-                </li>
-            </ul>
+   <header>
+    <div class="headerInner">
+        <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a></div>
+        <ul class="gnb">
+            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <ul class="snb">
+                    <li><a href="../brandstory/brandstory.html#concept">CONCEPT</a></li>
+                    <li><a href="../brandstory/brandstory.html#chologi">CHOLOGI</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/products_index.html">PRODUCT</a>
+                <ul class="snb">
+                    <li><a href="../products/products_index.html">SHOP</a></li>
+                    <li><a href="../products/cart_test.html">CART</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../support/index.html">SUPPORT</a>
+                <ul class="snb">
+                    <li><a href="../support/index.html#news">NEWS</a></li>
+                    <li><a href="../support/index.html#faq">FAQ</a></li>
+                    <li><a href="../support/index.html#location">LOCATION</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/login.html">LOG IN</a>
+                <ul class="snb">
+                    <li><a href="../products/signup.html">SIGN UP</a></li>
+                </ul>
+            </li>
+        </ul>
             <div class="ham">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-        </div>
-    </header>
+    </div>
+</header>
 
     <div class="dim"></div>
     <div class="hamSideMenu">
@@ -1076,7 +1079,7 @@
         </div>
     </div>
 
-    <!-- 화려하고 거대한 주문 완료 영수증  -->
+    <!-- 주문 완료 영수증  -->
     <div id="order-receipt-modal" class="confirm-modal fancy-receipt-modal" style="display: none;">
         <div class="confirm-modal-overlay" onclick="closeOrderModal()"></div>
         <div class="confirm-modal-content fancy-receipt-content">
@@ -1086,7 +1089,6 @@
             <h3 class="fancy-receipt-title">THANK YOU!</h3>
             <p class="fancy-receipt-subtitle">성공적으로 주문이 완료되었습니다 💚</p>
 
-            <!-- 펀치 구멍 뚫린 리얼한 영수증 내역 영역 -->
             <div class="receipt-paper">
                 <div class="receipt-row">
                     <span style="color: var(--sub-color);">주문 일자</span>
@@ -1103,7 +1105,7 @@
             </div>
 
             <!-- 빛이 스르륵 흐르는 영수증 최종 버튼 -->
-            <button type="button" class="btn-finish-order" onclick="finishOrder()">✨ 달콤한 굿즈 만나러 가기 ✨</button>
+            <button type="button" class="btn-finish-order" onclick="finishOrder()">✨ 상품 페이지로 돌아가기 ✨</button>
         </div>
     </div>
 
@@ -1288,9 +1290,7 @@
         function triggerFireworks() {
             var duration = 3 * 1000; // 3초 동안 폭죽
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10001 }; // zIndex를 높여서 모달 위로!
-
-            // FOR-LOG 브랜드 컬러 (올리브그린, 오렌지, 딥그린)
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10001 }; 
             var colors = ['#AAB664', '#DB824A', '#6F8B41', '#ffffff'];
 
             function randomInRange(min, max) {
@@ -1321,7 +1321,7 @@
             }, 250);
         }
 
-        // 🌟 주문 완료 로직
+        // 주문 완료 로직
         function executeOrder() {
             if (cart.length === 0) {
                 alert("장바구니가 비어 있습니다. 상품을 먼저 담아주세요! 🌿");

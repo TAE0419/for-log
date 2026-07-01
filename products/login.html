@@ -272,7 +272,7 @@
         }
 
         /* -----------------------------------------
-           [로그인 페이지 전용 스타일 - 시안 100% 반영]
+           로그인 페이지
         -------------------------------------------- */
         .login-page {
             flex: 1;
@@ -442,6 +442,16 @@
             color: #2b2118;
         }
 
+        .btn-naver {
+            background-color: #0ea150;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .btn-naver span {
+            font-family: 'Pretendard', sans-serif;
+        }
+
         .btn-signup-link {
             background-color: var(--dark-color);
             color: var(--bg-color);
@@ -459,6 +469,7 @@
             transform: translateY(-2px);
             box-shadow: 0 14px 30px rgba(36, 51, 28, 0.24);
         }
+
         /* -----------------------------------------
            [푸터 영역 스타일]
         -------------------------------------------- */
@@ -531,8 +542,8 @@
             <ul class="gnb">
                 <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
                     <ul class="snb">
-                        <li><a href="#">CONCEPT</a></li>
-                        <li><a href="#">CHOLOGI</a></li>
+                        <li><a href="../brandstory/brandstory.html#concept">CONCEPT</a></li>
+                        <li><a href="../brandstory/brandstory.html#chologi">CHOLOGI</a></li>
                     </ul>
                 </li>
                 <li>
@@ -543,13 +554,19 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="../support/html/index.html">SUPPORT</a>
+                    <a href="../support/index.html">SUPPORT</a>
                     <ul class="snb">
-                      <li><a href="#news">NEWS</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#location">LOCATION</a></li>
-                        <li><a href="../products/login.html">LOG IN</a></li>
+                        <li><a href="../support/index.html#news">NEWS</a></li>
+                        <li><a href="../support/index.html#faq">FAQ</a></li>
+                        <li><a href="../support/index.html#location">LOCATION</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="../products/login.html">LOG IN</a>
+                    <ul class="snb">
+                        <li><a href="../products/signup.html">SIGN UP</a></li>
+                    </ul>
+                    
                 </li>
             </ul>
             <div class="ham">
@@ -580,16 +597,16 @@
             <li>
                 <a href="../support/html/index.html">SUPPORT</a>
                 <ul class="hamSnb">
-                  <li><a href="#news">NEWS</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#location">LOCATION</a></li>
-                        <li><a href="../products/login.html">LOG IN</a></li>
+                    <li><a href="#news">NEWS</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#location">LOCATION</a></li>
+                    <li><a href="../products/login.html">LOG IN</a></li>
                 </ul>
             </li>
         </ul>
     </div>
 
-    <!-- 메인 로그인 영역 (시안 레이아웃 적용) -->
+    <!-- 메인 로그인 영역 -->
     <main class="login-page">
         <div class="login-top">
             <h1 class="big-logo">FOR-LOG</h1>
@@ -599,8 +616,10 @@
 
             <form id="loginForm" onsubmit="return handleLogin(event)" style="width: 100%; text-align: center;">
                 <div class="simple-input-group">
-                    <input type="text" id="userId" class="simple-input" placeholder="아이디를 입력해주세요" autocomplete="username">
-                    <input type="password" id="userPw" class="simple-input" placeholder="비밀번호를 입력해주세요" autocomplete="current-password">
+                    <input type="text" id="userId" class="simple-input" placeholder="아이디를 입력해주세요"
+                        autocomplete="username">
+                    <input type="password" id="userPw" class="simple-input" placeholder="비밀번호를 입력해주세요"
+                        autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-confirm">로그인</button>
             </form>
@@ -609,17 +628,21 @@
         <div class="login-bottom">
             <div class="or-text">또는</div>
             <div class="social-btns">
-                <button type="button" class="btn-social btn-google" onclick="showPreparingAlert()">
+                <button type="button" class="btn-social btn-google" onclick="openSocialLogin('google')">
                     <i class="fa-brands fa-google"></i>
                     구글로 로그인
                 </button>
-                <button type="button" class="btn-social btn-kakao" onclick="showPreparingAlert()">
+
+                <button type="button" class="btn-social btn-kakao" onclick="openSocialLogin('kakao')">
                     <i class="fa-solid fa-comment"></i>
                     카카오로 로그인
                 </button>
+
+                <button type="button" class="btn-social btn-naver" onclick="openSocialLogin('naver')">
+                    <span style="font-weight: 900; font-size: 1.1rem; margin-right: 2px;">N</span>
+                    네이버로 로그인
+                </button>
             </div>
-            <button type="button" class="btn-signup-link" onclick="location.href='signup.html'">회원가입하기</button>
-        </div>
     </main>
 
     <!-- 푸터 영역! -->
@@ -688,7 +711,7 @@
                 $(this).siblings('.hamSnb').stop().slideToggle(300);
             });
         });
-        
+
         // 페이지 로드 시 로그인 상태 체크
         window.onload = function () {
             const loggedInUser = localStorage.getItem('forlog_current_user');
@@ -732,9 +755,33 @@
             return false;
         }
 
-        // 소셜 로그인 준비 중 알림창 띄우기 함수
-        function showPreparingAlert() {
-            alert("아직 준비 중인 기능입니다. 조금만 기다려주세요! 🛠️");
+        // 소셜로그인 페이지 연동
+        function openSocialLogin(provider) {
+            let url = "";
+
+            // 각 소셜 서비스의 실제 공식 로그인 페이지 URL 주소
+            switch (provider) {
+                case 'google':
+                    url = "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin";
+                    break;
+                case 'kakao':
+                    url = "https://kauth.kakao.com/oauth/authorize";
+                    break;
+                case 'naver':
+                    url = "https://nid.naver.com/nidlogin.login";
+                    break;
+                default:
+                    return;
+            }
+
+            // 화면 중앙에 이쁘게 팝업창을 띄우기 위한 좌표 계산
+            const width = 500;
+            const height = 600;
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
+
+            // 실제 팝업창 열기 실행
+            window.open(url, `${provider}Login`, `width=${width}, height=${height}, top=${top}, left=${left}, scrollbars=yes, resizable=yes`);
         }
     </script>
 </body>

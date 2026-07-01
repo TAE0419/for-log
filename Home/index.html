@@ -8,7 +8,50 @@
     <link rel="stylesheet" href="./css/main.css">
     <title>FOR-LOG</title>
 </head>
+
+<header>
+    <div class="headerInner">
+        <div class="logo"><a href="../Home/index.html"><img src="../common/img/logo(black) 2.png" alt="logo"></a></div>
+        <ul class="gnb">
+            <li><a href="../brandstory/brandstory.html">BRANDSTORY</a>
+                <ul class="snb">
+                    <li><a href="../brandstory/brandstory.html#concept">CONCEPT</a></li>
+                    <li><a href="../brandstory/brandstory.html#chologi">CHOLOGI</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/products_index.html">PRODUCT</a>
+                <ul class="snb">
+                    <li><a href="../products/products_index.html">SHOP</a></li>
+                    <li><a href="../products/cart_test.html">CART</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../support/index.html">SUPPORT</a>
+                <ul class="snb">
+                    <li><a href="../support/index.html#news">NEWS</a></li>
+                    <li><a href="../support/index.html#faq">FAQ</a></li>
+                    <li><a href="../support/index.html#location">LOCATION</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="../products/login.html">LOG IN</a>
+                <ul class="snb">
+                    <li><a href="../products/signup.html">SIGN UP</a></li>
+                </ul>
+            </li>
+        </ul>
+            <div class="ham">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    </div>
+</header>
 <body>
+    <div class="eventPop">
+
+    </div>
     <div class="mainPopup" id="mainPopup" aria-label="event popup">
         <div class="mainPopupInner">
             <article class="mainPopupItem" data-popup-id="popUp1">
@@ -58,8 +101,8 @@
         </div>
     </div>
             <div class="heroVideos" aria-hidden="true">
-                <video class="heroVideo videoOne" src="./mp4/tomatomp4.mp4" autoplay muted loop playsinline></video>
-                <video class="heroVideo videoTwo" src="./mp4/movie2.mp4" autoplay muted loop playsinline></video>
+                <video class="heroVideo videoOne" src="./mp4/kore.mp4" autoplay muted loop playsinline></video>
+                <video class="heroVideo videoTwo" src="./mp4/tomatomp4.mp4" autoplay muted loop playsinline></video>
                 <video class="heroVideo videoThree" src="./img/video/tree.mp4" autoplay muted loop playsinline></video>
             </div>
     <section class="sec1">
@@ -133,22 +176,28 @@
      <!-- 섹션5시작-------리뷰페이지---------- -->
     <section class="sec5">
         <img src="./img/SVG files/pattern/pattern-green3.svg" alt="올록볼록한 장식 사진">
+           <div class="spakleGreenBox2">
+                <div class="spk1-1"></div>
+                <div class="spk2-1"></div>
+                <div class="spk3-1"></div>
+                <div class="spk4-1"></div>
+            </div>
         <div>
             <span>BEST<br>REVIEW!</span>
         </div>
 
         <div class="reviewStart">
             <div class="productBand">
-                <img class="productBandBg" src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+                <!-- <img class="productBandBg" src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임"> -->
                 <section class="productSection">
                 <div class="productList" id="productList"></div>
                 </section>
             </div>
-            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+            <!-- <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
             
             <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
             <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
-            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임">
+            <img src="./img/SVG files/pattern/circliewhite.svg" alt="배경이 되는 원들의 모임"> -->
         </div>
     </section>
 <!-- 섹션5끝-------리뷰페이지---------- -->
@@ -189,26 +238,28 @@
             <img src="./common/img/blog.png" alt="sns">
         </div>
     </footer>
+    <div class="roundG4"></div>
+    <script src="../products/mouseEffect.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        fetch("../common/header.html")
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (html) {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
-                const commonHeader = document.querySelector("#commonHeader");
-                const header = doc.querySelector("header");
-                const dim = doc.querySelector(".dim");
-                const hamSideMenu = doc.querySelector(".hamSideMenu");
+   <script>
+fetch("../common/header.html")
+    .then(function (response) {
+        return response.text();
+    })
+    .then(function (html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
 
-                if (commonHeader && header && dim && hamSideMenu) {
-                    commonHeader.append(header, dim, hamSideMenu);
-                }
-            });
-    </script>
+        const commonHeader = document.querySelector("#commonHeader");
+        const dim = doc.querySelector(".dim");
+        const hamSideMenu = doc.querySelector(".hamSideMenu");
+
+        if (commonHeader && dim && hamSideMenu) {
+            commonHeader.append(dim, hamSideMenu);
+        }
+    });
+</script>
     <script src="./js/main.js"></script>
 </body>
 </html>

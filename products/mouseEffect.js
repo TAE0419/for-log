@@ -1,5 +1,5 @@
 // ==========================================
-// 1. 공통 스타일 주입 (탑버튼 + 완벽한 원형 스타일)
+// 1. 공통 스타일 주입 (탑버튼 + 완벽한 원형 스타일 + 플로팅 로그인 상태 버튼)
 // ==========================================
 const style = document.createElement('style');
 style.textContent = `
@@ -8,7 +8,7 @@ style.textContent = `
         position: fixed;
         bottom: 40px; right: 40px;
         width: 50px; height: 50px;
-        background-color: #333; color: #fff;
+        background-color: var(--dark-color, #24331C); color: #fff;
         border: none; border-radius: 50%;
         z-index: 10001; 
         font-size: 14px; font-weight: bold;
@@ -17,12 +17,64 @@ style.textContent = `
         transition: all 0.3s ease;
         cursor: pointer; 
     }
-    .btn-top:hover { background-color: #555; }
+    .btn-top:hover { background-color: var(--point-color, #DB824A); }
     .btn-top.is-show { opacity: 1; visibility: visible; }
 
     /* 모든 입자를 찌그러짐 없는 완벽한 원형으로 고정 */
     .tinker-bubble {
         border-radius: 50% !important;
+    }
+
+    /* 💡 [추가] 우측 하단 플로팅 로그인/로그아웃 버튼 */
+    .btn-auth-floating {
+        position: fixed;
+        bottom: 105px; right: 40px; /* 탑버튼(40px)의 65px 위에 넉넉하게 배치 */
+        width: 50px; height: 50px;
+        background-color: var(--point-color, #DB824A); /* 비로그인 시 오렌지 포인트 컬러 */
+        color: #fff;
+        border: none; border-radius: 50%;
+        z-index: 10001;
+        font-size: 18px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    /* 로그인 완료 시 올리브 그린색으로 자동 변환 */
+    .btn-auth-floating.is-logged-in {
+        background-color: var(--main-color, #AAB664);
+    }
+    
+    .btn-auth-floating:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    /* 마우스 호버 시 뜨는 친절한 말풍선 툴팁 */
+    .btn-auth-floating .tooltip-text {
+        visibility: hidden;
+        width: max-content;
+        background-color: var(--dark-color, #24331C);
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 6px 12px;
+        position: absolute;
+        z-index: 1;
+        right: 125%; /* 버튼 왼쪽에 정렬 */
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-auth-floating:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
     }
 `;
 document.head.appendChild(style);
@@ -65,7 +117,52 @@ document.addEventListener("DOMContentLoaded", function() {
         else { topBtn.classList.remove('is-show'); }
     });
 
-    // --- [B] 완벽한 원형 레이어 생성 ---
+    // --- [B] 💡 로그인/로그아웃 플로팅 버튼 동적 생성 ---
+    // 로그인이나 회원가입 화면 자체에서는 중복 노출을 피하기 위해 렌더링하지 않음
+    const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
+    
+    if (!isAuthPage) {
+        const loggedInUser = localStorage.getItem('forlog_current_user');
+        const authBtn = document.createElement('button');
+        authBtn.type = 'button';
+        
+        // 폴더 위치에 구애받지 않는 영리한 상대 경로 자동 산출
+        let loginPath = 'login.html';
+        let indexPath = 'products_index.html';
+        if (!window.location.pathname.includes('/products/')) {
+            loginPath = '../products/login.html';
+            indexPath = '../products/products_index.html';
+        }
+
+        if (loggedInUser) {
+            // 로그인 상태일 때: 유저명 표기 + 클릭 시 로그아웃 처리
+            authBtn.className = 'btn-auth-floating is-logged-in';
+            authBtn.innerHTML = `
+                <i class="fa-solid fa-user-check"></i>
+                <span class="tooltip-text">${loggedInUser}님 로그인 중<br/>(클릭 시 로그아웃 🍀)</span>
+            `;
+            authBtn.addEventListener('click', () => {
+                if (confirm(`${loggedInUser}님, 로그아웃 하시겠습니까?`)) {
+                    localStorage.removeItem('forlog_current_user');
+                    alert("성공적으로 로그아웃되었습니다. 💚");
+                    window.location.href = indexPath;
+                }
+            });
+        } else {
+            // 비로그인 상태일 때: 자물쇠 아이콘 + 클릭 시 로그인 창 이동
+            authBtn.className = 'btn-auth-floating';
+            authBtn.innerHTML = `
+                <i class="fa-solid fa-lock"></i>
+                <span class="tooltip-text">로그인하기 🌱</span>
+            `;
+            authBtn.addEventListener('click', () => {
+                window.location.href = loginPath;
+            });
+        }
+        document.body.appendChild(authBtn);
+    }
+
+    // --- [C] 완벽한 원형 레이어 생성 ---
     for (var i = 0; i < sparkles; i++) {
         // 작은 원 (지름 5px)
         var rats = createDiv(5, 5); 
@@ -119,7 +216,6 @@ function sparkle() {
 
 function update_star(i) {
     if (--starv[i] == 25) {
-        // 크기가 줄어들 때도 찌그러지지 않게 축소 조절
         star[i].style.width = "4px";
         star[i].style.height = "4px";
     }
@@ -140,7 +236,6 @@ function update_star(i) {
         tiny[i].style.left = (tinyx[i] = starx[i]) + "px";
         tiny[i].style.width = "3px";
         tiny[i].style.height = "3px";
-        // 색상 유지
         tiny[i].style.backgroundColor = star[i].style.backgroundColor;
         star[i].style.visibility = "hidden";
         tiny[i].style.visibility = "visible";
@@ -208,10 +303,9 @@ function createDiv(height, width) {
     return (div);
 }
 
-// [수정] 색상 범위를 노란색(Yellow)에서 초록색(Green) 라인으로 한정하는 새로운 랜덤 함수
 function YGColour() {
-    var r = Math.floor(Math.random() * 156) + 100; // 100 ~ 255 (높은 레드로 노란 톤 확보)
-    var g = 255;                                   // 그린 최대 고정 (연두~초록 베이스)
-    var b = Math.floor(Math.random() * 50);        // 0 ~ 50 (블루를 최소화하여 노랑-초록 유도)
+    var r = Math.floor(Math.random() * 156) + 100; 
+    var g = 255;                                   
+    var b = Math.floor(Math.random() * 50);        
     return "rgb(" + r + ", " + g + ", " + b + ")";
 }
