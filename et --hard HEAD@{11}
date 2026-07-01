@@ -1,0 +1,23 @@
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{1}: checkout: moving from brandstory to brandstory
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{2}: checkout: moving from main to brandstory
+[33m0ff0449[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{3}: reset: moving to HEAD
+[33m0ff0449[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: pull: Fast-forward
+[33ma335c60[m[33m ([m[1;31morigin/brandstory[m[33m)[m HEAD@{5}: checkout: moving from brandstory to main
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{6}: checkout: moving from main to brandstory
+[33ma335c60[m[33m ([m[1;31morigin/brandstory[m[33m)[m HEAD@{7}: checkout: moving from brandstory to main
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{8}: checkout: moving from main to brandstory
+[33ma335c60[m[33m ([m[1;31morigin/brandstory[m[33m)[m HEAD@{9}: commit: 태은
+[33m720802f[m HEAD@{10}: pull: Fast-forward
+[33m667e053[m HEAD@{11}: checkout: moving from main to main
+[33m667e053[m HEAD@{12}: pull: Fast-forward
+[33m66146cc[m HEAD@{13}: reset: moving to HEAD
+[33m66146cc[m HEAD@{14}: checkout: moving from brandstory to main
+[33mffbdb83[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbrandstory[m[33m)[m HEAD@{15}: commit: 태은
+[33m667e053[m HEAD@{16}: pull origin main: Fast-forward
+[33m76872ad[m HEAD@{17}: commit: 태은
+[33m8e5e143[m HEAD@{18}: pull origin main: Fast-forward
+[33mca4b743[m HEAD@{19}: commit: 태은
+[33me4b88ac[m HEAD@{20}: commit: 태은
+[33m66146cc[m HEAD@{21}: checkout: moving from main to brandstory
+[33m66146cc[m HEAD@{22}: clone: from https://github.com/TAE0419/for-log.git
